@@ -55,7 +55,42 @@ namespace Data.Repositories
 
         public void Update(TEntity entity)
         {
-            Context.Set<TEntity>().Update(entity);
+            var ctx = Context.Set<TEntity>();
+            var oldEnt = Get(entity.Id);
+            if (oldEnt == entity)
+            {
+                Context.Set<TEntity>().Update(entity);
+            }
+            else
+            {
+                // Context.Entry(oldEnt).State = EntityState.Modified;
+                CopyProperties(entity, oldEnt);
+                Context.Set<TEntity>().Update(oldEnt);
+            }
+        }
+
+        private void CopyProperties(TEntity src, TEntity dest)
+        {
+            var srcProperties = src.GetType().GetProperties();
+            var destProperties = dest.GetType().GetProperties();
+            Type[] ifaces;
+            foreach (var srcProperty in srcProperties)
+            {
+                foreach (var destProperty in destProperties)
+                {
+                    if (srcProperty.Name == destProperty.Name)
+                    {
+                        ifaces = srcProperty.PropertyType.GetInterfaces();
+                        if (! ifaces.Any(
+                                    x => x.IsGenericType && 
+                                         (x.GetGenericTypeDefinition() == typeof(IEntity<>) ||
+                                          x.GetGenericTypeDefinition() == typeof(IEnumerable<>))
+                                         ))
+                            destProperty.SetValue(dest, srcProperty.GetValue(src));
+                        break;
+                    }
+                }
+            }
         }
 
         public void UpdateRange(IEnumerable<TEntity> entities)

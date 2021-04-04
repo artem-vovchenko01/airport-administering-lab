@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -37,12 +38,18 @@ namespace WpfApp3.ViewModels
         {
             _dialogService = dialogService;
             _flightService = flightService;
+            Flights = new ObservableCollection<FlightModel>();
             UpdateFlights();
         }
 
         private void UpdateFlights()
         {
-            Flights = new ObservableCollection<FlightModel>(_flightService.GetAllFlights());
+            Flights.Clear();
+            var updFlights = new List<FlightModel>(_flightService.GetAllFlights());
+            foreach (var flight in updFlights)
+            {
+                Flights.Add(flight);
+            }
         }
 
         private ICommand _editFlight;

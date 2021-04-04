@@ -65,11 +65,12 @@
                 </ListBox.ItemTemplate>
             </ListBox>     
         </GroupBox>
+        
         <UniformGrid Rows="1" Grid.Row="1" Margin="0, 3">
             <Button Margin="0,3" Command="{StaticResource ShowOverviewCommand}">Back</Button>
-            <Button Margin="0,3" fa:Awesome.Content="Solid_Plus" Foreground="Green"> Add</Button>
-            <Button Margin="0,3" fa:Awesome.Content="Solid_Edit" Foreground="White" Command="{Binding EditFlight}" CommandParameter="{Binding SelectedFlight}"> Edit</Button>
-            <Button Margin="0,3">Delete</Button>
+            <Button Margin="0,3" fa:Awesome.Content="Solid_Plus" Foreground="Green" Command="{Binding AddRoute}"> Add</Button>
+            <Button Margin="0,3" fa:Awesome.Content="Solid_Edit" Foreground="White" Command="{Binding EditRoute}" CommandParameter="{Binding SelectedRoute}"> Edit</Button>
+            <Button Margin="0,3" Command="{Binding DeleteRoute}" CommandParameter="{Binding SelectedRoute}">Delete</Button>
         </UniformGrid>
     </Grid>
 </UserControl>
