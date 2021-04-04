@@ -1,0 +1,17 @@
+﻿<Window x:Name = "ThisWindowMy" x:Class="WpfApp3.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp3"
+        xmlns:viewmodels="clr-namespace:WpfApp3.ViewModels"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" DataContext="{Binding Source={StaticResource ViewModelLocator} , Path=MainWindowViewModel}">
+
+    <!-- <Window.DataContext> -->
+    <!--     <Binding Path="MainWindowViewModel" Source="{StaticResource ViewModelLocator}"></Binding> -->
+    <!-- </Window.DataContext> -->
+    <Grid x:Name="thisGrid">
+        <ContentControl Content="{Binding CurrentPageViewModel}"></ContentControl> 
+        </Grid>
+</Window>

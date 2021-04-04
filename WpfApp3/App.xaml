@@ -1,0 +1,37 @@
+﻿<Application x:Class="WpfApp3.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:WpfApp3.ViewModels"
+             xmlns:views="clr-namespace:WpfApp3.Views"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
+            xmlns:viewmodels="clr-namespace:WpfApp3.ViewModels"
+             xmlns:cmd="clr-namespace:WpfApp3.Commands.TransitionCommands"
+             Startup="OnStartup">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <materialDesign:BundledTheme BaseTheme="Light" PrimaryColor="DeepPurple" SecondaryColor="Lime" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            
+        <DataTemplate DataType="{x:Type local:ShowAllFlightsViewModel}">
+            <views:ShowAllFlightsUserControl/>
+        </DataTemplate>
+            <DataTemplate DataType="{x:Type local:ShowAllRoutesViewModel}">
+                <views:ShowAllRoutesUserControl/>
+            </DataTemplate>
+        <DataTemplate DataType="{x:Type local:OverviewViewModel}">
+            <views:OveriewUserControl/>
+        </DataTemplate>
+            <viewmodels:ViewModelLocator x:Key="ViewModelLocator"/>
+            
+            
+            <cmd:ShowOverview x:Key="ShowOverviewCommand"/>
+            <cmd:ShowAllFlights x:Key="ShowAllFlightsCommand"/>
+            <cmd:ShowAllRoutes x:Key="ShowAllRoutesCommand"/>
+            
+        </ResourceDictionary> 
+        
+    </Application.Resources>
+</Application>
