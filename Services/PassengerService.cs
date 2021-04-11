@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Data.Repositories.Abstract;
 using Mappers;
 using Model;
@@ -30,5 +31,15 @@ namespace Services
             _uof.Passengers.Update(entity);
         }
 
+        public IEnumerable<PassengerModel> GetAllPassengers()
+        {
+            var passengerModels = new List<PassengerModel>();
+            foreach (var passenger in _uof.Passengers.GetAll())
+            {
+                passengerModels.Add(PassengerMapper.MapToModel(passenger));
+            }
+
+            return passengerModels;
+        }
     }
 }

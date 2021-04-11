@@ -16,7 +16,7 @@
             <RowDefinition Height="0.1*"/>
         </Grid.RowDefinitions>
         <GroupBox Grid.Row="0" Header="All flights">
-            <ListBox ItemsSource="{Binding Routes}" SelectedItem="{Binding SelectedRoute}">
+            <ListBox ItemsSource="{Binding Routes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedRoute, UpdateSourceTrigger=PropertyChanged}">
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem">
                         <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>

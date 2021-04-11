@@ -1,0 +1,45 @@
+﻿<UserControl x:Class="WpfApp3.Views.ShowAllAirportsUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:WpfApp3.Views"
+             xmlns:model="clr-namespace:Model;assembly=Model"
+             xmlns:fa="http://schemas.fontawesome.com/icons/"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.DataContext>
+        <Binding Path="ShowAllAirportsViewModel" Source="{StaticResource ViewModelLocator}"></Binding>
+    </UserControl.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.9*"/>
+            <RowDefinition Height="0.1*"/>
+        </Grid.RowDefinitions>
+        <GroupBox Grid.Row="0" Header="All flights">
+            <ListBox ItemsSource="{Binding Airports, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedAirport, UpdateSourceTrigger=PropertyChanged}">
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+                <ListBox.ItemTemplate>
+                <DataTemplate DataType="model:AirportModel">
+                        <StackPanel Orientation="Vertical" Width="300">
+                            <TextBlock Text="{Binding Country}"></TextBlock>
+                            <TextBlock Text="{Binding City}"></TextBlock>
+                            <TextBlock Text="{Binding Name}"></TextBlock>
+                        </StackPanel>
+                </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>     
+        </GroupBox>
+        
+        <UniformGrid Rows="1" Grid.Row="1" Margin="0, 3">
+            <Button Margin="0,3" Command="{StaticResource ShowOverviewCommand}">Back</Button>
+            <Button Margin="0,3" fa:Awesome.Content="Solid_Plus" Foreground="Green" Command="{Binding AddAirport}"> Add</Button>
+            <Button Margin="0,3" fa:Awesome.Content="Solid_Edit" Foreground="White" Command="{Binding EditAirport}" CommandParameter="{Binding SelectedAirport}"> Edit</Button>
+            <Button Margin="0,3" Command="{Binding DeleteAirport}" CommandParameter="{Binding SelectedAirport}">Delete</Button>
+        </UniformGrid>
+    </Grid>
+</UserControl>

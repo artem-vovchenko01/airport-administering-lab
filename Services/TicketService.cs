@@ -39,10 +39,28 @@ namespace Services
             return _uof.Tickets.GetTicketsByFlight(flightEntity).Count;
         }
 
-        public IEnumerable<Ticket> SoldTickets(FlightModel flight)
+        public IEnumerable<TicketModel> GetAllTickets()
+        {
+            var ticketModels = new List<TicketModel>();
+            foreach (var ticket in _uof.Tickets.GetAll())
+            {
+                ticketModels.Add(TicketMapper.MapToModel(ticket));
+            }
+
+            return ticketModels;
+        }
+
+        public IEnumerable<TicketModel> SoldTickets(FlightModel flight)
         {
             var flightEntity = FlightMapper.MapToEntity(flight);
-            return _uof.Tickets.GetTicketsByFlight(flightEntity);
+            var tickets =  _uof.Tickets.GetTicketsByFlight(flightEntity);
+            var ticketModels = new List<TicketModel>();
+            foreach (var ticket in tickets)
+            {
+                ticketModels.Add(TicketMapper.MapToModel(ticket)); 
+            }
+
+            return ticketModels;
         }
     }
 }

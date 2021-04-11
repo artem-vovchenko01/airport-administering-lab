@@ -26,7 +26,10 @@ namespace Mappers
             {
                 Id = model.Id,
                 Carrier = model.Carrier,
-                Code = model.Code
+                Code = model.Code,
+                AirplaneId = model.Airplane.Id,
+                AirportDepartId = model.AirportDepart.Id,
+                AirportArriveId = model.AirportArrive.Id
             };
             return entity;
         }

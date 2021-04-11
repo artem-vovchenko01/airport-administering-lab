@@ -1,9 +1,0 @@
-C:\Users\Artem\RiderProjects\WpfApp3\Model\bin\Debug\netcoreapp3.1\Model.deps.json
-C:\Users\Artem\RiderProjects\WpfApp3\Model\bin\Debug\netcoreapp3.1\Model.dll
-C:\Users\Artem\RiderProjects\WpfApp3\Model\bin\Debug\netcoreapp3.1\Model.pdb
-C:\Users\Artem\RiderProjects\WpfApp3\Model\obj\Debug\netcoreapp3.1\Model.csprojAssemblyReference.cache
-C:\Users\Artem\RiderProjects\WpfApp3\Model\obj\Debug\netcoreapp3.1\Model.AssemblyInfoInputs.cache
-C:\Users\Artem\RiderProjects\WpfApp3\Model\obj\Debug\netcoreapp3.1\Model.AssemblyInfo.cs
-C:\Users\Artem\RiderProjects\WpfApp3\Model\obj\Debug\netcoreapp3.1\Model.csproj.CoreCompileInputs.cache
-C:\Users\Artem\RiderProjects\WpfApp3\Model\obj\Debug\netcoreapp3.1\Model.dll
-C:\Users\Artem\RiderProjects\WpfApp3\Model\obj\Debug\netcoreapp3.1\Model.pdb

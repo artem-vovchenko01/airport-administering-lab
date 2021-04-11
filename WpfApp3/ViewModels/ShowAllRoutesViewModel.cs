@@ -1,6 +1,8 @@
 ﻿using System.Collections.ObjectModel;
+using System.Windows.Input;
 using Model;
 using Services.Abstract;
+using WpfApp3.Commands;
 using WpfApp3.Services;
 
 namespace WpfApp3.ViewModels
@@ -19,16 +21,50 @@ namespace WpfApp3.ViewModels
             set => Set(ref _selectedRoute, value);
         }
 
-        public object ShowOverview
+
+        private void UpdateRoutes()
         {
-            get { throw new System.NotImplementedException(); }
+            Routes.Clear();
+            var routes = _routeService.GetAllRoutes();
+            foreach (var route in routes)
+            {
+                Routes.Add(route); 
+            }
+        }
+        
+        private ICommand _addRoute;
+        private ICommand _editRoute;
+        private ICommand _deleteRoute;
+        public ICommand AddRoute => _addRoute ??= new RelayCommand(OnAddRouteCommandExecute, CanAlwaysExecute);
+        public ICommand EditRoute => _editRoute ??= new RelayCommand(OnEditRouteCommandExecute, IsRouteSelected);
+        public ICommand DeleteRoute => _deleteRoute ??= new RelayCommand(OnDeleteRouteCommandExecute, IsRouteSelected);
+        private bool CanAlwaysExecute(object r) => true;
+        private bool IsRouteSelected(object r) => SelectedRoute != null;
+
+        private void OnAddRouteCommandExecute(object r)
+        {
+            _dialogService.Add(new RouteModel());
+            UpdateRoutes();
+        }
+
+        private void OnEditRouteCommandExecute(object r)
+        {
+            _dialogService.Edit(r);
+            UpdateRoutes();
+        }
+
+        private void OnDeleteRouteCommandExecute(object r)
+        {
+            Routes.Remove(r as RouteModel);
+            _routeService.RemoveRoute(((RouteModel)r).Id);
         }
 
         public ShowAllRoutesViewModel(IRouteService routeService, IUserDialogService dialogService)
         {
             _routeService = routeService;
             _dialogService = dialogService;
-            Routes = new ObservableCollection<RouteModel>(_routeService.GetAllRoutes());
+            Routes = new ObservableCollection<RouteModel>();
+            UpdateRoutes();
         }
         
     }

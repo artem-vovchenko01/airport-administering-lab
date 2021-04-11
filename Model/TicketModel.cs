@@ -26,7 +26,7 @@ namespace Model
             get => _price;
             set => Set(ref _price, value);
         }
-        public PassengerModel Flight { get; set;}
+        public FlightModel Flight { get; set;}
         public PassengerModel Passenger { get; set; }
         
         // public IList<int> SeatsOccupiedList {get {return _seatsOccupiedList; } internal set {

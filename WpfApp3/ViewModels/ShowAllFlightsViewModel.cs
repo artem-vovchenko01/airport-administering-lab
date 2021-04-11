@@ -45,7 +45,7 @@ namespace WpfApp3.ViewModels
         private void UpdateFlights()
         {
             Flights.Clear();
-            var updFlights = new List<FlightModel>(_flightService.GetAllFlights());
+            var updFlights = _flightService.GetAllFlights();
             foreach (var flight in updFlights)
             {
                 Flights.Add(flight);
@@ -73,7 +73,6 @@ namespace WpfApp3.ViewModels
             Flights.Remove(f as FlightModel);
             _flightService.RemoveFlight(((FlightModel) f).Id);
         }
-
 
         private bool CanAlwaysExecute(object f) => true;
 

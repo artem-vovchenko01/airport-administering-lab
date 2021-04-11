@@ -49,17 +49,56 @@ namespace WpfApp3
             serviceCollection.AddSingleton<IPassengerService, PassengerService>();
             serviceCollection.AddSingleton<ITicketService, TicketService>();
             serviceCollection.AddSingleton<IRouteService, RouteService>();
+            serviceCollection.AddSingleton<IAirplaneService, AirplaneService>();
+            serviceCollection.AddSingleton<IAirportService, AirportService>();
 
-            serviceCollection.AddTransient(typeof(IUserDialogService),
-                sp => new WindowsUserDialogService(sp.GetRequiredService<IRouteService>(), sp.GetRequiredService<IFlightService>()));
+            serviceCollection.AddTransient<IUserDialogService, WindowsUserDialogService>();
             
+            serviceCollection.AddTransient<MainWindowViewModel>();
             serviceCollection.AddTransient<ChosenFlightViewModel>();
             serviceCollection.AddTransient<OverviewViewModel>();
+            serviceCollection.AddTransient<EditAirplaneViewModel>();
+            serviceCollection.AddTransient<EditAirportViewModel>();
+            serviceCollection.AddTransient<EditFlightViewModel>();
+            serviceCollection.AddTransient<EditRouteViewModel>();
+            serviceCollection.AddTransient<EditPassengerViewModel>();
+            serviceCollection.AddTransient<EditTicketViewModel>();
+            
+            serviceCollection.AddTransient<ShowAllFlightsViewModel>();
             serviceCollection.AddTransient<ShowAllRoutesViewModel>();
-            serviceCollection.AddTransient(sp =>
-                new ShowAllFlightsViewModel(sp.GetRequiredService<IFlightService>(), sp.GetRequiredService<IUserDialogService>()));
-            serviceCollection.AddTransient(sp =>
-                new MainWindowViewModel(sp.GetRequiredService<ShowAllFlightsViewModel>(), sp.GetRequiredService<OverviewViewModel>(), sp.GetRequiredService<ShowAllRoutesViewModel>()));
+            serviceCollection.AddTransient<ShowAllAirportsViewModel>();
+            serviceCollection.AddTransient<ShowAllAirplanesViewModel>();
+            serviceCollection.AddTransient<ShowAllPassengersViewModel>();
+            serviceCollection.AddTransient<ShowAllTicketsViewModel>();
+
+
+
+
+            // serviceCollection.AddTransient(typeof(IUserDialogService),
+            //     sp => new WindowsUserDialogService(sp.GetRequiredService<IRouteService>(), sp.GetRequiredService<IFlightService>(), sp.GetRequiredService<IAirplaneService>(), sp.GetRequiredService<IAirportService>(), sp.GetRequiredService<PassengerService>(), sp.GetRequiredService<TicketService>()));
+            //
+            // serviceCollection.AddTransient<ChosenFlightViewModel>();
+            // serviceCollection.AddTransient<OverviewViewModel>();
+            //
+            // serviceCollection.AddTransient(sp => new ShowAllRoutesViewModel(sp.GetRequiredService<IRouteService>(),
+            //     sp.GetRequiredService<IUserDialogService>()));
+            //
+            // serviceCollection.AddTransient(sp =>
+            //     new ShowAllFlightsViewModel(sp.GetRequiredService<IFlightService>(), sp.GetRequiredService<IUserDialogService>()));
+            //
+            // serviceCollection.AddTransient(sp => new ShowAllAirportsViewModel(sp.GetRequiredService<IAirportService>(),
+            //     sp.GetRequiredService<IUserDialogService>()));
+            //
+            // serviceCollection.AddTransient(sp =>
+            //     new ShowAllAirplanesViewModel(sp.GetRequiredService<IAirplaneService>(),
+            //         sp.GetRequiredService<IUserDialogService>()));
+            //
+            // serviceCollection.AddTransient(sp =>
+            //     new ShowAllPassengersViewModel(sp.GetRequiredService<IPassengerService>(),
+            //         sp.GetRequiredService<IUserDialogService>()));
+            //
+            // serviceCollection.AddTransient(sp =>
+            //     new MainWindowViewModel(sp.GetRequiredService<ShowAllFlightsViewModel>(), sp.GetRequiredService<OverviewViewModel>(), sp.GetRequiredService<ShowAllRoutesViewModel>(), sp.GetRequiredService<ShowAllAirplanesViewModel>(), sp.GetRequiredService<ShowAllAirportsViewModel>(), sp.GetRequiredService<ShowAllPassengersViewModel>(), sp.GetRequiredService<ShowAllTicketsViewModel>()));
         }
 
         // private void _testDb(IUnitOfWork uof)

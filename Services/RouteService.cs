@@ -19,17 +19,20 @@ namespace Services
         {
             var entity = RouteMapper.MapToEntity(route);
             _uof.Routes.Add(entity);
+            _uof.Complete();
         }
 
         public void RemoveRoute(Guid routeId)
         {
             _uof.Routes.Remove(_uof.Routes.Get(routeId));
+            _uof.Complete();
         }
 
         public void EditRoute(RouteModel route)
         {
             var entity = RouteMapper.MapToEntity(route);
             _uof.Routes.Update(entity);
+            _uof.Complete();
         }
 
         public IEnumerable<RouteModel> GetAllRoutes()
