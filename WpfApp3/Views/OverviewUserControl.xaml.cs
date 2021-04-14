@@ -2,9 +2,9 @@
 
 namespace WpfApp3.Views
 {
-    public partial class OveriewUserControl : UserControl
+    public partial class OverviewUserControl : UserControl
     {
-        public OveriewUserControl()
+        public OverviewUserControl()
         {
             InitializeComponent();
         }

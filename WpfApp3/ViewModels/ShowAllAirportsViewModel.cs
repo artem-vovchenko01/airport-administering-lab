@@ -20,6 +20,7 @@ namespace WpfApp3.ViewModels
             _airportService = airportService;
             _dialogService = dialogService;
             Airports = new ObservableCollection<AirportModel>();
+            UpdateAirports();
         }
 
         private ICommand _addAirport;
@@ -37,7 +38,7 @@ namespace WpfApp3.ViewModels
 
         private void OnAddAirportCommandExecute(object a)
         {
-            _dialogService.Add(a);
+            _dialogService.Add(new AirportModel());
             UpdateAirports();
         }
 

@@ -8,6 +8,9 @@ namespace WpfApp3.ViewModels
         private ICommand _showAllFlights;
         private ICommand _showAllRoutes;
 
+        public OverviewViewModel()
+        {
+        }
         public ICommand ShowAllFlights
         {
             get

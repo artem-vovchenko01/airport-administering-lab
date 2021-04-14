@@ -25,22 +25,23 @@ namespace WpfApp3.ViewModels
             _airplaneService = airplaneService;
             _dialogService = dialogService;
             Airplanes = new ObservableCollection<AirplaneModel>();
+            UpdateAirplanes();
         }
 
         private ICommand _addAirplane;
         private ICommand _editAirplane;
         private ICommand _deleteAirplane;
 
-        public ICommand AddAirplane => new RelayCommand(OnAddAirplaneCommandExecute, CanAlwaysExecute);
-        public ICommand EditAirplane => new RelayCommand(OnEditAirplaneCommandExecute, IsAirplaneSelected);
-        public ICommand DeleteAirplane => new RelayCommand(OnDeleteAirplaneCommandExecute, IsAirplaneSelected);
+        public ICommand AddAirplane => _addAirplane ??= new RelayCommand(OnAddAirplaneCommandExecute, CanAlwaysExecute);
+        public ICommand EditAirplane => _editAirplane ??= new RelayCommand(OnEditAirplaneCommandExecute, IsAirplaneSelected);
+        public ICommand DeleteAirplane => _deleteAirplane ??= new RelayCommand(OnDeleteAirplaneCommandExecute, IsAirplaneSelected);
 
         private bool CanAlwaysExecute(object a) => true;
         private bool IsAirplaneSelected(object a) => _selectedAirplane != null;
 
         private void OnAddAirplaneCommandExecute(object a)
         {
-            _dialogService.Add(a);
+            _dialogService.Add(new AirplaneModel());
             UpdateAirplanes();
         }
 

@@ -34,7 +34,7 @@
             <views:ShowAllTicketsUserControl/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type local:OverviewViewModel}">
-            <views:OveriewUserControl/>
+            <views:OverviewUserControl/>
         </DataTemplate>
             
             <viewmodels:ViewModelLocator x:Key="ViewModelLocator"/>
@@ -43,7 +43,10 @@
             <cmd:ShowOverview x:Key="ShowOverviewCommand"/>
             <cmd:ShowAllFlights x:Key="ShowAllFlightsCommand"/>
             <cmd:ShowAllRoutes x:Key="ShowAllRoutesCommand"/>
-            
+            <cmd:ShowAllAirplanes x:Key="ShowAllAirplanesCommand"/>
+            <cmd:ShowAllAirports x:Key="ShowAllAirportsCommand"/>
+            <cmd:ShowAllTickets x:Key="ShowAllTicketsCommand"/>
+            <cmd:ShowAllPassengers x:Key="ShowAllPassengersCommand"/>
             
         </ResourceDictionary> 
         

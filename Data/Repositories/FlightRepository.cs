@@ -27,12 +27,14 @@ namespace Data.Repositories
 
         public IEnumerable<Flight> GetAllWithRouteAndAirplane()
         {
-             return _Context.Flights
-                .Include(f => f.Route)
-                .Include(f => f.Route.Airplane)
-                .Include(f => f.Route.AirportArrive)
-                .Include(f => f.Route.AirportDepart)
-                .ToList();
+            var objs = _Context.Flights
+                                       .Include(f => f.Route)
+                                       .Include(f => f.Route.Airplane)
+                                       .Include(f => f.Route.AirportArrive)
+                                       .Include(f => f.Route.AirportDepart)
+                                       .ToList();
+            return objs;
+
         }
 
         public IEnumerable<Flight> GetAllWithTickets()
