@@ -18,17 +18,20 @@ namespace Services
         {
             var entity = PassengerMapper.MapToEntity(passenger);
             _uof.Passengers.Add(entity);
+            _uof.Complete();
         }
 
         public void RemovePassenger(Guid passengerId)
         {
             _uof.Passengers.Remove(_uof.Passengers.Get(passengerId));
+            _uof.Complete();
         }
 
         public void EditPassenger(PassengerModel passenger)
         {
             var entity = PassengerMapper.MapToEntity(passenger);
             _uof.Passengers.Update(entity);
+            _uof.Complete();
         }
 
         public IEnumerable<PassengerModel> GetAllPassengers()

@@ -13,7 +13,8 @@ namespace Mappers
                 Id = entity.Id,
                 Company = entity.Company,
                 Model = entity.Model,
-                DefaultPrice = entity.DefaultPrice
+                DefaultPrice = entity.DefaultPrice,
+                Seats = entity.Seats
             };
             return model;
         }
@@ -25,7 +26,8 @@ namespace Mappers
                 Id = model.Id,
                 Company = model.Company,
                 Model = model.Model,
-                DefaultPrice = model.DefaultPrice
+                DefaultPrice = model.DefaultPrice,
+                Seats = model.Seats
             };
             return entity;
         }

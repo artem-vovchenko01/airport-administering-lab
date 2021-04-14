@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Data;
@@ -15,9 +16,12 @@ namespace Data.Repositories
         }
         
         public MyDbContext MyDbContext => Context as MyDbContext;
-        public List<Ticket> GetTicketsByFlight(Flight flight)
+        public IEnumerable<Ticket> GetTicketsByFlight(Flight flight)
         {
-            return MyDbContext.Tickets.Where(t => t.FlightId == flight.Id).ToList();
+            return MyDbContext.Tickets.Where(t => t.FlightId == flight.Id)
+                .Include(t => t.Flight)
+                .Include(t => t.Passenger)
+                .ToList();
         }
 
         public int GetTicketCountByFlight(Flight flight)
@@ -25,5 +29,11 @@ namespace Data.Repositories
             return MyDbContext.Tickets.Count(t => t.FlightId == flight.Id);
         }
 
+        public IEnumerable<Ticket> GetAllWithIncludes()
+        {
+            return MyDbContext.Tickets
+                .Include(t => t.Flight)
+                .Include(t => t.Passenger).ToList();
+        }
     }
 }

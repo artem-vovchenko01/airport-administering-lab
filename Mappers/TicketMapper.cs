@@ -13,7 +13,9 @@ namespace Mappers
                 Id = entity.Id,
                 Adults = entity.Adults,
                 Children = entity.Children,
-                Price = entity.Price
+                Price = entity.Price,
+                Flight = FlightMapper.MapToModel(entity.Flight),
+                Passenger = PassengerMapper.MapToModel(entity.Passenger)
             };
             return model;
         }
@@ -25,7 +27,9 @@ namespace Mappers
                 Id = model.Id,
                 Adults = model.Adults,
                 Children = model.Children,
-                Price = model.Price
+                Price = model.Price,
+                FlightId = model.Flight.Id,
+                PassengerId = model.Passenger.Id
             };
             return entity;
         }

@@ -20,29 +20,33 @@ namespace Services
         {
             var entity = TicketMapper.MapToEntity(ticket);
             _uof.Tickets.Add(entity);
+            _uof.Complete();
         }
 
         public void RemoveTicket(Guid ticketId)
         {
             _uof.Tickets.Remove(_uof.Tickets.Get(ticketId));
+            _uof.Complete();
         }
 
         public void EditTicket(TicketModel ticket)
         {
             var entity = TicketMapper.MapToEntity(ticket);
             _uof.Tickets.Update(entity);
+            _uof.Complete();
         }
 
         public int SoldTicketsCount(FlightModel flight)
         {
             var flightEntity = FlightMapper.MapToEntity(flight);
-            return _uof.Tickets.GetTicketsByFlight(flightEntity).Count;
+            var tickets = new List<Ticket>(_uof.Tickets.GetAllWithIncludes());
+            return tickets.Count;
         }
 
         public IEnumerable<TicketModel> GetAllTickets()
         {
             var ticketModels = new List<TicketModel>();
-            foreach (var ticket in _uof.Tickets.GetAll())
+            foreach (var ticket in _uof.Tickets.GetAllWithIncludes())
             {
                 ticketModels.Add(TicketMapper.MapToModel(ticket));
             }

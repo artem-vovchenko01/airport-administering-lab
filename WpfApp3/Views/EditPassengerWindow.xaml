@@ -45,9 +45,10 @@
                    <RowDefinition/>
                    <RowDefinition/>
                </Grid.RowDefinitions>
-               <TextBlock Grid.Column="0" Grid.Row="0" Text="Country"/>
-               <TextBlock Grid.Column="0" Grid.Row="1" Text="City"/>
-               <TextBlock Grid.Column="0" Grid.Row="2" Text="Name"/>
+               <TextBlock Grid.Column="0" Grid.Row="0" Text="Name"/>
+               <TextBlock Grid.Column="0" Grid.Row="1" Text="Surname"/>
+               <TextBlock Grid.Column="0" Grid.Row="2" Text="Age"/>
+               <TextBlock Grid.Column="0" Grid.Row="3" Text="Passport"/>
                
                <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Surname, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>

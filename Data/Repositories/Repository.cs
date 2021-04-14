@@ -81,11 +81,12 @@ namespace Data.Repositories
                     if (srcProperty.Name == destProperty.Name)
                     {
                         ifaces = srcProperty.PropertyType.GetInterfaces();
-                        if (! ifaces.Any(
+                        if (  (!ifaces.Any(
                                     x => x.IsGenericType && 
                                          (x.GetGenericTypeDefinition() == typeof(IEntity<>) ||
                                           x.GetGenericTypeDefinition() == typeof(IEnumerable<>))
-                                         ))
+                                         )) ||
+                              srcProperty.PropertyType == typeof(string))
                             destProperty.SetValue(dest, srcProperty.GetValue(src));
                         break;
                     }
