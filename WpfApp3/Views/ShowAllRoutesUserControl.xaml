@@ -6,71 +6,95 @@
              xmlns:local="clr-namespace:WpfApp3.Views"
              xmlns:model="clr-namespace:Model;assembly=Model"
              xmlns:fa="http://schemas.fontawesome.com/icons/">
-             <!-- d:DesignHeight="300" d:DesignWidth="300"> -->
     <UserControl.DataContext>
-        <Binding Path="ShowAllRoutesViewModel" Source="{StaticResource ViewModelLocator}"></Binding>
+        <Binding Path="ShowAllRoutesViewModel" Source="{StaticResource ViewModelLocator}" />
     </UserControl.DataContext>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.9*"/>
-            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="0.9*" />
+            <RowDefinition Height="0.1*" />
         </Grid.RowDefinitions>
-        <GroupBox Grid.Row="0" Header="All flights">
-            <ListBox ItemsSource="{Binding Routes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedRoute, UpdateSourceTrigger=PropertyChanged}">
-                <ListBox.ItemContainerStyle>
-                    <Style TargetType="ListBoxItem">
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
-                    </Style>
-                </ListBox.ItemContainerStyle>
-                <ListBox.ItemTemplate>
-                <DataTemplate DataType="model:RouteModel">
-                    <DockPanel>
-                        
-                        <StackPanel Orientation="Vertical" Width="300">
-                            <TextBlock>
-                                <TextBlock.Text>
-                                    <MultiBinding StringFormat="{}{0}, {1}">
-                                        <Binding Path="Airplane.Company"></Binding>
-                                        <Binding Path="Airplane.Model"></Binding>
-                                    </MultiBinding>
-                                </TextBlock.Text>
-                            </TextBlock>
-                            <TextBlock Text="{Binding Carrier}"></TextBlock>
-                            <TextBlock Text="{Binding Code}"></TextBlock>
-                            <TextBlock Text="{Binding AirportDepart.Name}"></TextBlock>
-                            <TextBlock>
-                                <TextBlock.Text>
-                                    <MultiBinding StringFormat="{}{0}, {1}">
-                                        <Binding Path="AirportDepart.Country"></Binding>
-                                        <Binding Path="AirportDepart.City"></Binding>
-                                    </MultiBinding>
-                                </TextBlock.Text>
-                            </TextBlock>
-                        </StackPanel>
-                        
-                        <StackPanel DockPanel.Dock="Right" Orientation="Vertical">
-                            <TextBlock Text="{Binding AirportArrive.Name}"></TextBlock>
-                            <TextBlock>
-                                <TextBlock.Text>
-                                    <MultiBinding StringFormat="{}{0}, {1}">
-                                        <Binding Path="AirportArrive.Country"></Binding>
-                                        <Binding Path="AirportArrive.City"></Binding>
-                                    </MultiBinding>
-                                </TextBlock.Text>
-                            </TextBlock>
-                        </StackPanel>
-                            
-                    </DockPanel>
-                </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>     
+        <GroupBox Grid.Row="0" Header="All routes">
+            <StackPanel Orientation="Vertical">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="4*" />
+                        <ColumnDefinition Width="3*" />
+                        <ColumnDefinition Width="3*" />
+                        <ColumnDefinition Width="3*" />
+                        <ColumnDefinition Width="4*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock HorizontalAlignment="Center" Grid.Column="0" Text="Departure" />
+                    <TextBlock HorizontalAlignment="Center" Grid.Column="1" Text="Airplane" />
+                    <TextBlock HorizontalAlignment="Center" Grid.Column="2" Text="Carrier" />
+                    <TextBlock HorizontalAlignment="Center" Grid.Column="3" Text="Code" />
+                    <TextBlock HorizontalAlignment="Center" Grid.Column="4" Text="Destination" />
+                </Grid>
+                <ListBox ItemsSource="{Binding Routes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         SelectedItem="{Binding SelectedRoute, UpdateSourceTrigger=PropertyChanged}">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate DataType="model:RouteModel">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="4*" />
+                                    <ColumnDefinition Width="3*" />
+                                    <ColumnDefinition Width="3*" />
+                                    <ColumnDefinition Width="3*" />
+                                    <ColumnDefinition Width="4*" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0" Orientation="Vertical">
+                                    <TextBlock HorizontalAlignment="Center" Text="{Binding AirportDepart.Name}" />
+                                    <TextBlock HorizontalAlignment="Center">
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0}, {1}">
+                                                <Binding Path="AirportDepart.Country" />
+                                                <Binding Path="AirportDepart.City" />
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </StackPanel>
+                                <TextBlock Grid.Column="1" HorizontalAlignment="Center">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0}, {1}">
+                                            <Binding Path="Airplane.Company" />
+                                            <Binding Path="Airplane.Model" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                                <TextBlock Grid.Column="2" HorizontalAlignment="Center" Text="{Binding Carrier}" />
+                                <TextBlock Grid.Column="3" HorizontalAlignment="Center" Text="{Binding Code}" />
+                                <StackPanel Grid.Column="4" Orientation="Vertical">
+                                    <TextBlock HorizontalAlignment="Center" Text="{Binding AirportArrive.Name}" />
+                                    <TextBlock HorizontalAlignment="Center">
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0}, {1}">
+                                                <Binding Path="AirportArrive.Country" />
+                                                <Binding Path="AirportArrive.City" />
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </StackPanel>
+
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
         </GroupBox>
-        
+
         <UniformGrid Rows="1" Grid.Row="1" Margin="0, 3">
-            <Button Margin="0,3" Command="{StaticResource ShowOverviewCommand}">Back</Button>
-            <Button Margin="0,3" fa:Awesome.Content="Solid_Plus" Foreground="Green" Command="{Binding AddRoute}"> Add</Button>
-            <Button Margin="0,3" fa:Awesome.Content="Solid_Edit" Foreground="White" Command="{Binding EditRoute}" CommandParameter="{Binding SelectedRoute}"> Edit</Button>
-            <Button Margin="0,3" Command="{Binding DeleteRoute}" CommandParameter="{Binding SelectedRoute}">Delete</Button>
+            <Button Margin="3,3" Command="{StaticResource ShowOverviewCommand}" fa:Awesome.Content="Solid_ArrowLeft"
+                    Foreground="White" />
+            <Button Margin="3,3" fa:Awesome.Content="Solid_Plus" Foreground="Lime" Command="{Binding AddRoute}" />
+            <Button Margin="3,3" fa:Awesome.Content="Solid_Edit" Foreground="LightBlue" Command="{Binding EditRoute}"
+                    CommandParameter="{Binding SelectedRoute}" />
+            <Button Margin="3,3" Command="{Binding DeleteRoute}" CommandParameter="{Binding SelectedRoute}"
+                    fa:Awesome.Content="Solid_Trash" Foreground="Orange" />
         </UniformGrid>
     </Grid>
 </UserControl>

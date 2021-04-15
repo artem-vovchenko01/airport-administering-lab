@@ -66,6 +66,7 @@ namespace WpfApp3.ViewModels
         private void OnEditFlightCommandExecute(object f)
         {
             _dialogService.Edit(f);
+            UpdateFlights();
         }
 
         private void OnDeleteFlightCommandExecute(object f)

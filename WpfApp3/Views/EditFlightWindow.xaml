@@ -6,70 +6,58 @@
         xmlns:local="clr-namespace:WpfApp3.Views"
         xmlns:vm="clr-namespace:WpfApp3.ViewModels"
         xmlns:cmd="clr-namespace:WpfApp3.Commands"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="EditFlightWindow" Height="450" Width="800">
+        Title="Editing flight" Height="450" Width="800">
     <Window.DataContext>
-        <vm:EditFlightViewModel/>
+        <vm:EditFlightViewModel />
     </Window.DataContext>
-    <Grid>
-       <DockPanel>
-           <Grid DockPanel.Dock="Top" Margin="3" DataContext="{Binding Flight, Mode=TwoWay}">
-               <Grid.Resources>
-                    <Style TargetType="TextBlock">
-                        <Style.Triggers>
-                            <Trigger Property="Grid.Column" Value="0">
-                                <Setter Property="HorizontalAlignment" Value="Right"/>
-                                <Setter Property="VerticalAlignment" Value="Center"/>
-                                <Setter Property="FontWeight" Value="Bold"/>
-                                <Setter Property="Margin" Value="0 3"/>
-                            </Trigger>
-                            <Trigger Property="Grid.Column" Value="1">
-                                <Setter Property="Margin" Value="2 0 0 0 "></Setter>
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                    <Style TargetType="TextBox">
-                        <Setter Property="Margin" Value="3 2 0 2"/>
-                    </Style>
-                    <Style TargetType="DatePicker">
-                        <Setter Property="Margin" Value="3 2 0 2"></Setter>
-                    </Style>
-                </Grid.Resources> 
-               <Grid.ColumnDefinitions>
-                   <ColumnDefinition/>
-                   <ColumnDefinition/>
-               </Grid.ColumnDefinitions>
-               <Grid.RowDefinitions>
-                   <RowDefinition/>
-                   <RowDefinition/>
-                   <RowDefinition/>
-                   <RowDefinition/>
-                   <RowDefinition/>
-               </Grid.RowDefinitions>
-               <TextBlock Grid.Column="0" Grid.Row="0" Text="Time departure"/>
-               <TextBlock Grid.Column="0" Grid.Row="1" Text="Time arrive"/>
-               <TextBlock Grid.Column="0" Grid.Row="2" Text="Minutes delayed"/>
-               <TextBlock Grid.Column="0" Grid.Row="3" Text="Stop booking date"/>
-               <TextBlock Grid.Column="0" Grid.Row="4" Text="Route"></TextBlock>
-               
-               <DatePicker Grid.Column="1" Grid.Row="0" Text="{Binding TimeDepart, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-               <DatePicker Grid.Column="1" Grid.Row="1" Text="{Binding TimeArrive, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-               <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding MinDelayed, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-               <DatePicker Grid.Column="1" Grid.Row="3" Text="{Binding StopBooking, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-               <ComboBox Grid.Column="1" Grid.Row="4" ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.Routes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding RouteModel, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-           </Grid>
-           <UniformGrid DockPanel.Dock="Bottom" Rows="1" HorizontalAlignment="Right" Margin="0 0 0 10">
-               <Button Content="Ok" Margin="10,0" Padding="35 5" IsDefault="True" FontWeight="Bold" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=local:EditFlightWindow}}">
-                   <Button.Command>
-                       <cmd:CloseDialogCommand DialogResult="True"/>
-                   </Button.Command>
-               </Button>
-               <Button Content="Cancel" Margin="10,0" Padding="35 5" FontWeight="Bold" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=local:EditFlightWindow}}">
-                   <Button.Command>
-                       <cmd:CloseDialogCommand DialogResult="False"/>
-                   </Button.Command>
-               </Button>
-           </UniformGrid>
-       </DockPanel> 
+
+    <Grid DataContext="{Binding Flight, Mode=TwoWay}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="3*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <StackPanel Margin="0 80 20 20" Grid.Column="0" Grid.Row="0">
+            <StackPanel.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Margin" Value="25 5 5 5"></Setter>
+                </Style>
+            </StackPanel.Resources>
+            <TextBlock Text="Time departure" />
+            <TextBlock Text="Time arrive" />
+            <TextBlock Text="Minutes delayed" />
+            <TextBlock Text="Stop booking date" />
+            <TextBlock Text="Route" />
+        </StackPanel>
+
+        <StackPanel Margin="20 80 20 20" Grid.Column="1" Grid.Row="0">
+            <xctk:DateTimePicker Text="{Binding TimeDepart, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+            <xctk:DateTimePicker Text="{Binding TimeArrive, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+            <TextBox Text="{Binding MinDelayed, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+            <xctk:DateTimePicker Text="{Binding StopBooking, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+            <ComboBox ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.Routes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemTemplate="{StaticResource RouteComboTemplate}"
+                      SelectedItem="{Binding RouteModel, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+        </StackPanel>
+
+        <UniformGrid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" DockPanel.Dock="Bottom" Rows="1"
+                     HorizontalAlignment="Right" Margin="0 0 0 10">
+            <Button Content="Ok" Margin="10,0" Padding="35 5" IsDefault="True" FontWeight="Bold"
+                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=local:EditFlightWindow}}">
+                <Button.Command>
+                    <cmd:CloseDialogCommand DialogResult="True" />
+                </Button.Command>
+            </Button>
+            <Button Content="Cancel" Margin="10,0" Padding="35 5" FontWeight="Bold"
+                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=local:EditFlightWindow}}">
+                <Button.Command>
+                    <cmd:CloseDialogCommand DialogResult="False" />
+                </Button.Command>
+            </Button>
+        </UniformGrid>
     </Grid>
 </Window>

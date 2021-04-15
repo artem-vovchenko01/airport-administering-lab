@@ -9,38 +9,50 @@
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.DataContext>
-        <Binding Path="ShowAllPassengersViewModel" Source="{StaticResource ViewModelLocator}"></Binding>
+        <Binding Path="ShowAllPassengersViewModel" Source="{StaticResource ViewModelLocator}" />
     </UserControl.DataContext>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.9*"/>
-            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="0.9*" />
+            <RowDefinition Height="0.1*" />
         </Grid.RowDefinitions>
-        <GroupBox Grid.Row="0" Header="All flights">
-            <ListBox ItemsSource="{Binding Passengers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedPassenger, UpdateSourceTrigger=PropertyChanged}">
+        <GroupBox Grid.Row="0" Header="All passengers">
+            <ListBox ItemsSource="{Binding Passengers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     SelectedItem="{Binding SelectedPassenger, UpdateSourceTrigger=PropertyChanged}">
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem">
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                     </Style>
                 </ListBox.ItemContainerStyle>
                 <ListBox.ItemTemplate>
-                <DataTemplate DataType="model:PassengerModel">
-                        <StackPanel Orientation="Vertical" Width="300">
-                            <TextBlock Text="{Binding Name}"></TextBlock>
-                            <TextBlock Text="{Binding Surname}"></TextBlock>
-                            <TextBlock Text="{Binding Age}"></TextBlock>
-                            <TextBlock Text="{Binding Passport}"></TextBlock>
-                        </StackPanel>
-                </DataTemplate>
+                    <DataTemplate DataType="model:PassengerModel">
+                        <DockPanel>
+                            <StackPanel Margin="100 0 0 0 " DockPanel.Dock="Left" Orientation="Vertical" Width="200">
+                                <TextBlock Text="Name" />
+                                <TextBlock Text="Surname" />
+                                <TextBlock Text="Age" />
+                                <TextBlock Text="Passport" />
+                            </StackPanel>
+                            <StackPanel DockPanel.Dock="Right" Orientation="Vertical" Width="300">
+                                <TextBlock Text="{Binding Name}" />
+                                <TextBlock Text="{Binding Surname}" />
+                                <TextBlock Text="{Binding Age}" />
+                                <TextBlock Text="{Binding Passport}" />
+                            </StackPanel>
+                        </DockPanel>
+                    </DataTemplate>
                 </ListBox.ItemTemplate>
-            </ListBox>     
+            </ListBox>
         </GroupBox>
-        
+
         <UniformGrid Rows="1" Grid.Row="1" Margin="0, 3">
-            <Button Margin="0,3" Command="{StaticResource ShowOverviewCommand}">Back</Button>
-            <Button Margin="0,3" fa:Awesome.Content="Solid_Plus" Foreground="Green" Command="{Binding AddPassenger}"> Add</Button>
-            <Button Margin="0,3" fa:Awesome.Content="Solid_Edit" Foreground="White" Command="{Binding EditPassenger}" CommandParameter="{Binding SelectedPassenger}"> Edit</Button>
-            <Button Margin="0,3" Command="{Binding DeletePassenger}" CommandParameter="{Binding SelectedPassenger}">Delete</Button>
+            <Button Margin="3,3" Command="{StaticResource ShowOverviewCommand}" fa:Awesome.Content="Solid_ArrowLeft"
+                    Foreground="White" />
+            <Button Margin="3,3" fa:Awesome.Content="Solid_Plus" Foreground="Lime" Command="{Binding AddPassenger}" />
+            <Button Margin="3,3" fa:Awesome.Content="Solid_Edit" Foreground="LightBlue"
+                    Command="{Binding EditPassenger}" CommandParameter="{Binding SelectedPassenger}" />
+            <Button Margin="3,3" Command="{Binding DeletePassenger}" CommandParameter="{Binding SelectedPassenger}"
+                    fa:Awesome.Content="Solid_Trash" Foreground="Orange" />
         </UniformGrid>
     </Grid>
 </UserControl>

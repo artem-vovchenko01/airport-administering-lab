@@ -11,14 +11,14 @@
         <Binding Path="OverviewViewModel" Source="{StaticResource ViewModelLocator}"></Binding>
     </UserControl.DataContext>
     <DockPanel>
-        <GroupBox DockPanel.Dock="Right" Header="Database">
-            <StackPanel  Orientation="Vertical">
-                <Button Height="40" x:Name="BtnShowAllFlights" Command="{StaticResource ShowAllFlightsCommand}" >Flights</Button>
-                <Button Height="40" x:Name="BtnShowAllRoutes" Command="{StaticResource ShowAllRoutesCommand}">Routes</Button>
-                <Button Height="40" x:Name="BtnShowAllAirplanes" Command="{StaticResource ShowAllAirplanesCommand}">Airplanes</Button>
-                <Button Height="40" x:Name="BtnShowAllAirports" Command="{StaticResource ShowAllAirportsCommand}">Airports</Button>
-                <Button Height="40" x:Name="BtnShowAllPassengers" Command="{StaticResource ShowAllPassengersCommand}">Passengers</Button>
-                <Button Height="40" x:Name="BtnShowAllTickets" Command="{StaticResource ShowAllTicketsCommand}">Tickets</Button>
+        <GroupBox DockPanel.Dock="Right" Header="Database manipulation">
+            <StackPanel Orientation="Vertical">
+                <Button Margin="10 5" Height="40" x:Name="BtnShowAllFlights" Command="{StaticResource ShowAllFlightsCommand}" >Flights</Button>
+                <Button Margin="10 5" Height="40" x:Name="BtnShowAllRoutes" Command="{StaticResource ShowAllRoutesCommand}">Routes</Button>
+                <Button Margin="10 5" Height="40" x:Name="BtnShowAllAirplanes" Command="{StaticResource ShowAllAirplanesCommand}">Airplanes</Button>
+                <Button Margin="10 5" Height="40" x:Name="BtnShowAllAirports" Command="{StaticResource ShowAllAirportsCommand}">Airports</Button>
+                <Button Margin="10 5" Height="40" x:Name="BtnShowAllPassengers" Command="{StaticResource ShowAllPassengersCommand}">Passengers</Button>
+                <Button Margin="10 5" Height="40" x:Name="BtnShowAllTickets" Command="{StaticResource ShowAllTicketsCommand}">Tickets</Button>
             </StackPanel>
         </GroupBox>
     </DockPanel>

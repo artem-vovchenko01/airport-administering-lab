@@ -49,6 +49,8 @@ namespace Model
             set => Set(ref _minDelayed, value);
         }
 
+        public TimeSpan TravelTime { get; set; }
+
         public RouteModel RouteModel
         {
             get => _routeModel;

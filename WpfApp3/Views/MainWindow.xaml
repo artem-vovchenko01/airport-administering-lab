@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WpfApp3"
         xmlns:viewmodels="clr-namespace:WpfApp3.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" DataContext="{Binding Source={StaticResource ViewModelLocator} , Path=MainWindowViewModel}">
+        Title="Airport administering" Height="450" Width="800" DataContext="{Binding Source={StaticResource ViewModelLocator} , Path=MainWindowViewModel}">
 
     <!-- <Window.DataContext> -->
     <!--     <Binding Path="MainWindowViewModel" Source="{StaticResource ViewModelLocator}"></Binding> -->

@@ -5,50 +5,113 @@
              xmlns:views="clr-namespace:WpfApp3.Views"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:system="clr-namespace:System;assembly=System.Runtime"
-            xmlns:viewmodels="clr-namespace:WpfApp3.ViewModels"
+             xmlns:viewmodels="clr-namespace:WpfApp3.ViewModels"
              xmlns:cmd="clr-namespace:WpfApp3.Commands.TransitionCommands"
+             xmlns:model="clr-namespace:Model;assembly=Model"
              Startup="OnStartup">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <materialDesign:BundledTheme BaseTheme="Light" PrimaryColor="DeepPurple" SecondaryColor="Lime" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            
-        <DataTemplate DataType="{x:Type local:ShowAllFlightsViewModel}">
-            <views:ShowAllFlightsUserControl/>
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type local:ShowAllRoutesViewModel}">
-            <views:ShowAllRoutesUserControl/>
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type local:ShowAllAirplanesViewModel}">
-            <views:ShowAllAirplanesUserControl/>
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type local:ShowAllAirportsViewModel}">
-            <views:ShowAllAirportsUserControl/>
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type local:ShowAllPassengersViewModel}">
-            <views:ShowAllPassengersUserControl/>
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type local:ShowAllTicketsViewModel}">
-            <views:ShowAllTicketsUserControl/>
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type local:OverviewViewModel}">
-            <views:OverviewUserControl/>
-        </DataTemplate>
-            
-            <viewmodels:ViewModelLocator x:Key="ViewModelLocator"/>
-            
-            
-            <cmd:ShowOverview x:Key="ShowOverviewCommand"/>
-            <cmd:ShowAllFlights x:Key="ShowAllFlightsCommand"/>
-            <cmd:ShowAllRoutes x:Key="ShowAllRoutesCommand"/>
-            <cmd:ShowAllAirplanes x:Key="ShowAllAirplanesCommand"/>
-            <cmd:ShowAllAirports x:Key="ShowAllAirportsCommand"/>
-            <cmd:ShowAllTickets x:Key="ShowAllTicketsCommand"/>
-            <cmd:ShowAllPassengers x:Key="ShowAllPassengersCommand"/>
-            
-        </ResourceDictionary> 
-        
+
+            <DataTemplate DataType="{x:Type local:ShowAllFlightsViewModel}">
+                <views:ShowAllFlightsUserControl />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type local:ShowAllRoutesViewModel}">
+                <views:ShowAllRoutesUserControl />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type local:ShowAllAirplanesViewModel}">
+                <views:ShowAllAirplanesUserControl />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type local:ShowAllAirportsViewModel}">
+                <views:ShowAllAirportsUserControl />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type local:ShowAllPassengersViewModel}">
+                <views:ShowAllPassengersUserControl />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type local:ShowAllTicketsViewModel}">
+                <views:ShowAllTicketsUserControl />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type local:OverviewViewModel}">
+                <views:OverviewUserControl />
+            </DataTemplate>
+
+            <DataTemplate x:Key="AirplaneComboTemplate" DataType="{x:Type model:AirplaneModel}">
+                <TextBlock>
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{} {0} {1}">
+                            <Binding Path="Company" />
+                            <Binding Path="Model" />
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+            </DataTemplate>
+
+            <DataTemplate x:Key="AirportComboTemplate" DataType="{x:Type model:AirportModel}">
+                <TextBlock>
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{} {0}, {1}, {2}">
+                            <Binding Path="Name" />
+                            <Binding Path="City" />
+                            <Binding Path="Country" />
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+            </DataTemplate>
+
+            <DataTemplate x:Key="FlightComboTemplate" DataType="{x:Type model:FlightModel}">
+                <TextBlock>
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{} {0} -> {1}, {2}, departs at {3}">
+                            <Binding Path="RouteModel.AirportDepart.City" />
+                            <Binding Path="RouteModel.AirportArrive.City" />
+                            <Binding Path="RouteModel.Carrier" />
+                            <Binding Path="TimeDepart" />
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+            </DataTemplate>
+
+            <DataTemplate x:Key="RouteComboTemplate" DataType="{x:Type model:RouteModel}">
+                <TextBlock>
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{} {0}, {1} ({2}) -> {3} ({4}), {5}">
+                            <Binding Path="Code" />
+                            <Binding Path="AirportDepart.Name" />
+                            <Binding Path="AirportDepart.City" />
+                            <Binding Path="AirportArrive.Name" />
+                            <Binding Path="AirportArrive.City" />
+                            <Binding Path="Carrier" />
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+            </DataTemplate>
+
+            <DataTemplate x:Key="PassengerComboTemplate" DataType="{x:Type model:PassengerModel}">
+                <TextBlock>
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{} {0} {1}, {2}">
+                            <Binding Path="Name" />
+                            <Binding Path="Surname" />
+                            <Binding Path="Passport" />
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+            </DataTemplate>
+            <viewmodels:ViewModelLocator x:Key="ViewModelLocator" />
+
+            <cmd:ShowOverview x:Key="ShowOverviewCommand" />
+            <cmd:ShowAllFlights x:Key="ShowAllFlightsCommand" />
+            <cmd:ShowAllRoutes x:Key="ShowAllRoutesCommand" />
+            <cmd:ShowAllAirplanes x:Key="ShowAllAirplanesCommand" />
+            <cmd:ShowAllAirports x:Key="ShowAllAirportsCommand" />
+            <cmd:ShowAllTickets x:Key="ShowAllTicketsCommand" />
+            <cmd:ShowAllPassengers x:Key="ShowAllPassengersCommand" />
+
+        </ResourceDictionary>
+
     </Application.Resources>
 </Application>

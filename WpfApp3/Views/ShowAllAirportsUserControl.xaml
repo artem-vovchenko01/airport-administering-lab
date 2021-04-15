@@ -16,7 +16,7 @@
             <RowDefinition Height="0.9*"/>
             <RowDefinition Height="0.1*"/>
         </Grid.RowDefinitions>
-        <GroupBox Grid.Row="0" Header="All flights">
+        <GroupBox Grid.Row="0" Header="All airports">
             <ListBox ItemsSource="{Binding Airports, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedAirport, UpdateSourceTrigger=PropertyChanged}">
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem">
@@ -25,21 +25,28 @@
                 </ListBox.ItemContainerStyle>
                 <ListBox.ItemTemplate>
                 <DataTemplate DataType="model:AirportModel">
-                        <StackPanel Orientation="Vertical" Width="300">
-                            <TextBlock Text="{Binding Country}"></TextBlock>
-                            <TextBlock Text="{Binding City}"></TextBlock>
-                            <TextBlock Text="{Binding Name}"></TextBlock>
+                    <DockPanel>
+                        <StackPanel Margin="100 0 0 0 " DockPanel.Dock="Left" Orientation="Vertical" Width="200">
+                            <TextBlock Text="Country"></TextBlock>
+                            <TextBlock Text="City"></TextBlock>
+                            <TextBlock Text="Name"></TextBlock>
                         </StackPanel>
+                        <StackPanel DockPanel.Dock="Right" Orientation="Vertical" Width="300">
+                            <TextBlock Text="{Binding Country}"/>
+                            <TextBlock Text="{Binding City}"/>
+                            <TextBlock Text="{Binding Name}"/>
+                        </StackPanel>
+                    </DockPanel>
                 </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>     
         </GroupBox>
         
         <UniformGrid Rows="1" Grid.Row="1" Margin="0, 3">
-            <Button Margin="0,3" Command="{StaticResource ShowOverviewCommand}">Back</Button>
-            <Button Margin="0,3" fa:Awesome.Content="Solid_Plus" Foreground="Green" Command="{Binding AddAirport}"> Add</Button>
-            <Button Margin="0,3" fa:Awesome.Content="Solid_Edit" Foreground="White" Command="{Binding EditAirport}" CommandParameter="{Binding SelectedAirport}"> Edit</Button>
-            <Button Margin="0,3" Command="{Binding DeleteAirport}" CommandParameter="{Binding SelectedAirport}">Delete</Button>
+            <Button Margin="3,3" Command="{StaticResource ShowOverviewCommand}" fa:Awesome.Content="Solid_ArrowLeft" Foreground="White"/>
+            <Button Margin="3,3" fa:Awesome.Content="Solid_Plus" Foreground="Lime" Command="{Binding AddAirport}"/>
+            <Button Margin="3,3" fa:Awesome.Content="Solid_Edit" Foreground="LightBlue" Command="{Binding EditAirport}" CommandParameter="{Binding SelectedAirport}"/>
+            <Button Margin="3,3" Command="{Binding DeleteAirport}" CommandParameter="{Binding SelectedAirport}" fa:Awesome.Content="Solid_Trash" Foreground="Orange"/>
         </UniformGrid>
     </Grid>
 </UserControl>

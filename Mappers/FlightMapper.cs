@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Entities;
 using Mappers.Abstract;
 using Model;
@@ -17,7 +18,8 @@ namespace Mappers
                 TimeArrive = entity.TimeArrive,
                 TimeDepart = entity.TimeDepart,
                 Tickets = entity.Tickets?.Select(TicketMapper.MapToModel),
-                RouteModel = RouteMapper.MapToModel(entity?.Route)
+                RouteModel = RouteMapper.MapToModel(entity?.Route),
+                TravelTime = entity.TimeArrive - entity.TimeDepart
             };
             return model;
         }

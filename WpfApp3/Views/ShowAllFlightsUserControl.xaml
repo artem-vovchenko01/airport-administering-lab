@@ -18,20 +18,42 @@
             <RowDefinition Height="0.1*"/>
         </Grid.RowDefinitions>
         <GroupBox Grid.Row="0" Header="All flights">
+            <StackPanel Orientation="Vertical">
+             <Grid>
+                 <Grid.ColumnDefinitions>
+                     <ColumnDefinition Width="1*"/>
+                     <ColumnDefinition Width="4*"/>
+                     <ColumnDefinition Width="2*"/>
+                     <ColumnDefinition Width="4*"/>
+                 </Grid.ColumnDefinitions>
+                 <TextBlock Margin="20 0 0 0" HorizontalAlignment="Center" Grid.Column="1" Text="Departure"/>
+                 <TextBlock HorizontalAlignment="Center" Grid.Column="2" Text="Travel time"/>
+                 <TextBlock HorizontalAlignment="Center" Grid.Column="3" Text="Destination"/>
+             </Grid>   
             <ListBox ItemsSource="{Binding Flights, Mode=TwoWay}" SelectedItem="{Binding SelectedFlight, UpdateSourceTrigger=PropertyChanged}">
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem">
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                     </Style>
                 </ListBox.ItemContainerStyle>
                 <ListBox.ItemTemplate>
                 <DataTemplate DataType="model:FlightModel">
-                    <DockPanel>
-                        
-                        <StackPanel Orientation="Vertical" Width="300">
-                            <TextBlock Text="{Binding TimeDepart}"></TextBlock>
-                            <TextBlock Text="{Binding RouteModel.AirportDepart.Name}"></TextBlock>
-                            <TextBlock>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="4*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="4*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Time"/>
+                            <TextBlock Text="Airport"/>
+                            <TextBlock Text="City"/>
+                        </StackPanel>
+                        <StackPanel Margin="20 0 0 0" Grid.Column="1" Orientation="Vertical">
+                            <TextBlock HorizontalAlignment="Center" Text="{Binding TimeDepart}"/>
+                            <TextBlock HorizontalAlignment="Center" Text="{Binding RouteModel.AirportDepart.Name}"/>
+                            <TextBlock HorizontalAlignment="Center">
                                 <TextBlock.Text>
                                     <MultiBinding StringFormat="{}{0}, {1}">
                                         <Binding Path="RouteModel.AirportDepart.City"></Binding>
@@ -40,29 +62,37 @@
                                 </TextBlock.Text>
                             </TextBlock>
                         </StackPanel>
-                        <StackPanel DockPanel.Dock="Right" Orientation="Vertical">
-                            <TextBlock Text="{Binding TimeArrive}"></TextBlock> 
-                            <TextBlock Text="{Binding RouteModel.AirportArrive.Name}"></TextBlock>
-                            <TextBlock>
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Grid.Column="2">
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}{0} h {1} m">
+                                    <Binding Path="TravelTime.Hours"/>
+                                    <Binding Path="TravelTime.Minutes"/>
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                        <StackPanel Grid.Column="3" Orientation="Vertical">
+                            <TextBlock HorizontalAlignment="Center" Text="{Binding TimeArrive}"/> 
+                            <TextBlock HorizontalAlignment="Center" Text="{Binding RouteModel.AirportArrive.Name}"/>
+                            <TextBlock HorizontalAlignment="Center">
                                 <TextBlock.Text>
                                     <MultiBinding StringFormat="{}{0}, {1}">
-                                        <Binding Path="RouteModel.AirportArrive.City"></Binding>
-                                        <Binding Path="RouteModel.AirportArrive.Country"></Binding>
+                                        <Binding Path="RouteModel.AirportArrive.City"/>
+                                        <Binding Path="RouteModel.AirportArrive.Country"/>
                                     </MultiBinding>
                                 </TextBlock.Text>
                             </TextBlock>
                         </StackPanel>
-                            
-                    </DockPanel>
+                    </Grid>
                 </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>     
+            </StackPanel>
         </GroupBox>
         <UniformGrid Rows="1" Grid.Row="1" Margin="0, 3">
-            <Button Margin="0,3" Command="{StaticResource ShowOverviewCommand}">Back</Button>
-            <Button Margin="0,3" fa:Awesome.Content="Solid_Plus" Foreground="Green" Command="{Binding AddFlight}"> Add</Button>
-            <Button Margin="0,3" fa:Awesome.Content="Solid_Edit" Foreground="White" Command="{Binding EditFlight}" CommandParameter="{Binding SelectedFlight}"> Edit</Button>
-            <Button Margin="0,3" Command="{Binding DeleteFlight}" CommandParameter="{Binding SelectedFlight}">Delete</Button>
+            <Button Margin="3,3" Command="{StaticResource ShowOverviewCommand}" fa:Awesome.Content="Solid_ArrowLeft" Foreground="White"/>
+            <Button Margin="3,3" fa:Awesome.Content="Solid_Plus" Foreground="Lime" Command="{Binding AddFlight}"/>
+            <Button Margin="3,3" fa:Awesome.Content="Solid_Edit" Foreground="LightBlue" Command="{Binding EditFlight}" CommandParameter="{Binding SelectedFlight}"/>
+            <Button Margin="3,3" Command="{Binding DeleteFlight}" CommandParameter="{Binding SelectedFlight}" fa:Awesome.Content="Solid_Trash" Foreground="Orange"/>
         </UniformGrid>
     </Grid>
 </UserControl>
