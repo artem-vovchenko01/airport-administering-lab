@@ -8,6 +8,7 @@
              xmlns:viewmodels="clr-namespace:WpfApp3.ViewModels"
              xmlns:cmd="clr-namespace:WpfApp3.Commands.TransitionCommands"
              xmlns:model="clr-namespace:Model;assembly=Model"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              Startup="OnStartup">
     <Application.Resources>
         <ResourceDictionary>
@@ -110,7 +111,19 @@
             <cmd:ShowAllAirports x:Key="ShowAllAirportsCommand" />
             <cmd:ShowAllTickets x:Key="ShowAllTicketsCommand" />
             <cmd:ShowAllPassengers x:Key="ShowAllPassengersCommand" />
-
+            
+            
+            
+            <Style x:Key="DateTimePickerErrorStyle" TargetType="{x:Type xctk:DateTimePicker}">
+                <Style.Triggers>
+                    <Trigger Property="Validation.HasError" Value="True">
+                        <Setter Property="Background" Value="Red"/>
+                        <Setter Property="ToolTip" 
+                                Value="{Binding RelativeSource={x:Static RelativeSource.Self},
+        Path=(Validation.Errors)[0].ErrorContent}"></Setter>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>            
         </ResourceDictionary>
 
     </Application.Resources>

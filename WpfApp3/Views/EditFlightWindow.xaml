@@ -7,6 +7,7 @@
         xmlns:vm="clr-namespace:WpfApp3.ViewModels"
         xmlns:cmd="clr-namespace:WpfApp3.Commands"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:valid="clr-namespace:WpfApp3.ViewModels.Validations"
         mc:Ignorable="d"
         Title="Editing flight" Height="450" Width="800">
     <Window.DataContext>
@@ -36,8 +37,16 @@
         </StackPanel>
 
         <StackPanel Margin="20 80 20 20" Grid.Column="1" Grid.Row="0">
-            <xctk:DateTimePicker Text="{Binding TimeDepart, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-            <xctk:DateTimePicker Text="{Binding TimeArrive, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+            <xctk:DateTimePicker Style="{StaticResource DateTimePickerErrorStyle}" Text="{Binding TimeDepart, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+            <xctk:DateTimePicker>
+                <xctk:DateTimePicker.Text>
+                    <Binding Path="TimeArrive" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay" >
+                        <Binding.ValidationRules>
+                            <ExceptionValidationRule/>
+                        </Binding.ValidationRules>
+                    </Binding> 
+                </xctk:DateTimePicker.Text>
+            </xctk:DateTimePicker>
             <TextBox Text="{Binding MinDelayed, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
             <xctk:DateTimePicker Text="{Binding StopBooking, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
             <ComboBox ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.Routes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemTemplate="{StaticResource RouteComboTemplate}"

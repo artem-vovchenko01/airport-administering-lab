@@ -98,9 +98,28 @@ namespace WpfApp3.Services
             {
                 return false;
             }
+
+            var errs = GetModelErrors(flightCopy);
+            if (errs != string.Empty)
+            {
+                ShowError(errs, "Error! Saving cancelled. ");
+                return false;
+            } 
             CopyFields(flightCopy, flight);
             _flightService.EditFlight(flight); 
             return true;
+        }
+
+        private string GetModelErrors(AbstractModel model)
+        {
+            var res = string.Empty;
+            foreach (var prop in model.GetType().GetProperties())
+            {
+                if (model[prop.Name] != string.Empty)
+                    res += model[prop.Name] + "\n";
+            }
+
+            return res;
         }
 
         private bool EditRoute(RouteModel route)
@@ -276,7 +295,7 @@ namespace WpfApp3.Services
             {
                 foreach (var destProp in destProperties)
                 {
-                    if (srcProp.Name == destProp.Name && srcProp.GetType() == destProp.GetType())
+                     if (srcProp.Name == destProp.Name && srcProp.GetType() == destProp.GetType() && srcProp.Name != "Error" && srcProp.Name != "Item")
                     {
                         destProp.SetValue(dest, srcProp.GetValue(src));
                         break;

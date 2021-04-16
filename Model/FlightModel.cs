@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Model
 {
@@ -10,6 +11,7 @@ namespace Model
         private DateTime _stopBooking;
         private int _minDelayed;
         private RouteModel _routeModel;
+
         private int _seatsAvailable;
         // private AirportModel _airportModel;
 
@@ -32,17 +34,19 @@ namespace Model
             get => _timeDepart;
             set => Set(ref _timeDepart, value);
         }
-        
+
         public DateTime TimeArrive
         {
             get => _timeArrive;
             set => Set(ref _timeArrive, value);
         }
+
         public DateTime StopBooking
         {
             get => _stopBooking;
             set => Set(ref _stopBooking, value);
         }
+
         public int MinDelayed
         {
             get => _minDelayed;
@@ -55,6 +59,38 @@ namespace Model
         {
             get => _routeModel;
             set => Set(ref _routeModel, value);
+        }
+
+        public override string this[string columnName]
+        {
+            get
+            {
+                string error = string.Empty;
+
+                switch (columnName)
+                {
+                    case nameof(TimeDepart):
+                        if (TimeArrive != null)
+                        {
+                            if (TimeDepart >= TimeArrive)
+                                error = "Time of departure should come before arrival";
+                            else if ((TimeArrive - TimeDepart).TotalDays >= 1)
+                                error = "One flight cannot last >= 24 hours";
+                        }
+                        break;
+
+                    case nameof(TimeArrive):
+                        if (TimeDepart != null)
+                        {
+                            if (TimeDepart >= TimeArrive)
+                                error = "Time of departure should come before arrival";
+                            else if ((TimeArrive - TimeDepart).TotalDays >= 1)
+                                error = "One flight cannot last >= 24 hours";
+                        }
+                        break;
+                }
+                return error;
+            }
         }
     }
 }

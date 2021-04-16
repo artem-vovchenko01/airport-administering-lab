@@ -5,7 +5,7 @@ using Model.Annotations;
 
 namespace Model
 {
-    public abstract class AbstractModel : IModel<Guid>
+    public abstract class AbstractModel : IModel<Guid>, IDataErrorInfo
     {
         public Guid Id { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
@@ -23,5 +23,9 @@ namespace Model
             OnPropertyChanged(PropertyName);
             return true;
         }
+
+        public string Error => string.Empty;
+
+        public virtual string this[string columnName] => throw new NotImplementedException();
     }
 }
