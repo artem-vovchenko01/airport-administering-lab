@@ -5,6 +5,7 @@ using Entities;
 using Model;
 using Services.Abstract;
 using WpfApp3.ViewModels;
+using WpfApp3.ViewModels.EntityEditViewModels;
 using WpfApp3.Views;
 
 namespace WpfApp3.Services
@@ -366,18 +367,6 @@ namespace WpfApp3.Services
             return true;
         }
 
-        // private void CopyFlightFields(FlightModel src, FlightModel dest)
-        // {
-        //     dest.Id = src.Id;
-        //     dest.TimeDepart = src.TimeDepart;
-        //     dest.TimeArrive = src.TimeArrive;
-        //     dest.StopBooking = src.StopBooking;
-        //     dest.SeatsAvailable = src.SeatsAvailable;
-        //     dest.RouteModel = src.RouteModel;
-        //     dest.MinDelayed = src.MinDelayed;
-        //     dest.Tickets = src.Tickets;
-        // }
-
         private void CopyFields(object src, object dest)
         {
             var srcProperties = src.GetType().GetProperties();
@@ -395,10 +384,5 @@ namespace WpfApp3.Services
                 }
             }
         }
-
-        // private void CopyRouteFields(RouteModel src, RouteModel dest)
-        // {
-        //     
-        // }
     }
 }

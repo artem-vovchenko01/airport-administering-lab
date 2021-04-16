@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.Collections.Generic;
 using Model;
 
-namespace WpfApp3.ViewModels
+namespace WpfApp3.ViewModels.EntityEditViewModels
 {
     public class EditFlightViewModel : BaseViewModel, IPageViewModel
     {

@@ -3,6 +3,7 @@ using System.Linq;
 using Data;
 using Data.Repositories;
 using WpfApp3.Commands.TransitionCommands;
+using WpfApp3.ViewModels.BulkShowEntitiesViewModels;
 
 namespace WpfApp3.ViewModels
 {
@@ -30,21 +31,6 @@ namespace WpfApp3.ViewModels
             _showAllTicketsViewModel = showAllTicketsViewModel;
 
             _currentPageViewModel = overviewViewModel;
-            // PageViewModels.Add(overviewViewModel);
-            // PageViewModels.Add(showAllFlightsViewModel);
-            // PageViewModels.Add(showAllRoutesViewModel);
-            // PageViewModels.Add(showAllAirplanesViewModel);
-            // PageViewModels.Add(showAllAirportsViewModel);
-            // PageViewModels.Add(showAllPassengersViewModel);
-            // PageViewModels.Add(showAllTicketsViewModel);
-            // CurrentPageViewModel = PageViewModels[0]; 
-            // Mediator.Subscribe("ShowAllFlights", ShowAllFlights);
-            // Mediator.Subscribe("ShowOverview", ShowOverview);
-            // Mediator.Subscribe("ShowAllRoutes", ShowAllRoutes);
-            // Mediator.Subscribe("ShowAllAirplanes", ShowAllAirplanes);
-            // Mediator.Subscribe("ShowAllAirports", ShowAllAirports);
-            // Mediator.Subscribe("ShowAllPassengers", ShowAllPassengers);
-            // Mediator.Subscribe("ShowAllTickets", ShowAllTickets);
         }
 
         public IPageViewModel CurrentPageViewModel

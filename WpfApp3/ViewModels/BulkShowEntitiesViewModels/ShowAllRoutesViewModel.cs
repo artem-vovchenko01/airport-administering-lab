@@ -5,7 +5,7 @@ using Services.Abstract;
 using WpfApp3.Commands;
 using WpfApp3.Services;
 
-namespace WpfApp3.ViewModels
+namespace WpfApp3.ViewModels.BulkShowEntitiesViewModels
 {
     public class ShowAllRoutesViewModel : BaseViewModel, IPageViewModel
     {

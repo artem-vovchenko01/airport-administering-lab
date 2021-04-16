@@ -1,6 +1,6 @@
 ﻿using Model;
 
-namespace WpfApp3.ViewModels
+namespace WpfApp3.ViewModels.EntityEditViewModels
 {
     public class EditAirplaneViewModel : BaseViewModel, IPageViewModel
     {

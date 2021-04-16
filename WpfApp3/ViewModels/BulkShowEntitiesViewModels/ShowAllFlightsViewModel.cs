@@ -1,23 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
-using Data;
-using Data.Repositories;
-using Data.Repositories.Abstract;
-using Entities;
-using Microsoft.Extensions.DependencyInjection;
 using Model;
-using Model.Annotations;
-using Services;
 using Services.Abstract;
 using WpfApp3.Commands;
 using WpfApp3.Services;
-using WpfApp3.Views;
 
-namespace WpfApp3.ViewModels
+namespace WpfApp3.ViewModels.BulkShowEntitiesViewModels
 {
     public class ShowAllFlightsViewModel : BaseViewModel, IPageViewModel
     {

@@ -1,9 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Entities;
 using Model;
 
-namespace WpfApp3.ViewModels
+namespace WpfApp3.ViewModels.EntityEditViewModels
 {
     public class EditRouteViewModel : BaseViewModel, IPageViewModel
     {

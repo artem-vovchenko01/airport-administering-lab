@@ -14,6 +14,8 @@ using Services;
 using Services.Abstract;
 using WpfApp3.Services;
 using WpfApp3.ViewModels;
+using WpfApp3.ViewModels.BulkShowEntitiesViewModels;
+using WpfApp3.ViewModels.EntityEditViewModels;
 
 namespace WpfApp3
 {

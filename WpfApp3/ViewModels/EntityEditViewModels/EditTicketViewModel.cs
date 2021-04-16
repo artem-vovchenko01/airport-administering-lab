@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Model;
 
-namespace WpfApp3.ViewModels
+namespace WpfApp3.ViewModels.EntityEditViewModels
 {
     public class EditTicketViewModel : BaseViewModel, IPageViewModel
     {

@@ -9,6 +9,7 @@
              xmlns:cmd="clr-namespace:WpfApp3.Commands.TransitionCommands"
              xmlns:model="clr-namespace:Model;assembly=Model"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:bulkShowEntitiesViewModels="clr-namespace:WpfApp3.ViewModels.BulkShowEntitiesViewModels"
              Startup="OnStartup">
     <Application.Resources>
         <ResourceDictionary>
@@ -18,22 +19,22 @@
                     Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-            <DataTemplate DataType="{x:Type local:ShowAllFlightsViewModel}">
+            <DataTemplate DataType="{x:Type bulkShowEntitiesViewModels:ShowAllFlightsViewModel}">
                 <views:ShowAllFlightsUserControl />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type local:ShowAllRoutesViewModel}">
+            <DataTemplate DataType="{x:Type bulkShowEntitiesViewModels:ShowAllRoutesViewModel}">
                 <views:ShowAllRoutesUserControl />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type local:ShowAllAirplanesViewModel}">
+            <DataTemplate DataType="{x:Type bulkShowEntitiesViewModels:ShowAllAirplanesViewModel}">
                 <views:ShowAllAirplanesUserControl />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type local:ShowAllAirportsViewModel}">
+            <DataTemplate DataType="{x:Type bulkShowEntitiesViewModels:ShowAllAirportsViewModel}">
                 <views:ShowAllAirportsUserControl />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type local:ShowAllPassengersViewModel}">
+            <DataTemplate DataType="{x:Type bulkShowEntitiesViewModels:ShowAllPassengersViewModel}">
                 <views:ShowAllPassengersUserControl />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type local:ShowAllTicketsViewModel}">
+            <DataTemplate DataType="{x:Type bulkShowEntitiesViewModels:ShowAllTicketsViewModel}">
                 <views:ShowAllTicketsUserControl />
             </DataTemplate>
             <DataTemplate DataType="{x:Type local:OverviewViewModel}">

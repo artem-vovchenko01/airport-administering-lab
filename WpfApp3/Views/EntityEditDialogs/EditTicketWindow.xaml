@@ -6,10 +6,11 @@
         xmlns:local="clr-namespace:WpfApp3.Views"
         xmlns:vm="clr-namespace:WpfApp3.ViewModels"
         xmlns:cmd="clr-namespace:WpfApp3.Commands"
+        xmlns:entityEditViewModels="clr-namespace:WpfApp3.ViewModels.EntityEditViewModels"
         mc:Ignorable="d"
         Title="Editing ticket" Height="450" Width="800">
     <Window.DataContext>
-        <vm:EditTicketViewModel />
+        <entityEditViewModels:EditTicketViewModel />
     </Window.DataContext>
 
     <Grid DataContext="{Binding Ticket, Mode=TwoWay}">

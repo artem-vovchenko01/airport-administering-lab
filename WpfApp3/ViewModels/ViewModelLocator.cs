@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using WpfApp3.ViewModels.BulkShowEntitiesViewModels;
 
 namespace WpfApp3.ViewModels
 {
