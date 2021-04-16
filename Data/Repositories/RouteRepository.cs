@@ -25,7 +25,12 @@ namespace Data.Repositories
 
         public void RemoveByAirportId(Guid airportId)
         {
-            MyDbContext.Routes.RemoveRange(MyDbContext.Routes.Where(r => r.AirportArrive.Id == airportId || r.AirportDepart.Id == airportId));
+            var routes = MyDbContext.Routes
+                .Where(r => r.AirportArrive.Id == airportId || r.AirportDepart.Id == airportId).ToList();
+            foreach (var route in routes)
+            {
+                MyDbContext.Routes.Remove(route);
+            }
         }
     }
 }

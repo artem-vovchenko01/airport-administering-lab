@@ -12,6 +12,6 @@
     <!--     <Binding Path="MainWindowViewModel" Source="{StaticResource ViewModelLocator}"></Binding> -->
     <!-- </Window.DataContext> -->
     <Grid x:Name="thisGrid">
-        <ContentControl Content="{Binding CurrentPageViewModel}"></ContentControl> 
+        <ContentControl Content="{Binding CurrentPageViewModel, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></ContentControl> 
         </Grid>
 </Window>

@@ -2,40 +2,49 @@
 using System.Linq;
 using Data;
 using Data.Repositories;
+using WpfApp3.Commands.TransitionCommands;
 
 namespace WpfApp3.ViewModels
 {
     public class MainWindowViewModel : BaseViewModel
     {
         private IPageViewModel _currentPageViewModel;
-        private List<IPageViewModel> _pageViewModels;
 
+        public static MainWindowViewModel CurrentInstance { get; set; }
+        private readonly OverviewViewModel _overviewViewModel;
+        private readonly ShowAllFlightsViewModel _showAllFlightsViewModel;
+        private readonly ShowAllRoutesViewModel _showAllRoutesViewModel;
+        private readonly ShowAllAirplanesViewModel _showAllAirplanesViewModel;
+        private readonly ShowAllAirportsViewModel _showAllAirportsViewModel;
+        private readonly ShowAllPassengersViewModel _showAllPassengersViewModel;
+        private readonly ShowAllTicketsViewModel _showAllTicketsViewModel;
         public MainWindowViewModel(ShowAllFlightsViewModel showAllFlightsViewModel, OverviewViewModel overviewViewModel, ShowAllRoutesViewModel showAllRoutesViewModel, ShowAllAirplanesViewModel showAllAirplanesViewModel, ShowAllAirportsViewModel showAllAirportsViewModel, ShowAllPassengersViewModel showAllPassengersViewModel, ShowAllTicketsViewModel showAllTicketsViewModel)
         {
-            PageViewModels.Add(overviewViewModel);
-            PageViewModels.Add(showAllFlightsViewModel);
-            PageViewModels.Add(showAllRoutesViewModel);
-            PageViewModels.Add(showAllAirplanesViewModel);
-            PageViewModels.Add(showAllAirportsViewModel);
-            PageViewModels.Add(showAllPassengersViewModel);
-            PageViewModels.Add(showAllTicketsViewModel);
-            CurrentPageViewModel = PageViewModels[0]; 
-            Mediator.Subscribe("ShowAllFlights", ShowAllFlights);
-            Mediator.Subscribe("ShowOverview", ShowOverview);
-            Mediator.Subscribe("ShowAllRoutes", ShowAllRoutes);
-            Mediator.Subscribe("ShowAllAirplanes", ShowAllAirplanes);
-            Mediator.Subscribe("ShowAllAirports", ShowAllAirports);
-            Mediator.Subscribe("ShowAllPassengers", ShowAllPassengers);
-            Mediator.Subscribe("ShowAllTickets", ShowAllTickets);
-        }
+            CurrentInstance = this;
+            _overviewViewModel = overviewViewModel;
+            _showAllAirplanesViewModel = showAllAirplanesViewModel;
+            _showAllAirportsViewModel = showAllAirportsViewModel;
+            _showAllFlightsViewModel = showAllFlightsViewModel;
+            _showAllPassengersViewModel = showAllPassengersViewModel;
+            _showAllRoutesViewModel = showAllRoutesViewModel;
+            _showAllTicketsViewModel = showAllTicketsViewModel;
 
-        public List<IPageViewModel> PageViewModels
-        {
-            get
-            {
-                if (_pageViewModels == null) _pageViewModels = new List<IPageViewModel>();
-                return _pageViewModels;
-            }
+            _currentPageViewModel = overviewViewModel;
+            // PageViewModels.Add(overviewViewModel);
+            // PageViewModels.Add(showAllFlightsViewModel);
+            // PageViewModels.Add(showAllRoutesViewModel);
+            // PageViewModels.Add(showAllAirplanesViewModel);
+            // PageViewModels.Add(showAllAirportsViewModel);
+            // PageViewModels.Add(showAllPassengersViewModel);
+            // PageViewModels.Add(showAllTicketsViewModel);
+            // CurrentPageViewModel = PageViewModels[0]; 
+            // Mediator.Subscribe("ShowAllFlights", ShowAllFlights);
+            // Mediator.Subscribe("ShowOverview", ShowOverview);
+            // Mediator.Subscribe("ShowAllRoutes", ShowAllRoutes);
+            // Mediator.Subscribe("ShowAllAirplanes", ShowAllAirplanes);
+            // Mediator.Subscribe("ShowAllAirports", ShowAllAirports);
+            // Mediator.Subscribe("ShowAllPassengers", ShowAllPassengers);
+            // Mediator.Subscribe("ShowAllTickets", ShowAllTickets);
         }
 
         public IPageViewModel CurrentPageViewModel
@@ -44,43 +53,36 @@ namespace WpfApp3.ViewModels
             set => Set(ref _currentPageViewModel, value);
         }
 
-        private void ShowOverview(object obj)
+        public void ShowOverview()
         {
-            ChangeViewModel(PageViewModels[0]);
+            CurrentPageViewModel = _overviewViewModel;
         }
-        private void ShowAllFlights(object obj)
+        public void ShowAllFlights()
         {
-            ChangeViewModel(PageViewModels[1]);
+            CurrentPageViewModel = _showAllFlightsViewModel;
         }
-        private void ShowAllRoutes(object obj)
+        public void ShowAllRoutes()
         {
-            ChangeViewModel(PageViewModels[2]);
+            CurrentPageViewModel = _showAllRoutesViewModel;
         }
-        private void ShowAllAirplanes(object obj)
+        public void ShowAllAirplanes()
         {
-            ChangeViewModel(PageViewModels[3]);
-        }
-
-        private void ShowAllAirports(object obj)
-        {
-            ChangeViewModel(PageViewModels[4]);
+            CurrentPageViewModel = _showAllAirplanesViewModel;
         }
 
-        private void ShowAllPassengers(object obj)
+        public void ShowAllAirports()
         {
-            ChangeViewModel(PageViewModels[5]);
+            CurrentPageViewModel = _showAllAirportsViewModel;
         }
 
-        private void ShowAllTickets(object obj)
+        public void ShowAllPassengers()
         {
-            ChangeViewModel(PageViewModels[6]);
+            CurrentPageViewModel = _showAllPassengersViewModel;
         }
-        
-        private void ChangeViewModel(IPageViewModel viewModel)
+
+        public void ShowAllTickets()
         {
-            if (!PageViewModels.Contains(viewModel))
-                PageViewModels.Add(viewModel);
-            CurrentPageViewModel = PageViewModels.FirstOrDefault(vm => vm == viewModel);         
+            CurrentPageViewModel = _showAllTicketsViewModel;
         }
     }
 }

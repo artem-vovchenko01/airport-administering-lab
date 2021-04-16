@@ -24,9 +24,8 @@ namespace Services
 
         public void RemoveAirport(Guid airportId)
         {
-            _uof.Airports.Remove(_uof.Airports.Get(airportId));
-            _uof.Complete();
             _uof.Routes.RemoveByAirportId(airportId);
+            _uof.Airports.Remove(_uof.Airports.Get(airportId));
             _uof.Complete();
         }
 

@@ -32,19 +32,31 @@ namespace Model
         public DateTime TimeDepart
         {
             get => _timeDepart;
-            set => Set(ref _timeDepart, value);
+            set
+            {
+                value = new DateTime(value.Year, value.Month, value.Day, value.Hour, value.Minute, 0);
+                Set(ref _timeDepart, value);
+            }
         }
 
         public DateTime TimeArrive
         {
             get => _timeArrive;
-            set => Set(ref _timeArrive, value);
+            set
+            {
+                value = new DateTime(value.Year, value.Month, value.Day, value.Hour, value.Minute, 0);
+                Set(ref _timeArrive, value);
+            }
         }
 
         public DateTime StopBooking
         {
             get => _stopBooking;
-            set => Set(ref _stopBooking, value);
+            set
+            {
+                value = new DateTime(value.Year, value.Month, value.Day, value.Hour, value.Minute, 0);
+                Set(ref _stopBooking, value);
+            }
         }
 
         public int MinDelayed
@@ -93,6 +105,9 @@ namespace Model
                     case nameof(MinDelayed):
                         if (MinDelayed < 0)
                             error = "Value for " + nameof(MinDelayed) + " could not be < 0";
+                        if (StopBooking > TimeDepart.Add(new TimeSpan(0, MinDelayed, 0)))
+                            error =
+                                "Cannot decrease delay because stop booking date will become ahead of departure time";
                         break;
                     case nameof(StopBooking):
                         if (StopBooking > TimeDepart.Add(new TimeSpan(0, MinDelayed, 0)))

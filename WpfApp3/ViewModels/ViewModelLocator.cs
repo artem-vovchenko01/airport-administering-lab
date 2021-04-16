@@ -22,6 +22,6 @@ namespace WpfApp3.ViewModels
             App.ServiceProvider.GetService<ShowAllPassengersViewModel>();
         public OverviewViewModel OverviewViewModel => App.ServiceProvider.GetService<OverviewViewModel>();
 
-        public MainWindowViewModel MainWindowViewModel => App.ServiceProvider.GetService<ViewModels.MainWindowViewModel>();
+        public MainWindowViewModel MainWindowViewModel => App.ServiceProvider.GetService<MainWindowViewModel>();
     }
 }
