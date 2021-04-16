@@ -4,14 +4,16 @@ using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EFClasses.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210416133319_AllowNullableInRoutes")]
+    partial class AllowNullableInRoutes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -129,10 +131,10 @@ namespace EFClasses.Migrations
                     b.Property<Guid>("AirplaneId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("AirportArriveId")
+                    b.Property<Guid>("AirportArriveId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("AirportDepartId")
+                    b.Property<Guid>("AirportDepartId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Carrier")
@@ -223,12 +225,14 @@ namespace EFClasses.Migrations
                     b.HasOne("Entities.Airport", "AirportArrive")
                         .WithMany("ArrivingRoutes")
                         .HasForeignKey("AirportArriveId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("Entities.Airport", "AirportDepart")
                         .WithMany("DeparturingRoutes")
                         .HasForeignKey("AirportDepartId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Entities.Seat", b =>

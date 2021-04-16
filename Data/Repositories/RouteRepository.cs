@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Data;
 using Data.Repositories.Abstract;
 using Entities;
@@ -20,6 +21,11 @@ namespace Data.Repositories
                 .Include(r => r.Airplane)
                 .Include(r => r.AirportArrive)
                 .Include(r => r.AirportDepart);
+        }
+
+        public void RemoveByAirportId(Guid airportId)
+        {
+            MyDbContext.Routes.RemoveRange(MyDbContext.Routes.Where(r => r.AirportArrive.Id == airportId || r.AirportDepart.Id == airportId));
         }
     }
 }

@@ -111,19 +111,28 @@
             <cmd:ShowAllAirports x:Key="ShowAllAirportsCommand" />
             <cmd:ShowAllTickets x:Key="ShowAllTicketsCommand" />
             <cmd:ShowAllPassengers x:Key="ShowAllPassengersCommand" />
-            
-            
-            
+
+            <Style x:Key="TextBoxErrorStyle" TargetType="{x:Type TextBox}">
+                <Style.Triggers>
+                    <Trigger Property="Validation.HasError" Value="True">
+                        <Setter Property="Background" Value="Red" />
+                        <Setter Property="ToolTip"
+                                Value="{Binding RelativeSource={x:Static RelativeSource.Self},
+         Path=(Validation.Errors)[0].ErrorContent}" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
             <Style x:Key="DateTimePickerErrorStyle" TargetType="{x:Type xctk:DateTimePicker}">
                 <Style.Triggers>
                     <Trigger Property="Validation.HasError" Value="True">
-                        <Setter Property="Background" Value="Red"/>
-                        <Setter Property="ToolTip" 
+                        <Setter Property="Background" Value="Red" />
+                        <Setter Property="ToolTip"
                                 Value="{Binding RelativeSource={x:Static RelativeSource.Self},
-        Path=(Validation.Errors)[0].ErrorContent}"></Setter>
+        Path=(Validation.Errors)[0].ErrorContent}" />
                     </Trigger>
                 </Style.Triggers>
-            </Style>            
+            </Style>
         </ResourceDictionary>
 
     </Application.Resources>

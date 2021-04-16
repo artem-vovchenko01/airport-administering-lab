@@ -8,5 +8,6 @@ namespace Data.Repositories.Abstract
     public interface IRouteRepository : IRepository<Route, Guid>
     {
         IEnumerable<Route> GetAllWithIncludes();
+        void RemoveByAirportId(Guid airportId);
     }
 }

@@ -77,6 +77,7 @@ namespace Model
                             else if ((TimeArrive - TimeDepart).TotalDays >= 1)
                                 error = "One flight cannot last >= 24 hours";
                         }
+
                         break;
 
                     case nameof(TimeArrive):
@@ -87,8 +88,19 @@ namespace Model
                             else if ((TimeArrive - TimeDepart).TotalDays >= 1)
                                 error = "One flight cannot last >= 24 hours";
                         }
+
+                        break;
+                    case nameof(MinDelayed):
+                        if (MinDelayed < 0)
+                            error = "Value for " + nameof(MinDelayed) + " could not be < 0";
+                        break;
+                    case nameof(StopBooking):
+                        if (StopBooking > TimeDepart.Add(new TimeSpan(0, MinDelayed, 0)))
+                            error =
+                                "Stop booking date should not come after the flight will depart (counting delay time)";
                         break;
                 }
+
                 return error;
             }
         }

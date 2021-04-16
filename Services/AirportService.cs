@@ -26,6 +26,8 @@ namespace Services
         {
             _uof.Airports.Remove(_uof.Airports.Get(airportId));
             _uof.Complete();
+            _uof.Routes.RemoveByAirportId(airportId);
+            _uof.Complete();
         }
 
         public void EditAirport(AirportModel airport)

@@ -26,5 +26,30 @@ namespace Model
             set => Set(ref _country, value);
         }
 
+        public override string this[string columnName]
+        {
+            get
+            {
+                var error = string.Empty;
+
+                switch (columnName)
+                {
+                    case nameof(Name):
+                        if (string.IsNullOrWhiteSpace(Name))
+                            error = "Blank value not allowed for the field" + nameof(Name);
+                        break;
+                    case nameof(City):
+                        if (string.IsNullOrWhiteSpace(City))
+                            error = "Blank value not allowed for the field" + nameof(City);
+                        break;
+                    case nameof(Country):
+                        if (string.IsNullOrWhiteSpace(Country))
+                            error = "Blank value not allowed for the field" + nameof(Country);
+                        break;
+                }
+
+                return error;
+            }
+        }
     }
 }

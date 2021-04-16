@@ -26,7 +26,7 @@
         <StackPanel Margin="0 80 20 20" Grid.Column="0" Grid.Row="0">
             <StackPanel.Resources>
                 <Style TargetType="TextBlock">
-                    <Setter Property="Margin" Value="25 5 5 5"></Setter>
+                    <Setter Property="Margin" Value="25 5 5 5" />
                 </Style>
             </StackPanel.Resources>
             <TextBlock Text="Time departure" />
@@ -37,20 +37,39 @@
         </StackPanel>
 
         <StackPanel Margin="20 80 20 20" Grid.Column="1" Grid.Row="0">
-            <xctk:DateTimePicker Style="{StaticResource DateTimePickerErrorStyle}" Text="{Binding TimeDepart, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+            <xctk:DateTimePicker Text="{Binding TimeDepart, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
             <xctk:DateTimePicker>
                 <xctk:DateTimePicker.Text>
-                    <Binding Path="TimeArrive" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay" >
+                    <Binding Path="TimeArrive" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged"
+                             Mode="TwoWay">
                         <Binding.ValidationRules>
-                            <ExceptionValidationRule/>
+                            <ExceptionValidationRule />
                         </Binding.ValidationRules>
-                    </Binding> 
+                    </Binding>
                 </xctk:DateTimePicker.Text>
             </xctk:DateTimePicker>
-            <TextBox Text="{Binding MinDelayed, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-            <xctk:DateTimePicker Text="{Binding StopBooking, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-            <ComboBox ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.Routes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemTemplate="{StaticResource RouteComboTemplate}"
-                      SelectedItem="{Binding RouteModel, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+            <TextBox>
+                <TextBox.Text>
+                    <Binding Path="MinDelayed" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
+                        <Binding.ValidationRules>
+                            <ExceptionValidationRule />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+            <xctk:DateTimePicker>
+                <xctk:DateTimePicker.Text>
+                    <Binding Path="StopBooking" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
+                        <Binding.ValidationRules>
+                            <ExceptionValidationRule />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </xctk:DateTimePicker.Text>
+            </xctk:DateTimePicker>
+            <ComboBox
+                ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.Routes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                ItemTemplate="{StaticResource RouteComboTemplate}"
+                SelectedItem="{Binding RouteModel, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
         </StackPanel>
 
         <UniformGrid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" DockPanel.Dock="Bottom" Rows="1"

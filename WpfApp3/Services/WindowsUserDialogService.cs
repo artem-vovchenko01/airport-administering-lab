@@ -17,7 +17,10 @@ namespace WpfApp3.Services
         private readonly IAirportService _airportService;
         private readonly IPassengerService _passengerService;
         private readonly ITicketService _ticketService;
-        public WindowsUserDialogService(IRouteService routeService, IFlightService flightService, IAirplaneService airplaneService, IAirportService airportService, IPassengerService passengerService, ITicketService ticketService)
+
+        public WindowsUserDialogService(IRouteService routeService, IFlightService flightService,
+            IAirplaneService airplaneService, IAirportService airportService, IPassengerService passengerService,
+            ITicketService ticketService)
         {
             _routeService = routeService;
             _flightService = flightService;
@@ -45,9 +48,11 @@ namespace WpfApp3.Services
                 case TicketModel ticket:
                     return AddTicket(ticket);
                 default:
-                    throw new NotSupportedException($"Adding the object of type {item.GetType().Name} is not supported ");
+                    throw new NotSupportedException(
+                        $"Adding the object of type {item.GetType().Name} is not supported ");
             }
         }
+
         public bool Edit(object item)
         {
             if (item is null) throw new ArgumentNullException(nameof(item));
@@ -66,7 +71,8 @@ namespace WpfApp3.Services
                 case TicketModel ticket:
                     return EditTicket(ticket);
                 default:
-                    throw new NotSupportedException($"Editing the object of type {item.GetType().Name} is not supported ");
+                    throw new NotSupportedException(
+                        $"Editing the object of type {item.GetType().Name} is not supported ");
             }
         }
 
@@ -76,7 +82,8 @@ namespace WpfApp3.Services
         public void ShowWarning(string message, string caption) =>
             MessageBox.Show(message, caption, MessageBoxButton.OK, MessageBoxImage.Warning);
 
-        public void ShowError(string message, string caption) => MessageBox.Show(message, caption, MessageBoxButton.OK, MessageBoxImage.Error);
+        public void ShowError(string message, string caption) =>
+            MessageBox.Show(message, caption, MessageBoxButton.OK, MessageBoxImage.Error);
 
         public bool Confirm(string message, string caption, bool exclamation = false)
         {
@@ -88,7 +95,7 @@ namespace WpfApp3.Services
         private bool EditFlight(FlightModel flight)
         {
             var editWindow = new EditFlightWindow();
-            var ctx =  (EditFlightViewModel) editWindow.DataContext;
+            var ctx = (EditFlightViewModel) editWindow.DataContext;
             var flightCopy = new FlightModel();
             CopyFields(flight, flightCopy);
             ctx.Flight = flightCopy;
@@ -104,9 +111,10 @@ namespace WpfApp3.Services
             {
                 ShowError(errs, "Error! Saving cancelled. ");
                 return false;
-            } 
+            }
+
             CopyFields(flightCopy, flight);
-            _flightService.EditFlight(flight); 
+            _flightService.EditFlight(flight);
             return true;
         }
 
@@ -135,6 +143,13 @@ namespace WpfApp3.Services
             routeCopy.AirportArrive = ctx.Airports.Single(a => a.Id == routeCopy.AirportArrive.Id);
             routeCopy.Airplane = ctx.Airplanes.Single(a => a.Id == routeCopy.Airplane.Id);
             if (editWindow.ShowDialog() != true) return false;
+            var errs = GetModelErrors(routeCopy);
+            if (errs != string.Empty)
+            {
+                ShowError(errs, "Error! Saving cancelled. ");
+                return false;
+            }
+
             CopyFields(routeCopy, route);
             _routeService.EditRoute(route);
             return true;
@@ -148,6 +163,13 @@ namespace WpfApp3.Services
             CopyFields(airplane, airplaneCopy);
             ctx.Airplane = airplaneCopy;
             if (editWindow.ShowDialog() != true) return false;
+            var errs = GetModelErrors(airplaneCopy);
+            if (errs != string.Empty)
+            {
+                ShowError(errs, "Error! Saving cancelled. ");
+                return false;
+            }
+
             CopyFields(airplaneCopy, airplane);
             _airplaneService.EditAirplane(airplane);
             return true;
@@ -155,103 +177,157 @@ namespace WpfApp3.Services
 
         private bool EditAirport(AirportModel airport)
         {
-             var editWindow = new EditAirportWindow();
-             var ctx = (EditAirportViewModel) editWindow.DataContext;
-             var airportCopy = new AirportModel();
-             CopyFields(airport, airportCopy);
-             ctx.Airport = airportCopy;
-             if (editWindow.ShowDialog() != true) return false;
-             CopyFields(airportCopy, airport);
-             _airportService.EditAirport(airport);
-             return true;           
+            var editWindow = new EditAirportWindow();
+            var ctx = (EditAirportViewModel) editWindow.DataContext;
+            var airportCopy = new AirportModel();
+            CopyFields(airport, airportCopy);
+            ctx.Airport = airportCopy;
+            if (editWindow.ShowDialog() != true) return false;
+            var errs = GetModelErrors(airportCopy);
+            if (errs != string.Empty)
+            {
+                ShowError(errs, "Error! Saving cancelled. ");
+                return false;
+            }
+
+            CopyFields(airportCopy, airport);
+            _airportService.EditAirport(airport);
+            return true;
         }
 
         private bool EditPassenger(PassengerModel passenger)
         {
-              var editWindow = new EditPassengerWindow();
-              var ctx = (EditPassengerViewModel) editWindow.DataContext;
-              var passengerCopy = new PassengerModel();
-              CopyFields(passenger, passengerCopy);
-              ctx.Passenger = passengerCopy;
-              if (editWindow.ShowDialog() != true) return false;
-              CopyFields(passengerCopy, passenger);
-              _passengerService.EditPassenger(passenger);
-              return true;                      
+            var editWindow = new EditPassengerWindow();
+            var ctx = (EditPassengerViewModel) editWindow.DataContext;
+            var passengerCopy = new PassengerModel();
+            CopyFields(passenger, passengerCopy);
+            ctx.Passenger = passengerCopy;
+            if (editWindow.ShowDialog() != true) return false;
+            var errs = GetModelErrors(passengerCopy);
+            if (errs != string.Empty)
+            {
+                ShowError(errs, "Error! Saving cancelled. ");
+                return false;
+            }
+
+            CopyFields(passengerCopy, passenger);
+            _passengerService.EditPassenger(passenger);
+            return true;
         }
 
         private bool EditTicket(TicketModel ticket)
         {
-               var editWindow = new EditTicketWindow();
-               var ctx = (EditTicketViewModel) editWindow.DataContext;
-               var ticketCopy = new TicketModel();
-               CopyFields(ticket, ticketCopy);
-               ctx.Ticket = ticketCopy;
-               ctx.Flights = _flightService.GetAllFlights();
-               ctx.Passengers = _passengerService.GetAllPassengers();
-               ticketCopy.Flight = ctx.Flights.Single(f => f.Id == ticketCopy.Flight.Id);
-               ticketCopy.Passenger = ctx.Passengers.Single(p => p.Id == ticketCopy.Passenger.Id);
-               if (editWindow.ShowDialog() != true) return false;
-               CopyFields(ticketCopy, ticket);
-               _ticketService.EditTicket(ticket);
-               return true;                                 
+            var editWindow = new EditTicketWindow();
+            var ctx = (EditTicketViewModel) editWindow.DataContext;
+            var ticketCopy = new TicketModel();
+            CopyFields(ticket, ticketCopy);
+            ctx.Ticket = ticketCopy;
+            ctx.Flights = _flightService.GetAllFlights();
+            ctx.Passengers = _passengerService.GetAllPassengers();
+            ticketCopy.Flight = ctx.Flights.Single(f => f.Id == ticketCopy.Flight.Id);
+            ticketCopy.Passenger = ctx.Passengers.Single(p => p.Id == ticketCopy.Passenger.Id);
+            if (editWindow.ShowDialog() != true) return false;
+            var errs = GetModelErrors(ticketCopy);
+            if (errs != string.Empty)
+            {
+                ShowError(errs, "Error! Saving cancelled. ");
+                return false;
+            }
+
+            CopyFields(ticketCopy, ticket);
+            _ticketService.EditTicket(ticket);
+            return true;
         }
+
         private bool AddFlight(FlightModel flightModel)
         {
             var editWindow = new EditFlightWindow();
-            var ctx =  (EditFlightViewModel) editWindow.DataContext;
+            var ctx = (EditFlightViewModel) editWindow.DataContext;
             ctx.Flight = flightModel;
             ctx.Routes = _routeService.GetAllRoutes();
             if (editWindow.ShowDialog() != true)
             {
                 return false;
             }
-            _flightService.AddFlight(flightModel); 
+
+            var errs = GetModelErrors(ctx.Flight);
+            if (errs != string.Empty)
+            {
+                ShowError(errs, "Error! Saving cancelled. ");
+                return false;
+            }
+
+            _flightService.AddFlight(flightModel);
             return true;
         }
 
         private bool AddAirplane(AirplaneModel airplaneModel)
         {
-             var editWindow = new EditAirplaneWindow();
-             var ctx =  (EditAirplaneViewModel) editWindow.DataContext;
-             ctx.Airplane = airplaneModel;
-             if (editWindow.ShowDialog() != true)
-             {
-                 return false;
-             }
-             _airplaneService.AddAirplane(airplaneModel);
-             return true;           
+            var editWindow = new EditAirplaneWindow();
+            var ctx = (EditAirplaneViewModel) editWindow.DataContext;
+            ctx.Airplane = airplaneModel;
+            if (editWindow.ShowDialog() != true)
+            {
+                return false;
+            }
+
+            var errs = GetModelErrors(ctx.Airplane);
+            if (errs != string.Empty)
+            {
+                ShowError(errs, "Error! Saving cancelled. ");
+                return false;
+            }
+
+            _airplaneService.AddAirplane(airplaneModel);
+            return true;
         }
 
         private bool AddAirport(AirportModel airportModel)
         {
-              var editWindow = new EditAirportWindow();
-              var ctx =  (EditAirportViewModel) editWindow.DataContext;
-              ctx.Airport = airportModel;
-              if (editWindow.ShowDialog() != true)
-              {
-                  return false;
-              }
-              _airportService.AddAirport(airportModel);
-              return true;                      
+            var editWindow = new EditAirportWindow();
+            var ctx = (EditAirportViewModel) editWindow.DataContext;
+            ctx.Airport = airportModel;
+            if (editWindow.ShowDialog() != true)
+            {
+                return false;
+            }
+
+            var errs = GetModelErrors(ctx.Airport);
+            if (errs != string.Empty)
+            {
+                ShowError(errs, "Error! Saving cancelled. ");
+                return false;
+            }
+
+            _airportService.AddAirport(airportModel);
+            return true;
         }
 
         private bool AddPassenger(PassengerModel passengerModel)
         {
-               var editWindow = new EditPassengerWindow();
-               var ctx =  (EditPassengerViewModel) editWindow.DataContext;
-               ctx.Passenger = passengerModel;
-               if (editWindow.ShowDialog() != true)
-               {
-                   return false;
-               }
-               _passengerService.AddPassenger(passengerModel);
-               return true;                                 
+            var editWindow = new EditPassengerWindow();
+            var ctx = (EditPassengerViewModel) editWindow.DataContext;
+            ctx.Passenger = passengerModel;
+            if (editWindow.ShowDialog() != true)
+            {
+                return false;
+            }
+
+            var errs = GetModelErrors(ctx.Passenger);
+            if (errs != string.Empty)
+            {
+                ShowError(errs, "Error! Saving cancelled. ");
+                return false;
+            }
+
+            _passengerService.AddPassenger(passengerModel);
+            return true;
         }
 
         private bool AddTicket(TicketModel ticketModel)
         {
             var editWindow = new EditTicketWindow();
-            var ctx =  (EditTicketViewModel) editWindow.DataContext;
+            var ctx = (EditTicketViewModel) editWindow.DataContext;
             ctx.Ticket = ticketModel;
             ctx.Flights = _flightService.GetAllFlights();
             ctx.Passengers = _passengerService.GetAllPassengers();
@@ -259,8 +335,16 @@ namespace WpfApp3.Services
             {
                 return false;
             }
+
+            var errs = GetModelErrors(ctx.Ticket);
+            if (errs != string.Empty)
+            {
+                ShowError(errs, "Error! Saving cancelled. ");
+                return false;
+            }
+
             _ticketService.AddTicket(ticketModel);
-            return true;                                            
+            return true;
         }
 
         private bool AddRoute(RouteModel routeModel)
@@ -271,10 +355,17 @@ namespace WpfApp3.Services
             ctx.Airports = _airportService.GetAllAirports();
             ctx.Airplanes = _airplaneService.GetAllAirplanes();
             if (editWindow.ShowDialog() != true) return false;
+            var errs = GetModelErrors(ctx.Route);
+            if (errs != string.Empty)
+            {
+                ShowError(errs, "Error! Saving cancelled. ");
+                return false;
+            }
+
             _routeService.AddRoute(routeModel);
             return true;
         }
-        
+
         // private void CopyFlightFields(FlightModel src, FlightModel dest)
         // {
         //     dest.Id = src.Id;
@@ -295,12 +386,13 @@ namespace WpfApp3.Services
             {
                 foreach (var destProp in destProperties)
                 {
-                     if (srcProp.Name == destProp.Name && srcProp.GetType() == destProp.GetType() && srcProp.Name != "Error" && srcProp.Name != "Item")
+                    if (srcProp.Name == destProp.Name && srcProp.GetType() == destProp.GetType() &&
+                        srcProp.Name != "Error" && srcProp.Name != "Item")
                     {
                         destProp.SetValue(dest, srcProp.GetValue(src));
                         break;
-                    } 
-                } 
+                    }
+                }
             }
         }
 

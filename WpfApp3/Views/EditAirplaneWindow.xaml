@@ -33,10 +33,45 @@
         </StackPanel>
 
         <StackPanel Margin="20 80 20 20" Grid.Column="1" Grid.Row="0">
-            <TextBox Text="{Binding Company, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-            <TextBox Text="{Binding Model, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-            <TextBox Text="{Binding Seats, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-            <TextBox Text="{Binding DefaultPrice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+            <TextBox>
+                <TextBox.Text>
+                    <Binding Path="Company" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
+                        <Binding.ValidationRules>
+                            <ExceptionValidationRule/>
+                        </Binding.ValidationRules>
+                        </Binding>
+                </TextBox.Text>
+            </TextBox>
+            <TextBox>
+                <TextBox.Text>
+                    <Binding Path="Model" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
+                         
+                        <Binding.ValidationRules>
+                            <ExceptionValidationRule/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                    
+                </TextBox.Text>
+            </TextBox>
+            <TextBox>
+                <TextBox.Text>
+                    <Binding Path="Seats" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
+                        <Binding.ValidationRules>
+                            <ExceptionValidationRule/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                    
+                </TextBox.Text>
+            </TextBox>
+            <TextBox>
+                <TextBox.Text>
+                    <Binding Path="DefaultPrice" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay" >
+                        <Binding.ValidationRules>
+                            <ExceptionValidationRule/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
         </StackPanel>
         <!-- <ComboBox Grid.Column="1" Grid.Row="2" ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.Airports, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding AirportDepart, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/> -->
 

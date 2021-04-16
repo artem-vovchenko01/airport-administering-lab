@@ -8,10 +8,11 @@ namespace Model
         private string _model;
         private int _seats;
         private int _defaultPrice;
-        public string Company 
+
+        public string Company
         {
             get => _company;
-            set => Set(ref _company, value); 
+            set => Set(ref _company, value);
         }
 
         public string Model
@@ -30,6 +31,37 @@ namespace Model
         {
             get => _defaultPrice;
             set => Set(ref _defaultPrice, value);
+        }
+
+
+        public override string this[string columnName]
+        {
+            get
+            {
+                string error = string.Empty;
+
+                switch (columnName)
+                {
+                    case nameof(Seats):
+                        if (Seats <= 0)
+                            error = "Number of seats should be >= 0";
+                        break;
+                    case nameof(DefaultPrice):
+                        if (DefaultPrice <= 0)
+                            error = "Default price should be >= 0";
+                        break;
+                    case nameof(Model):
+                        if (string.IsNullOrWhiteSpace(Model))
+                            error = "Blank value not allowed for the field" + nameof(Model);
+                        break;
+                    case nameof(Company):
+                        if (string.IsNullOrWhiteSpace(Company))
+                            error = "Blank value not allowed for the field" + nameof(Company);
+                        break;
+                }
+
+                return error;
+            }
         }
     }
 }
