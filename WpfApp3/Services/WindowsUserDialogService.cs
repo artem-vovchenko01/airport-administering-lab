@@ -19,6 +19,19 @@ namespace WpfApp3.Services
         private readonly IPassengerService _passengerService;
         private readonly ITicketService _ticketService;
 
+        public (bool, FlightModel) SelectFlight()
+        {
+            var selectFlightWindow = new SelectFlightWindow();
+            var ctx = (SelectFlightViewModel) selectFlightWindow.DataContext;
+            if (selectFlightWindow.ShowDialog() != true)
+            {
+                return (false, null);
+            }
+            else
+            {
+                return (true, ctx.SelectedFlight);
+            }
+        }
         public WindowsUserDialogService(IRouteService routeService, IFlightService flightService,
             IAirplaneService airplaneService, IAirportService airportService, IPassengerService passengerService,
             ITicketService ticketService)

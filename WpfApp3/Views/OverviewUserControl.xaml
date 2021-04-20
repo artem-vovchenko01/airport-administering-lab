@@ -21,10 +21,11 @@
                 <Button Margin="10 5" Height="40" x:Name="BtnShowAllTickets" Command="{StaticResource ShowAllTicketsCommand}">Tickets</Button>
             </StackPanel>
         </GroupBox>
+        <GroupBox DockPanel.Dock="Left" Header="Actions">
+            <StackPanel Orientation="Vertical">
+                <Button Margin="10 5" Height="40" Command="{Binding ShowTicketsBySelectedFlight}" >Flights</Button>
+            </StackPanel>
+        </GroupBox>
     </DockPanel>
     
-    
-    <!-- <Border Grid.Row="2" Grid.Column="5"> -->
-    <!--         <Button Height="30" x:Name="btnShowAllPassengers" Click="ShowAllPassengers">Show passengers</Button> -->
-    <!-- </Border> -->
 </UserControl>

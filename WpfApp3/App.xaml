@@ -9,7 +9,7 @@
              xmlns:cmd="clr-namespace:WpfApp3.Commands.TransitionCommands"
              xmlns:model="clr-namespace:Model;assembly=Model"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-             xmlns:bulkShowEntitiesViewModels="clr-namespace:WpfApp3.ViewModels.BulkShowEntitiesViewModels"
+             xmlns:bulkWm="clr-namespace:WpfApp3.ViewModels.BulkShowEntitiesViewModels"
              Startup="OnStartup">
     <Application.Resources>
         <ResourceDictionary>
@@ -19,26 +19,29 @@
                     Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-            <DataTemplate DataType="{x:Type bulkShowEntitiesViewModels:ShowAllFlightsViewModel}">
+            <DataTemplate DataType="{x:Type bulkWm:ShowAllFlightsViewModel}">
                 <views:ShowAllFlightsUserControl />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type bulkShowEntitiesViewModels:ShowAllRoutesViewModel}">
+            <DataTemplate DataType="{x:Type bulkWm:ShowAllRoutesViewModel}">
                 <views:ShowAllRoutesUserControl />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type bulkShowEntitiesViewModels:ShowAllAirplanesViewModel}">
+            <DataTemplate DataType="{x:Type bulkWm:ShowAllAirplanesViewModel}">
                 <views:ShowAllAirplanesUserControl />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type bulkShowEntitiesViewModels:ShowAllAirportsViewModel}">
+            <DataTemplate DataType="{x:Type bulkWm:ShowAllAirportsViewModel}">
                 <views:ShowAllAirportsUserControl />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type bulkShowEntitiesViewModels:ShowAllPassengersViewModel}">
+            <DataTemplate DataType="{x:Type bulkWm:ShowAllPassengersViewModel}">
                 <views:ShowAllPassengersUserControl />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type bulkShowEntitiesViewModels:ShowAllTicketsViewModel}">
+            <DataTemplate DataType="{x:Type bulkWm:ShowAllTicketsViewModel}">
                 <views:ShowAllTicketsUserControl />
             </DataTemplate>
             <DataTemplate DataType="{x:Type local:OverviewViewModel}">
                 <views:OverviewUserControl />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type local:TicketsByFlightViewModel}">
+                <views:ShowTicketsByFlightUserControl/>
             </DataTemplate>
 
             <DataTemplate x:Key="AirplaneComboTemplate" DataType="{x:Type model:AirplaneModel}">

@@ -1,4 +1,6 @@
-﻿namespace WpfApp3.Services
+﻿using Model;
+
+namespace WpfApp3.Services
 {
     public interface IUserDialogService
     {
@@ -8,7 +10,7 @@
         void ShowWarning(string message, string caption);
         void ShowError(string message, string caption);
         bool Confirm(string message, string caption, bool exclamation = false);
-        
-        
+
+        (bool, FlightModel) SelectFlight();
     }
 }

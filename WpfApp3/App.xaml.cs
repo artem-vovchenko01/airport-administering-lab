@@ -73,6 +73,9 @@ namespace WpfApp3
             serviceCollection.AddTransient<ShowAllPassengersViewModel>();
             serviceCollection.AddTransient<ShowAllTicketsViewModel>();
 
+            serviceCollection.AddTransient<SelectFlightViewModel>();
+            serviceCollection.AddTransient<SelectFlightViewModel>();
+            serviceCollection.AddSingleton<TicketsByFlightViewModel>();
 
 
 

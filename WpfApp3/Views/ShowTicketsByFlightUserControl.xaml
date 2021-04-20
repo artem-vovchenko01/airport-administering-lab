@@ -1,0 +1,77 @@
+﻿<UserControl x:Class="WpfApp3.Views.ShowTicketsByFlightUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:WpfApp3.Views"
+             xmlns:model="clr-namespace:Model;assembly=Model"
+             xmlns:fa="http://schemas.fontawesome.com/icons/"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.DataContext>
+        <Binding Path="TicketsByFlightViewModel" Source="{StaticResource ViewModelLocator}" />
+    </UserControl.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.9*" />
+            <RowDefinition Height="0.1*" />
+        </Grid.RowDefinitions>
+        <GroupBox Grid.Row="0" Header="All tickets">
+            <ListBox ItemsSource="{Binding Tickets, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     SelectedItem="{Binding SelectedTicket, UpdateSourceTrigger=PropertyChanged}">
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    </Style>
+                </ListBox.ItemContainerStyle>
+                <ListBox.ItemTemplate>
+                    <DataTemplate DataType="model:TicketModel">
+                        <DockPanel>
+                            <StackPanel Margin="100 0 0 0 " DockPanel.Dock="Left" Orientation="Vertical" Width="200">
+                                <TextBlock Text="Adults" />
+                                <TextBlock Text="Children" />
+                                <TextBlock Text="Price" />
+                                <TextBlock Text="Passenger" />
+                                <TextBlock Text="Flight" />
+                            </StackPanel>
+                            <StackPanel DockPanel.Dock="Right" Orientation="Vertical" Width="300">
+                                <TextBlock Text="{Binding Adults}" />
+                                <TextBlock Text="{Binding Children}" />
+                                <TextBlock Text="{Binding Price}" />
+                                <TextBlock>
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0}, {1}">
+                                            <Binding Path="Passenger.Name" />
+                                            <Binding Path="Passenger.Surname" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                                <TextBlock>
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{} {0} -> {1}, {2}, departs at {3}">
+                                            <Binding Path="Flight.RouteModel.AirportDepart.City" />
+                                            <Binding Path="Flight.RouteModel.AirportArrive.City" />
+                                            <Binding Path="Flight.RouteModel.Carrier" />
+                                            <Binding Path="Flight.TimeDepart" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </StackPanel>
+                        </DockPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </GroupBox>
+
+        <UniformGrid Rows="1" Grid.Row="1" Margin="0, 3">
+            <Button Margin="3,3" Command="{StaticResource ShowOverviewCommand}" fa:Awesome.Content="Solid_ArrowLeft"
+                    Foreground="White" />
+            <Button Margin="3,3" fa:Awesome.Content="Solid_Plus" Foreground="Lime" Command="{Binding AddTicket}" />
+            <Button Margin="3,3" fa:Awesome.Content="Solid_Edit" Foreground="LightBlue" Command="{Binding EditTicket}"
+                    CommandParameter="{Binding SelectedTicket}" />
+            <Button Margin="3,3" Command="{Binding DeleteTicket}" CommandParameter="{Binding SelectedTicket}"
+                    fa:Awesome.Content="Solid_Trash" Foreground="Orange" />
+        </UniformGrid>
+           
+    </Grid>
+</UserControl>
