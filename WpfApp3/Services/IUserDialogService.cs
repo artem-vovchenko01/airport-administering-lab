@@ -1,4 +1,5 @@
-﻿using Model;
+﻿using System.Collections.Generic;
+using Model;
 
 namespace WpfApp3.Services
 {
@@ -12,5 +13,6 @@ namespace WpfApp3.Services
         bool Confirm(string message, string caption, bool exclamation = false);
 
         (bool, FlightModel) SelectFlight();
+        (bool, List<int>) ChooseSeats(TicketModel model);
     }
 }

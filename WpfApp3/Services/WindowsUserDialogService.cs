@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using Entities;
@@ -19,6 +20,21 @@ namespace WpfApp3.Services
         private readonly IPassengerService _passengerService;
         private readonly ITicketService _ticketService;
 
+        public (bool, List<int>) ChooseSeats(TicketModel ticketModel)
+        {
+            var chooseWindow = new ChooseSeatsWindow();
+            var ctx = (ChooseSeatsViewModel) chooseWindow.DataContext;
+            ctx.TicketModel = ticketModel;
+            ctx.InitializeSeats();
+            if (chooseWindow.ShowDialog() != true)
+            {
+                return (false, null);
+            }
+            else
+            {
+                return (true, new List<int>(ctx.Seats.Where(s => s.State == SeatState.Chosen).Select(s => s.Number)));
+            }
+        }
         public (bool, FlightModel) SelectFlight()
         {
             var selectFlightWindow = new SelectFlightWindow();
@@ -235,11 +251,11 @@ namespace WpfApp3.Services
             var ctx = (EditTicketViewModel) editWindow.DataContext;
             var ticketCopy = new TicketModel();
             CopyFields(ticket, ticketCopy);
-            ctx.Ticket = ticketCopy;
             ctx.Flights = _flightService.GetAllFlights();
             ctx.Passengers = _passengerService.GetAllPassengers();
             ticketCopy.Flight = ctx.Flights.Single(f => f.Id == ticketCopy.Flight.Id);
             ticketCopy.Passenger = ctx.Passengers.Single(p => p.Id == ticketCopy.Passenger.Id);
+            ctx.Ticket = ticketCopy;
             if (editWindow.ShowDialog() != true) return false;
             var errs = GetModelErrors(ticketCopy);
             if (errs != string.Empty)

@@ -19,6 +19,7 @@ namespace Data.Repositories
         public IEnumerable<Ticket> GetTicketsByFlight(Flight flight)
         {
             return MyDbContext.Tickets.Where(t => t.FlightId == flight.Id)
+                .Include(t => t.SeatsOccupied)
                 .Include(t => t.Flight)
                 .Include(t => t.Passenger)
                 .ToList();
@@ -32,6 +33,7 @@ namespace Data.Repositories
         public IEnumerable<Ticket> GetAllWithIncludes()
         {
             return MyDbContext.Tickets
+                .Include(t => t.SeatsOccupied)
                 .Include(t => t.Flight)
                 .Include(t => t.Passenger).ToList();
         }

@@ -55,7 +55,7 @@
             <Button Content="Ok" Margin="10,0" Padding="35 5" IsDefault="True" FontWeight="Bold"
                     CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=local:EditRouteWindow}}">
                 <Button.Command>
-                    <cmd:CloseDialogCommand DialogResult="True" />
+                    <Binding RelativeSource="{RelativeSource AncestorType=Window}" Path="DataContext.CloseDialog"></Binding>
                 </Button.Command>
             </Button>
             <Button Content="Cancel" Margin="10,0" Padding="35 5" FontWeight="Bold"

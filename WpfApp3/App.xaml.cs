@@ -30,8 +30,50 @@ namespace WpfApp3
             var serviceCollection = new ServiceCollection();
             ConfigureServices(serviceCollection);
             ServiceProvider = serviceCollection.BuildServiceProvider();
+            // TestServices();
         }
 
+        private void TestServices()
+        {
+            ServiceProvider.GetService<MyDbContext>();
+            // ServiceProvider.GetService(sp => sp);
+            ServiceProvider.GetService<IUnitOfWork>();
+            
+            
+            ServiceProvider.GetService<IFlightService>();
+            ServiceProvider.GetService<IPassengerService>();
+            ServiceProvider.GetService<ITicketService>();
+            ServiceProvider.GetService<IRouteService>();
+            ServiceProvider.GetService<IAirplaneService>();
+            ServiceProvider.GetService<IAirportService>();
+
+            ServiceProvider.GetService<IUserDialogService>();
+            
+            ServiceProvider.GetService<MainWindowViewModel>();
+            ServiceProvider.GetService<ChosenFlightViewModel>();
+            ServiceProvider.GetService<OverviewViewModel>();
+            ServiceProvider.GetService<EditAirplaneViewModel>();
+            ServiceProvider.GetService<EditAirportViewModel>();
+            ServiceProvider.GetService<EditFlightViewModel>();
+            ServiceProvider.GetService<EditRouteViewModel>();
+            ServiceProvider.GetService<EditPassengerViewModel>();
+            ServiceProvider.GetService<EditTicketViewModel>();
+            ServiceProvider.GetService<ChooseSeatsViewModel>();
+            ServiceProvider.GetService<EditTicketViewModel>();
+           
+            ServiceProvider.GetService<ShowAllFlightsViewModel>();
+            ServiceProvider.GetService<ShowAllRoutesViewModel>();
+            ServiceProvider.GetService<ShowAllAirportsViewModel>();
+            ServiceProvider.GetService<ShowAllAirplanesViewModel>();
+            ServiceProvider.GetService<ShowAllPassengersViewModel>();
+            ServiceProvider.GetService<ShowAllTicketsViewModel>();
+
+            ServiceProvider.GetService<SelectFlightViewModel>();
+            ServiceProvider.GetService<SelectFlightViewModel>();
+            ServiceProvider.GetService<TicketsByFlightViewModel>();
+            // ServiceProvider.GetService<MainWindow>();
+        }
+        
         private void OnStartup(object sender, StartupEventArgs args)
         {
             var appWindow = ServiceProvider.GetService<MainWindow>();
@@ -65,6 +107,8 @@ namespace WpfApp3
             serviceCollection.AddTransient<EditRouteViewModel>();
             serviceCollection.AddTransient<EditPassengerViewModel>();
             serviceCollection.AddTransient<EditTicketViewModel>();
+            serviceCollection.AddTransient<ChooseSeatsViewModel>();
+            serviceCollection.AddSingleton<EditTicketViewModel>();
             
             serviceCollection.AddTransient<ShowAllFlightsViewModel>();
             serviceCollection.AddTransient<ShowAllRoutesViewModel>();

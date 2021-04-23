@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Input;
 using Entities;
 using Model;
+using WpfApp3.Commands;
 
 namespace WpfApp3.ViewModels.EntityEditViewModels
 {
@@ -9,10 +12,17 @@ namespace WpfApp3.ViewModels.EntityEditViewModels
         private RouteModel _route;
         private IEnumerable<AirportModel> _airports;
         private IEnumerable<AirplaneModel> _airplanes;
-        private AirportModel _selectedAirportDepart;
-        private AirportModel _selectedAirportArrive;
-        private Airplane _selectedAirplane;
+        private ICommand _closeDialog;
 
+        public ICommand CloseDialog => _closeDialog ??= new RelayCommand(OnCloseDialogCommandExecute,
+            (param) => _route.Airplane != null && _route.AirportArrive != null && _route.AirportDepart != null);
+        
+        private void OnCloseDialogCommandExecute(object parameter)
+        {
+            var window = (Window) parameter;
+            window.DialogResult = true;
+            window.Close();
+        }
         public RouteModel Route
         {
             get => _route;
@@ -29,24 +39,6 @@ namespace WpfApp3.ViewModels.EntityEditViewModels
         {
             get => _airplanes;
             set => Set(ref _airplanes, value);
-        }
-
-        public AirportModel SelectedAirportDepart
-        {
-            get => _selectedAirportDepart;
-            set => Set(ref _selectedAirportDepart, value);
-        }
-
-        public AirportModel SelectedAirportArrive
-        {
-            get => _selectedAirportArrive;
-            set => Set(ref _selectedAirportArrive, value);
-        }
-
-        public Airplane SelectedAirplane
-        {
-            get => _selectedAirplane;
-            set => Set(ref _selectedAirplane, value);
         }
     }
 }

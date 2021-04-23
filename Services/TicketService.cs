@@ -34,6 +34,26 @@ namespace Services
             var entity = TicketMapper.MapToEntity(ticket);
             _uof.Tickets.Update(entity);
             _uof.Complete();
+            UpdateTicketSeats(ticket);
+        }
+
+        private void UpdateTicketSeats(TicketModel ticket)
+        {
+            var newSeats = ticket.OccupiedSeats;
+            var oldSeats = _uof.Seats.SeatsOccupiedByTicketId(ticket.Id);
+            foreach (var oldSeat in oldSeats)
+            {
+                _uof.Seats.Remove(oldSeat);
+            }
+
+            _uof.Complete();
+            foreach (var newSeat in newSeats)
+            {
+                _uof.Seats.Add(new Seat {SeatNumber = newSeat, TicketId = ticket.Id});
+            }
+
+            _uof.Complete();
+
         }
 
         public int SoldTicketsCount(FlightModel flight)

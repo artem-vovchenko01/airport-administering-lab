@@ -1,5 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Input;
 using Model;
+using WpfApp3.Commands;
+using WpfApp3.Services;
 
 namespace WpfApp3.ViewModels.EntityEditViewModels
 {
@@ -8,13 +12,62 @@ namespace WpfApp3.ViewModels.EntityEditViewModels
         private TicketModel _ticket;
         private IEnumerable<FlightModel> _flights;
         private IEnumerable<PassengerModel> _passengers;
-        private FlightModel _selectedFlight;
-        private PassengerModel _selectedPassenger;
+        private ICommand _openChooseSeatsDialog;
+        private readonly IUserDialogService _dialogService;
+        private bool _areSeatsSelected = false;
+        private ICommand _closeDialog;
+
+        public ICommand CloseDialog =>
+            _closeDialog ??= new RelayCommand(OnCloseDialogCommandExecute, CanSaveAndClose);
+
+        private bool CanSaveAndClose(object param)
+        {
+            VerifySeatsSelected();
+            return _areSeatsSelected && _ticket.Flight != null && _ticket.Passenger != null;
+        }
+
+        private void VerifySeatsSelected()
+        {
+            if (_ticket.OccupiedSeats.Count == 0) _areSeatsSelected = false;
+        }
+        private void OnCloseDialogCommandExecute(object parameter)
+        {
+            var window = (Window) parameter;
+            window.DialogResult = true;
+            window.Close();
+        }
+
+        public EditTicketViewModel(IUserDialogService dialogService)
+        {
+            _dialogService = dialogService;
+        }
+        
+        public ICommand OpenChooseSeatsDialog => _openChooseSeatsDialog ??= new RelayCommand(OnOpenChooseSeatsDialogCommandExecute, o => _ticket.Flight != null);
+
+        private void OnOpenChooseSeatsDialogCommandExecute(object obj)
+        {
+            var ticket = new TicketModel
+            {
+                Flight = _ticket.Flight,
+                OccupiedSeats = _ticket.OccupiedSeats
+            };
+            (bool success, var seats) = _dialogService.ChooseSeats(ticket);
+            if (success)
+            {
+                _ticket.Adults = seats.Count;
+                _ticket.OccupiedSeats = seats;
+                _areSeatsSelected = true;
+            }
+        }
 
         public TicketModel Ticket
         {
             get => _ticket;
-            set => Set(ref _ticket, value);
+            set
+            {
+                Set(ref _ticket, value);
+                if (_ticket.OccupiedSeats.Count > 0) _areSeatsSelected = true;
+            }
         }
 
         public IEnumerable<FlightModel> Flights
@@ -29,16 +82,20 @@ namespace WpfApp3.ViewModels.EntityEditViewModels
             set => Set(ref _passengers, value);
         }
 
-        public FlightModel SelectedFlight
-        {
-            get => _selectedFlight;
-            set => Set(ref _selectedFlight, value);
-        }
+        // public FlightModel SelectedFlight
+        // {
+        //     get => _selectedFlight;
+        //     set
+        //     {
+        //         Set(ref _selectedFlight, value);
+        //         _areSeatsSelected = false;
+        //     }
+        // }
 
-        public PassengerModel SelectedPassenger
-        {
-            get => _selectedPassenger;
-            set => Set(ref _selectedPassenger, value);
-        }
+        // public PassengerModel SelectedPassenger
+        // {
+        //     get => _selectedPassenger;
+        //     set => Set(ref _selectedPassenger, value);
+        // }
     }
 }

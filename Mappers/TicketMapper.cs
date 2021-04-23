@@ -1,4 +1,6 @@
-﻿using Entities;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Entities;
 using Mappers.Abstract;
 using Model;
 
@@ -15,13 +17,19 @@ namespace Mappers
                 Children = entity.Children,
                 Price = entity.Price,
                 Flight = FlightMapper.MapToModel(entity.Flight),
-                Passenger = PassengerMapper.MapToModel(entity.Passenger)
+                Passenger = PassengerMapper.MapToModel(entity.Passenger),
+                OccupiedSeats = entity.SeatsOccupied.Select(s => s.SeatNumber).ToList()
             };
             return model;
         }
 
         public static Ticket MapToEntity(TicketModel model)
         {
+            var seats = new List<Seat>();
+            foreach (var seatNum in model.OccupiedSeats)
+            {
+                seats.Add(new Seat {TicketId = model.Id, SeatNumber = seatNum});
+            }
             var entity = new Ticket
             {
                 Id = model.Id,
@@ -29,7 +37,8 @@ namespace Mappers
                 Children = model.Children,
                 Price = model.Price,
                 FlightId = model.Flight.Id,
-                PassengerId = model.Passenger.Id
+                PassengerId = model.Passenger.Id,
+                SeatsOccupied = seats
             };
             return entity;
         }

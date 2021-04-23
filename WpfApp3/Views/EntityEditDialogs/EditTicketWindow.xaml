@@ -8,12 +8,9 @@
         xmlns:cmd="clr-namespace:WpfApp3.Commands"
         xmlns:entityEditViewModels="clr-namespace:WpfApp3.ViewModels.EntityEditViewModels"
         mc:Ignorable="d"
-        Title="Editing ticket" Height="450" Width="800">
-    <Window.DataContext>
-        <entityEditViewModels:EditTicketViewModel />
-    </Window.DataContext>
+        Title="Editing ticket" Height="450" Width="800" DataContext="{Binding Path=EditTicketViewModel , Source={StaticResource ViewModelLocator}}">
 
-    <Grid DataContext="{Binding Ticket, Mode=TwoWay}">
+    <Grid DataContext="{Binding Ticket, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*" />
             <ColumnDefinition Width="3*" />
@@ -36,7 +33,7 @@
         </StackPanel>
 
         <StackPanel Margin="20 80 20 20" Grid.Column="1" Grid.Row="0">
-            <TextBox Text="{Binding  Adults, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+            <TextBox IsReadOnly="True" Text="{Binding  Adults, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
             <TextBox Text="{Binding Children, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
             <TextBox Text="{Binding Price, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
             <ComboBox
@@ -54,13 +51,18 @@
             <Button Content="Ok" Margin="10,0" Padding="35 5" IsDefault="True" FontWeight="Bold"
                     CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=local:EditTicketWindow}}">
                 <Button.Command>
-                    <cmd:CloseDialogCommand DialogResult="True" />
+                    <Binding RelativeSource="{RelativeSource AncestorType=Window}" Path="DataContext.CloseDialog"></Binding>
                 </Button.Command>
             </Button>
             <Button Content="Cancel" Margin="10,0" Padding="35 5" FontWeight="Bold"
                     CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=local:EditTicketWindow}}">
                 <Button.Command>
                     <cmd:CloseDialogCommand DialogResult="False" />
+                </Button.Command>
+            </Button>
+            <Button Margin="10,0" Padding="35 5"  FontWeight="Bold" Content="Choose seats">
+                <Button.Command>
+                    <Binding RelativeSource="{RelativeSource AncestorType=Window}" Path="DataContext.OpenChooseSeatsDialog"/>
                 </Button.Command>
             </Button>
         </UniformGrid>

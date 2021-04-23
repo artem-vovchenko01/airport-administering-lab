@@ -10,8 +10,12 @@
     <UserControl.DataContext>
         <Binding Path="OverviewViewModel" Source="{StaticResource ViewModelLocator}"></Binding>
     </UserControl.DataContext>
-    <DockPanel>
-        <GroupBox DockPanel.Dock="Right" Header="Database manipulation">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <GroupBox Grid.Column="0" Header="Database manipulation">
             <StackPanel Orientation="Vertical">
                 <Button Margin="10 5" Height="40" x:Name="BtnShowAllFlights" Command="{StaticResource ShowAllFlightsCommand}" >Flights</Button>
                 <Button Margin="10 5" Height="40" x:Name="BtnShowAllRoutes" Command="{StaticResource ShowAllRoutesCommand}">Routes</Button>
@@ -21,11 +25,11 @@
                 <Button Margin="10 5" Height="40" x:Name="BtnShowAllTickets" Command="{StaticResource ShowAllTicketsCommand}">Tickets</Button>
             </StackPanel>
         </GroupBox>
-        <GroupBox DockPanel.Dock="Left" Header="Actions">
+        <GroupBox Grid.Column="1" Header="Actions">
             <StackPanel Orientation="Vertical">
-                <Button Margin="10 5" Height="40" Command="{Binding ShowTicketsBySelectedFlight}" >Flights</Button>
+                <Button Margin="10 5" Height="40" Command="{Binding ShowTicketsBySelectedFlight}" >Show tickets by flight</Button>
             </StackPanel>
         </GroupBox>
-    </DockPanel>
+    </Grid>
     
 </UserControl>

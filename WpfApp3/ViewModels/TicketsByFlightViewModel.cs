@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
@@ -66,7 +67,7 @@ namespace WpfApp3.ViewModels
  
          private void OnAddTicketCommandExecute(object t)
          {
-             _dialogService.Add(new TicketModel());
+             _dialogService.Add(new TicketModel { OccupiedSeats = new List<int>()});
              UpdateTickets();
          }
  

@@ -26,7 +26,7 @@
         </Grid.RowDefinitions>
         <StackPanel Margin="0 80 20 20" Grid.Column="0" Grid.Row="0">
             <StackPanel.Resources>
-                <Style TargetType="TextBlock">
+                <Style TargetType="TextBlock" BasedOn="{StaticResource MaterialDesignTextBlock}">
                     <Setter Property="Margin" Value="25 5 5 5" />
                 </Style>
             </StackPanel.Resources>
@@ -38,6 +38,14 @@
         </StackPanel>
 
         <StackPanel Margin="20 80 20 20" Grid.Column="1" Grid.Row="0">
+            <StackPanel.Resources>
+                <Style TargetType="xctk:DateTimePicker">
+                   <Setter Property="Margin" Value="7"></Setter> 
+                </Style>
+                <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignTextBox}">
+                    <Setter Property="Margin" Value="5" />
+                </Style>
+            </StackPanel.Resources>
             <xctk:DateTimePicker Text="{Binding TimeDepart, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
             <xctk:DateTimePicker>
                 <xctk:DateTimePicker.Text>
@@ -78,7 +86,7 @@
             <Button Content="Ok" Margin="10,0" Padding="35 5" IsDefault="True" FontWeight="Bold"
                     CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=local:EditFlightWindow}}">
                 <Button.Command>
-                    <cmd:CloseDialogCommand DialogResult="True" />
+                    <Binding RelativeSource="{RelativeSource AncestorType=Window}" Path="DataContext.CloseDialog"></Binding>
                 </Button.Command>
             </Button>
             <Button Content="Cancel" Margin="10,0" Padding="35 5" FontWeight="Bold"

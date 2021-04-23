@@ -8,6 +8,8 @@ namespace Model
         private int _adults;
         private int _children;
         private decimal _price;
+        private FlightModel _flight;
+        public List<int> OccupiedSeats { get; set; }
 
         public int Adults
         {
@@ -27,7 +29,22 @@ namespace Model
             set => Set(ref _price, value);
         }
 
-        public FlightModel Flight { get; set; }
+        public FlightModel Flight
+        {
+            get
+            {
+                return _flight;
+            }
+            set
+            {
+                if (_flight != null && value.Id != _flight.Id)
+                {
+                    OccupiedSeats = new List<int>();
+                }
+                _flight = value;
+            }
+
+        }
         public PassengerModel Passenger { get; set; }
 
         public override string this[string columnName]

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using WpfApp3.ViewModels.BulkShowEntitiesViewModels;
+using WpfApp3.ViewModels.EntityEditViewModels;
 
 namespace WpfApp3.ViewModels
 {
@@ -28,5 +29,9 @@ namespace WpfApp3.ViewModels
 
         public TicketsByFlightViewModel TicketsByFlightViewModel =>
             App.ServiceProvider.GetService<TicketsByFlightViewModel>();
+
+        public ChooseSeatsViewModel ChooseSeatsViewModel => App.ServiceProvider.GetService<ChooseSeatsViewModel>();
+
+        public EditTicketViewModel EditTicketViewModel => App.ServiceProvider.GetService<EditTicketViewModel>();
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Model;
 using Services.Abstract;
@@ -52,7 +53,7 @@ namespace WpfApp3.ViewModels.BulkShowEntitiesViewModels
 
         private void OnAddTicketCommandExecute(object t)
         {
-            _dialogService.Add(new TicketModel());
+            _dialogService.Add(new TicketModel {OccupiedSeats = new List<int>()});
             UpdateTickets();
         }
 
