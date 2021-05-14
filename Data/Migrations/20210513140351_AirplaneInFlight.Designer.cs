@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EFClasses.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20210416133319_AllowNullableInRoutes")]
-    partial class AllowNullableInRoutes
+    [Migration("20210513140351_AirplaneInFlight")]
+    partial class AirplaneInFlight
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -69,11 +69,32 @@ namespace EFClasses.Migrations
                     b.ToTable("Airports");
                 });
 
+            modelBuilder.Entity("Entities.Carrier", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Carriers");
+                });
+
             modelBuilder.Entity("Entities.Flight", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AirplaneId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("MinDelayed")
                         .HasColumnType("int");
@@ -91,6 +112,8 @@ namespace EFClasses.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AirplaneId");
 
                     b.HasIndex("RouteId");
 
@@ -128,30 +151,22 @@ namespace EFClasses.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("AirplaneId")
+                    b.Property<Guid?>("AirportArriveId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("AirportArriveId")
+                    b.Property<Guid?>("AirportDepartId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("AirportDepartId")
+                    b.Property<Guid>("CarrierId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Carrier")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AirplaneId");
 
                     b.HasIndex("AirportArriveId");
 
                     b.HasIndex("AirportDepartId");
+
+                    b.HasIndex("CarrierId");
 
                     b.ToTable("Routes");
                 });
@@ -207,6 +222,12 @@ namespace EFClasses.Migrations
 
             modelBuilder.Entity("Entities.Flight", b =>
                 {
+                    b.HasOne("Entities.Airplane", "Airplane")
+                        .WithMany("Flights")
+                        .HasForeignKey("AirplaneId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Entities.Route", "Route")
                         .WithMany()
                         .HasForeignKey("RouteId")
@@ -216,22 +237,20 @@ namespace EFClasses.Migrations
 
             modelBuilder.Entity("Entities.Route", b =>
                 {
-                    b.HasOne("Entities.Airplane", "Airplane")
-                        .WithMany("Routes")
-                        .HasForeignKey("AirplaneId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Entities.Airport", "AirportArrive")
                         .WithMany("ArrivingRoutes")
                         .HasForeignKey("AirportArriveId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("Entities.Airport", "AirportDepart")
                         .WithMany("DeparturingRoutes")
                         .HasForeignKey("AirportDepartId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("Entities.Carrier", "Carrier")
+                        .WithMany("Routes")
+                        .HasForeignKey("CarrierId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 

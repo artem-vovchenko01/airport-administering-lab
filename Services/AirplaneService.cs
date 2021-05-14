@@ -11,20 +11,22 @@ namespace Services
     public class AirplaneService : IAirplaneService
     {
         private readonly IUnitOfWork _uof;
+        private readonly AirplaneMapper _airplaneMapper;
         public AirplaneService(IUnitOfWork uof)
         {
             _uof = uof;
+            _airplaneMapper = new AirplaneMapper();
         }
         public void AddAirplane(AirplaneModel airplane)
         {
-            var entity = AirplaneMapper.MapToEntity(airplane);
+            var entity = _airplaneMapper.MapToEntity(airplane);
             _uof.Airplanes.Add(entity);
             _uof.Complete();
         }
 
         public void EditAirplane(AirplaneModel airplane)
         {
-            var entity = AirplaneMapper.MapToEntity(airplane);
+            var entity = _airplaneMapper.MapToEntity(airplane);
             _uof.Airplanes.Update(entity);
             _uof.Complete();
         }
@@ -41,7 +43,7 @@ namespace Services
             AirplaneModel model;
             foreach (var airplane in _uof.Airplanes.GetAll())
             {
-                model = AirplaneMapper.MapToModel(airplane);
+                model = _airplaneMapper.MapToModel(airplane);
                 models.Add(model);
             }
 

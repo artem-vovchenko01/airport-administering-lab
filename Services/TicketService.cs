@@ -11,14 +11,18 @@ namespace Services
     public class TicketService : ITicketService
     {
         private readonly IUnitOfWork _uof;
+        private readonly TicketMapper _ticketMapper;
+        private readonly FlightMapper _flightMapper;
         public TicketService(IUnitOfWork uof)
         {
             _uof = uof;
+            _ticketMapper = new TicketMapper();
+            _flightMapper = new FlightMapper();
         }
 
         public void AddTicket(TicketModel ticket)
         {
-            var entity = TicketMapper.MapToEntity(ticket);
+            var entity = _ticketMapper.MapToEntity(ticket);
             _uof.Tickets.Add(entity);
             _uof.Complete();
         }
@@ -31,7 +35,7 @@ namespace Services
 
         public void EditTicket(TicketModel ticket)
         {
-            var entity = TicketMapper.MapToEntity(ticket);
+            var entity = _ticketMapper.MapToEntity(ticket);
             _uof.Tickets.Update(entity);
             _uof.Complete();
             UpdateTicketSeats(ticket);
@@ -58,7 +62,7 @@ namespace Services
 
         public int SoldTicketsCount(FlightModel flight)
         {
-            var flightEntity = FlightMapper.MapToEntity(flight);
+            var flightEntity = _flightMapper.MapToEntity(flight);
             var tickets = new List<Ticket>(_uof.Tickets.GetAllWithIncludes());
             return tickets.Count;
         }
@@ -68,7 +72,7 @@ namespace Services
             var ticketModels = new List<TicketModel>();
             foreach (var ticket in _uof.Tickets.GetAllWithIncludes())
             {
-                ticketModels.Add(TicketMapper.MapToModel(ticket));
+                ticketModels.Add(_ticketMapper.MapToModel(ticket));
             }
 
             return ticketModels;
@@ -76,12 +80,12 @@ namespace Services
 
         public IEnumerable<TicketModel> SoldTickets(FlightModel flight)
         {
-            var flightEntity = FlightMapper.MapToEntity(flight);
+            var flightEntity = _flightMapper.MapToEntity(flight);
             var tickets =  _uof.Tickets.GetTicketsByFlight(flightEntity);
             var ticketModels = new List<TicketModel>();
             foreach (var ticket in tickets)
             {
-                ticketModels.Add(TicketMapper.MapToModel(ticket)); 
+                ticketModels.Add(_ticketMapper.MapToModel(ticket)); 
             }
 
             return ticketModels;

@@ -10,6 +10,7 @@
              xmlns:model="clr-namespace:Model;assembly=Model"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:bulkWm="clr-namespace:WpfApp3.ViewModels.BulkShowEntitiesViewModels"
+             xmlns:bulkEntityViews="clr-namespace:WpfApp3.Views.BulkEntityViews"
              Startup="OnStartup">
     <Application.Resources>
         <ResourceDictionary>
@@ -20,22 +21,25 @@
             </ResourceDictionary.MergedDictionaries>
 
             <DataTemplate DataType="{x:Type bulkWm:ShowAllFlightsViewModel}">
-                <views:ShowAllFlightsUserControl />
+                <bulkEntityViews:ShowAllFlightsUserControl />
             </DataTemplate>
             <DataTemplate DataType="{x:Type bulkWm:ShowAllRoutesViewModel}">
-                <views:ShowAllRoutesUserControl />
+                <bulkEntityViews:ShowAllRoutesUserControl />
             </DataTemplate>
             <DataTemplate DataType="{x:Type bulkWm:ShowAllAirplanesViewModel}">
-                <views:ShowAllAirplanesUserControl />
+                <bulkEntityViews:ShowAllAirplanesUserControl />
             </DataTemplate>
             <DataTemplate DataType="{x:Type bulkWm:ShowAllAirportsViewModel}">
-                <views:ShowAllAirportsUserControl />
+                <bulkEntityViews:ShowAllAirportsUserControl />
             </DataTemplate>
             <DataTemplate DataType="{x:Type bulkWm:ShowAllPassengersViewModel}">
-                <views:ShowAllPassengersUserControl />
+                <bulkEntityViews:ShowAllPassengersUserControl />
             </DataTemplate>
             <DataTemplate DataType="{x:Type bulkWm:ShowAllTicketsViewModel}">
-                <views:ShowAllTicketsUserControl />
+                <bulkEntityViews:ShowAllTicketsUserControl />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type bulkWm:ShowAllCarriersViewModel}">
+                <bulkEntityViews:ShowAllCarriersUserControl />
             </DataTemplate>
             <DataTemplate DataType="{x:Type local:OverviewViewModel}">
                 <views:OverviewUserControl />
@@ -55,6 +59,13 @@
                 </TextBlock>
             </DataTemplate>
 
+            <DataTemplate x:Key="CarrierComboTemplate" DataType="{x:Type model:CarrierModel}">
+                <TextBlock>
+                    <TextBlock.Text>
+                            <Binding Path="Name"/>
+                    </TextBlock.Text>
+                </TextBlock>
+            </DataTemplate>
             <DataTemplate x:Key="AirportComboTemplate" DataType="{x:Type model:AirportModel}">
                 <TextBlock>
                     <TextBlock.Text>
@@ -83,13 +94,12 @@
             <DataTemplate x:Key="RouteComboTemplate" DataType="{x:Type model:RouteModel}">
                 <TextBlock>
                     <TextBlock.Text>
-                        <MultiBinding StringFormat="{} {0}, {1} ({2}) -> {3} ({4}), {5}">
-                            <Binding Path="Code" />
+                        <MultiBinding StringFormat="{} {0} ({1}) -> {2} ({3}), {4}">
                             <Binding Path="AirportDepart.Name" />
                             <Binding Path="AirportDepart.City" />
                             <Binding Path="AirportArrive.Name" />
                             <Binding Path="AirportArrive.City" />
-                            <Binding Path="Carrier" />
+                            <Binding Path="Carrier.Name" />
                         </MultiBinding>
                     </TextBlock.Text>
                 </TextBlock>
@@ -115,6 +125,7 @@
             <cmd:ShowAllAirports x:Key="ShowAllAirportsCommand" />
             <cmd:ShowAllTickets x:Key="ShowAllTicketsCommand" />
             <cmd:ShowAllPassengers x:Key="ShowAllPassengersCommand" />
+            <cmd:ShowAllCarriers x:Key="ShowAllCarriersCommand" />
 
             <Style x:Key="TextBoxErrorStyle" TargetType="{x:Type TextBox}">
                 <Style.Triggers>

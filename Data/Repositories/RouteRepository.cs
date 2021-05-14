@@ -14,22 +14,22 @@ namespace Data.Repositories
         {
         }
         
-        public MyDbContext MyDbContext => Context as MyDbContext;
+        private MyDbContext _context => Context as MyDbContext;
         public IEnumerable<Route> GetAllWithIncludes()
         {
-            return MyDbContext.Routes
-                .Include(r => r.Airplane)
+            return _context.Routes
+                .Include(r => r.Carrier)
                 .Include(r => r.AirportArrive)
                 .Include(r => r.AirportDepart);
         }
 
         public void RemoveByAirportId(Guid airportId)
         {
-            var routes = MyDbContext.Routes
+            var routes = _context.Routes
                 .Where(r => r.AirportArrive.Id == airportId || r.AirportDepart.Id == airportId).ToList();
             foreach (var route in routes)
             {
-                MyDbContext.Routes.Remove(route);
+                _context.Routes.Remove(route);
             }
         }
     }

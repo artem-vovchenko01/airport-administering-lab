@@ -21,7 +21,6 @@ namespace WpfApp3.ViewModels.BulkShowEntitiesViewModels
             set => Set(ref _selectedFlight, value);
         }
 
-        // public FlightsViewModel(IFlightService flightService, IServiceProvider serviceProvider)
         public ShowAllFlightsViewModel(IFlightService flightService, IUserDialogService dialogService)
         {
             _dialogService = dialogService;
@@ -48,7 +47,7 @@ namespace WpfApp3.ViewModels.BulkShowEntitiesViewModels
             _editFlight ??= new RelayCommand(OnEditFlightCommandExecute, IsFlightSelected);
 
         public ICommand DeleteFlight => _deleteFlight ??= new RelayCommand(OnDeleteFlightCommandExecute, IsFlightSelected);
-        public ICommand AddFlight => _addFlight ??= new RelayCommand(OnAddFlightCommandExecute, CanAlwaysExecute);
+        public ICommand AddFlight => _addFlight ??= new RelayCommand(OnAddFlightCommandExecute, (obj) => true);
 
         private bool IsFlightSelected(object f) => SelectedFlight != null;
         private void OnEditFlightCommandExecute(object f)
@@ -62,8 +61,6 @@ namespace WpfApp3.ViewModels.BulkShowEntitiesViewModels
             Flights.Remove(f as FlightModel);
             _flightService.RemoveFlight(((FlightModel) f).Id);
         }
-
-        private bool CanAlwaysExecute(object f) => true;
 
         private void OnAddFlightCommandExecute(object f)
         {

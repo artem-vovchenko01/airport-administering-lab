@@ -10,13 +10,15 @@ namespace Services
     public class PassengerService : IPassengerService
     {
         private readonly IUnitOfWork _uof;
+        private readonly PassengerMapper _passengerMapper;
         public PassengerService(IUnitOfWork uof)
         {
             _uof = uof;
+            _passengerMapper = new PassengerMapper();
         }
         public void AddPassenger(PassengerModel passenger)
         {
-            var entity = PassengerMapper.MapToEntity(passenger);
+            var entity = _passengerMapper.MapToEntity(passenger);
             _uof.Passengers.Add(entity);
             _uof.Complete();
         }
@@ -29,7 +31,7 @@ namespace Services
 
         public void EditPassenger(PassengerModel passenger)
         {
-            var entity = PassengerMapper.MapToEntity(passenger);
+            var entity = _passengerMapper.MapToEntity(passenger);
             _uof.Passengers.Update(entity);
             _uof.Complete();
         }
@@ -39,7 +41,7 @@ namespace Services
             var passengerModels = new List<PassengerModel>();
             foreach (var passenger in _uof.Passengers.GetAll())
             {
-                passengerModels.Add(PassengerMapper.MapToModel(passenger));
+                passengerModels.Add(_passengerMapper.MapToModel(passenger));
             }
 
             return passengerModels;

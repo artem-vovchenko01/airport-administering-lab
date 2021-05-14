@@ -2,9 +2,9 @@
 
 namespace WpfApp3.Views.BulkEntityViews
 {
-    public partial class ShowAllAirplanesUserControl : UserControl
+    public partial class ShowAllCarriersUserControl : UserControl
     {
-        public ShowAllAirplanesUserControl()
+        public ShowAllCarriersUserControl()
         {
             InitializeComponent();
         }

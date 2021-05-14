@@ -10,14 +10,16 @@ namespace Services
     public class AirportService : IAirportService
     {
         private readonly IUnitOfWork _uof;
+        private readonly AirportMapper _airportMapper;
         public AirportService(IUnitOfWork uof)
         {
             _uof = uof;
+            _airportMapper = new AirportMapper();
         }
             
         public void AddAirport(AirportModel airport)
         {
-            var entity = AirportMapper.MapToEntity(airport);
+            var entity = _airportMapper.MapToEntity(airport);
             _uof.Airports.Add(entity);
             _uof.Complete();
         }
@@ -31,7 +33,7 @@ namespace Services
 
         public void EditAirport(AirportModel airport)
         {
-            var entity = AirportMapper.MapToEntity(airport);
+            var entity = _airportMapper.MapToEntity(airport);
             _uof.Airports.Update(entity);
             _uof.Complete();
         }
@@ -42,7 +44,7 @@ namespace Services
             AirportModel model;
             foreach (var airport in _uof.Airports.GetAll())
             {
-                model = AirportMapper.MapToModel(airport);
+                model = _airportMapper.MapToModel(airport);
                 models.Add(model);
             }
 

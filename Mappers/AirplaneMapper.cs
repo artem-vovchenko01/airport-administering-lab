@@ -4,9 +4,9 @@ using Model;
 
 namespace Mappers
 {
-    public static class AirplaneMapper 
+    public class AirplaneMapper 
     {
-        public static AirplaneModel MapToModel(Airplane entity)
+        public AirplaneModel MapToModel(Airplane entity)
         {
             var model = new AirplaneModel
             {
@@ -19,7 +19,7 @@ namespace Mappers
             return model;
         }
 
-        public static Airplane MapToEntity(AirplaneModel model)
+        public Airplane MapToEntity(AirplaneModel model)
         {
             var entity = new Airplane
             {

@@ -10,6 +10,7 @@ namespace WpfApp3.ViewModels.EntityEditViewModels
     {
         private FlightModel _flight;
         private IEnumerable<RouteModel> _routes;
+        private IEnumerable<AirplaneModel> _airplanes;
         private ICommand _closeDialog;
 
         public ICommand CloseDialog => _closeDialog ??=
@@ -25,6 +26,11 @@ namespace WpfApp3.ViewModels.EntityEditViewModels
         {
             get => _flight;
             set => Set(ref _flight, value);
+        }
+        public IEnumerable<AirplaneModel> Airplanes
+        {
+            get => _airplanes;
+            set => Set(ref _airplanes, value);
         }
 
         public IEnumerable<RouteModel> Routes

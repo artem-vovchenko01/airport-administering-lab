@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EFClasses.Migrations
 {
-    public partial class FullModelCreated : Migration
+    public partial class AirplaneInFlight : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -37,6 +37,18 @@ namespace EFClasses.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Carriers",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Carriers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Passengers",
                 columns: table => new
                 {
@@ -56,21 +68,13 @@ namespace EFClasses.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    Carrier = table.Column<string>(nullable: false),
-                    Code = table.Column<string>(nullable: false),
-                    AirportDepartId = table.Column<Guid>(nullable: false),
-                    AirportArriveId = table.Column<Guid>(nullable: false),
-                    AirplaneId = table.Column<Guid>(nullable: false)
+                    CarrierId = table.Column<Guid>(nullable: false),
+                    AirportDepartId = table.Column<Guid>(nullable: true),
+                    AirportArriveId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Routes", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Routes_Airplanes_AirplaneId",
-                        column: x => x.AirplaneId,
-                        principalTable: "Airplanes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Routes_Airports_AirportArriveId",
                         column: x => x.AirportArriveId,
@@ -81,6 +85,12 @@ namespace EFClasses.Migrations
                         column: x => x.AirportDepartId,
                         principalTable: "Airports",
                         principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Routes_Carriers_CarrierId",
+                        column: x => x.CarrierId,
+                        principalTable: "Carriers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -88,15 +98,23 @@ namespace EFClasses.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    Code = table.Column<string>(nullable: false),
                     TimeDepart = table.Column<DateTime>(nullable: false),
                     TimeArrive = table.Column<DateTime>(nullable: false),
                     StopBooking = table.Column<DateTime>(nullable: false),
                     MinDelayed = table.Column<int>(nullable: false),
-                    RouteId = table.Column<Guid>(nullable: false)
+                    RouteId = table.Column<Guid>(nullable: false),
+                    AirplaneId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Flights", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Flights_Airplanes_AirplaneId",
+                        column: x => x.AirplaneId,
+                        principalTable: "Airplanes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Flights_Routes_RouteId",
                         column: x => x.RouteId,
@@ -153,14 +171,14 @@ namespace EFClasses.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Flights_AirplaneId",
+                table: "Flights",
+                column: "AirplaneId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Flights_RouteId",
                 table: "Flights",
                 column: "RouteId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Routes_AirplaneId",
-                table: "Routes",
-                column: "AirplaneId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Routes_AirportArriveId",
@@ -171,6 +189,11 @@ namespace EFClasses.Migrations
                 name: "IX_Routes_AirportDepartId",
                 table: "Routes",
                 column: "AirportDepartId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Routes_CarrierId",
+                table: "Routes",
+                column: "CarrierId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Seats_TicketId",
@@ -203,13 +226,16 @@ namespace EFClasses.Migrations
                 name: "Passengers");
 
             migrationBuilder.DropTable(
-                name: "Routes");
-
-            migrationBuilder.DropTable(
                 name: "Airplanes");
 
             migrationBuilder.DropTable(
+                name: "Routes");
+
+            migrationBuilder.DropTable(
                 name: "Airports");
+
+            migrationBuilder.DropTable(
+                name: "Carriers");
         }
     }
 }

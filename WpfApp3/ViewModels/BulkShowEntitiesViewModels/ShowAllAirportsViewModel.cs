@@ -27,13 +27,12 @@ namespace WpfApp3.ViewModels.BulkShowEntitiesViewModels
         private ICommand _editAirport;
         private ICommand _deleteAirport;
 
-        public ICommand AddAirport => _addAirport ??= new RelayCommand(OnAddAirportCommandExecute, CanAlwaysExecute);
+        public ICommand AddAirport => _addAirport ??= new RelayCommand(OnAddAirportCommandExecute, (obj) => true);
 
         public ICommand EditAirport =>
             _editAirport ??= new RelayCommand(OnEditAirportCommandExecute, IsAirportSelected);
         public ICommand DeleteAirport => _deleteAirport ??= new RelayCommand(OnDeleteAirportCommandExecute, IsAirportSelected);
 
-        private bool CanAlwaysExecute(object a) => true;
         private bool IsAirportSelected(object a) => _selectedAirport != null;
 
         private void OnAddAirportCommandExecute(object a)

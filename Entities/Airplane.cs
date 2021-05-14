@@ -15,6 +15,6 @@ namespace Entities
         [Required]
         public int DefaultPrice {get; set; }
         
-        public virtual List<Route> Routes { get; set; }
+        public virtual List<Flight> Flights { get; set; }
     }
 }

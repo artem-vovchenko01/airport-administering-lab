@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-using Entities;
 using Model;
 using Services.Abstract;
 using WpfApp3.ViewModels;
 using WpfApp3.ViewModels.EntityEditViewModels;
 using WpfApp3.Views;
+using WpfApp3.Views.EntityEditDialogs;
 
 namespace WpfApp3.Services
 {
@@ -19,6 +19,7 @@ namespace WpfApp3.Services
         private readonly IAirportService _airportService;
         private readonly IPassengerService _passengerService;
         private readonly ITicketService _ticketService;
+        private readonly ICarrierService _carrierService;
 
         public (bool, List<int>) ChooseSeats(TicketModel ticketModel)
         {
@@ -50,7 +51,7 @@ namespace WpfApp3.Services
         }
         public WindowsUserDialogService(IRouteService routeService, IFlightService flightService,
             IAirplaneService airplaneService, IAirportService airportService, IPassengerService passengerService,
-            ITicketService ticketService)
+            ITicketService ticketService, ICarrierService carrierService)
         {
             _routeService = routeService;
             _flightService = flightService;
@@ -58,6 +59,7 @@ namespace WpfApp3.Services
             _airportService = airportService;
             _passengerService = passengerService;
             _ticketService = ticketService;
+            _carrierService = carrierService;
         }
 
         public bool Add(object item)
@@ -77,6 +79,8 @@ namespace WpfApp3.Services
                     return AddPassenger(passenger);
                 case TicketModel ticket:
                     return AddTicket(ticket);
+                case CarrierModel carrier:
+                    return AddCarrier(carrier);
                 default:
                     throw new NotSupportedException(
                         $"Adding the object of type {item.GetType().Name} is not supported ");
@@ -100,6 +104,8 @@ namespace WpfApp3.Services
                     return EditPassenger(passenger);
                 case TicketModel ticket:
                     return EditTicket(ticket);
+                case CarrierModel carrier:
+                    return EditCarrier(carrier);
                 default:
                     throw new NotSupportedException(
                         $"Editing the object of type {item.GetType().Name} is not supported ");
@@ -130,6 +136,7 @@ namespace WpfApp3.Services
             CopyFields(flight, flightCopy);
             ctx.Flight = flightCopy;
             ctx.Routes = _routeService.GetAllRoutes();
+            ctx.Airplanes = _airplaneService.GetAllAirplanes();
             flightCopy.RouteModel = ctx.Routes.Single(r => r.Id == flightCopy.RouteModel.Id);
             if (editWindow.ShowDialog() != true)
             {
@@ -168,10 +175,9 @@ namespace WpfApp3.Services
             CopyFields(route, routeCopy);
             ctx.Route = routeCopy;
             ctx.Airports = _airportService.GetAllAirports();
-            ctx.Airplanes = _airplaneService.GetAllAirplanes();
+            ctx.Carriers = _carrierService.GetAllCarriers();
             routeCopy.AirportDepart = ctx.Airports.Single(a => a.Id == routeCopy.AirportDepart.Id);
             routeCopy.AirportArrive = ctx.Airports.Single(a => a.Id == routeCopy.AirportArrive.Id);
-            routeCopy.Airplane = ctx.Airplanes.Single(a => a.Id == routeCopy.Airplane.Id);
             if (editWindow.ShowDialog() != true) return false;
             var errs = GetModelErrors(routeCopy);
             if (errs != string.Empty)
@@ -244,7 +250,27 @@ namespace WpfApp3.Services
             _passengerService.EditPassenger(passenger);
             return true;
         }
+        
+        private bool EditCarrier(CarrierModel carrier)
+        {
+            var editWindow = new EditCarrierWindow();
+            var ctx = (EditCarrierViewModel) editWindow.DataContext;
+            var carrierCopy = new CarrierModel();
+            CopyFields(carrier, carrierCopy);
+            ctx.Carrier = carrierCopy;
+            if (editWindow.ShowDialog() != true) return false;
+            var errs = GetModelErrors(carrierCopy);
+            if (errs != string.Empty)
+            {
+                ShowError(errs, "Error! Saving cancelled. ");
+                return false;
+            }
 
+            CopyFields(carrierCopy, carrier);
+            _carrierService.EditCarrier(carrier);
+            return true;
+        }
+        
         private bool EditTicket(TicketModel ticket)
         {
             var editWindow = new EditTicketWindow();
@@ -275,6 +301,7 @@ namespace WpfApp3.Services
             var ctx = (EditFlightViewModel) editWindow.DataContext;
             ctx.Flight = flightModel;
             ctx.Routes = _routeService.GetAllRoutes();
+            ctx.Airplanes = _airplaneService.GetAllAirplanes();
             if (editWindow.ShowDialog() != true)
             {
                 return false;
@@ -354,6 +381,27 @@ namespace WpfApp3.Services
             return true;
         }
 
+        private bool AddCarrier(CarrierModel carrierModel)
+        {
+             var editWindow = new EditCarrierWindow();
+             var ctx = (EditCarrierViewModel) editWindow.DataContext;
+             ctx.Carrier = carrierModel;
+             if (editWindow.ShowDialog() != true)
+             {
+                 return false;
+             }
+ 
+             var errs = GetModelErrors(ctx.Carrier);
+             if (errs != string.Empty)
+             {
+                 ShowError(errs, "Error! Saving cancelled. ");
+                 return false;
+             }
+ 
+             _carrierService.AddCarrier(carrierModel);
+             return true;           
+        }
+
         private bool AddTicket(TicketModel ticketModel)
         {
             var editWindow = new EditTicketWindow();
@@ -383,7 +431,7 @@ namespace WpfApp3.Services
             var ctx = (EditRouteViewModel) editWindow.DataContext;
             ctx.Route = routeModel;
             ctx.Airports = _airportService.GetAllAirports();
-            ctx.Airplanes = _airplaneService.GetAllAirplanes();
+            ctx.Carriers = _carrierService.GetAllCarriers();
             if (editWindow.ShowDialog() != true) return false;
             var errs = GetModelErrors(ctx.Route);
             if (errs != string.Empty)

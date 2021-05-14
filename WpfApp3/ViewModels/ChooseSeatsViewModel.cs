@@ -14,6 +14,9 @@ namespace WpfApp3.ViewModels
         private ObservableCollection<SeatModel> _seats;
         private TicketModel _ticket;
         private SeatModel _clickedSeat;
+        private readonly ITicketService _ticketService;
+        private readonly IFlightService _flightService;
+        private FlightModel _flight;
 
         public SeatModel ClickedSeat
         {
@@ -51,9 +54,6 @@ namespace WpfApp3.ViewModels
         {
             get => _seats;
         }
-        private readonly ITicketService _ticketService;
-        private readonly IFlightService _flightService;
-        private FlightModel _flight;
         
         public ChooseSeatsViewModel(ITicketService ticketService, IFlightService flightService)
         {
@@ -64,7 +64,7 @@ namespace WpfApp3.ViewModels
 
         public void InitializeSeats()
         {
-            int maxSeat = _flight.RouteModel.Airplane.Seats;
+            int maxSeat = _flight.Airplane.Seats;
             var free = _flightService.SeatsAvailable(_flight).ToList();
             for (int seat = 1; seat <= maxSeat; seat++) _seats.Add(new SeatModel {Number = seat, State = SeatState.Occupied});
             foreach (var seat in free)

@@ -6,9 +6,9 @@ using Model;
 
 namespace Mappers
 {
-    public static class TicketMapper 
+    public class TicketMapper 
     {
-        public static TicketModel MapToModel(Ticket entity)
+        public TicketModel MapToModel(Ticket entity)
         {
             var model = new TicketModel
             {
@@ -16,14 +16,14 @@ namespace Mappers
                 Adults = entity.Adults,
                 Children = entity.Children,
                 Price = entity.Price,
-                Flight = FlightMapper.MapToModel(entity.Flight),
-                Passenger = PassengerMapper.MapToModel(entity.Passenger),
+                Flight = new FlightMapper().MapToModel(entity.Flight),
+                Passenger = new PassengerMapper().MapToModel(entity.Passenger),
                 OccupiedSeats = entity.SeatsOccupied.Select(s => s.SeatNumber).ToList()
             };
             return model;
         }
 
-        public static Ticket MapToEntity(TicketModel model)
+        public Ticket MapToEntity(TicketModel model)
         {
             var seats = new List<Seat>();
             foreach (var seatNum in model.OccupiedSeats)

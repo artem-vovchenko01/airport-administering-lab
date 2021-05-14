@@ -6,17 +6,27 @@ namespace ConsoleUI
 {
     class Program
     {
+        public delegate int Calculate(int x, int y);
+
+        static int Calculation(int x1, int x2)
+        {
+            return x1 + x2;
+        }
         static void Main(string[] args)
         {
-            Console.WriteLine(new Guid());
-            QueryStringArray();
-            Console.WriteLine();
-            QueryArrayList();
-            Console.WriteLine();
-            foreach (var num in QueryIntArray())
-            {
-                Console.WriteLine(num);
-            }
+            Calculate handler = Calculation;
+            handler += Calculation;
+            handler += Calculation;
+            handler(4,5);
+            // Console.WriteLine(new Guid());
+            // QueryStringArray();
+            // Console.WriteLine();
+            // QueryArrayList();
+            // Console.WriteLine();
+            // foreach (var num in QueryIntArray())
+            // {
+            //     Console.WriteLine(num);
+            // }
         }
 
         static void QueryArrayList()

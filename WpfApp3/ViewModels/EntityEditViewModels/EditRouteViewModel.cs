@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
 using Entities;
@@ -11,11 +12,11 @@ namespace WpfApp3.ViewModels.EntityEditViewModels
     {
         private RouteModel _route;
         private IEnumerable<AirportModel> _airports;
-        private IEnumerable<AirplaneModel> _airplanes;
+        private IEnumerable<CarrierModel> _carriers;
         private ICommand _closeDialog;
 
         public ICommand CloseDialog => _closeDialog ??= new RelayCommand(OnCloseDialogCommandExecute,
-            (param) => _route.Airplane != null && _route.AirportArrive != null && _route.AirportDepart != null);
+            (param) => _route.AirportArrive != null && _route.AirportDepart != null);
         
         private void OnCloseDialogCommandExecute(object parameter)
         {
@@ -35,10 +36,11 @@ namespace WpfApp3.ViewModels.EntityEditViewModels
             set => Set(ref _airports, value);
         }
 
-        public IEnumerable<AirplaneModel> Airplanes
+        public IEnumerable<CarrierModel> Carriers
         {
-            get => _airplanes;
-            set => Set(ref _airplanes, value);
+            get => _carriers;
+            set => Set(ref _carriers, value);
         }
+
     }
 }

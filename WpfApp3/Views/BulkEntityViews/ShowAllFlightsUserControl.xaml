@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="WpfApp3.Views.ShowAllFlightsUserControl"
+﻿<UserControl x:Class="WpfApp3.Views.BulkEntityViews.ShowAllFlightsUserControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -27,7 +27,7 @@
                      <ColumnDefinition Width="4*"/>
                  </Grid.ColumnDefinitions>
                  <TextBlock Margin="20 0 0 0" HorizontalAlignment="Center" Grid.Column="1" Text="Departure"/>
-                 <TextBlock HorizontalAlignment="Center" Grid.Column="2" Text="Travel time"/>
+                 <TextBlock HorizontalAlignment="Center" Grid.Column="2" Text="Flight / travel time"/>
                  <TextBlock HorizontalAlignment="Center" Grid.Column="3" Text="Destination"/>
              </Grid>   
             <ListBox ItemsSource="{Binding Flights, Mode=TwoWay}" SelectedItem="{Binding SelectedFlight, UpdateSourceTrigger=PropertyChanged}">
@@ -62,7 +62,9 @@
                                 </TextBlock.Text>
                             </TextBlock>
                         </StackPanel>
-                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Grid.Column="2">
+                        <StackPanel Grid.Column="2" >
+                        <TextBlock Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Text="{Binding Code}"/>
+                        <TextBlock Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" >
                             <TextBlock.Text>
                                 <MultiBinding StringFormat="{}{0} h {1} m">
                                     <Binding Path="TravelTime.Hours"/>
@@ -70,6 +72,7 @@
                                 </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>
+                        </StackPanel>
                         <StackPanel Grid.Column="3" Orientation="Vertical">
                             <TextBlock HorizontalAlignment="Center" Text="{Binding TimeArrive}"/> 
                             <TextBlock HorizontalAlignment="Center" Text="{Binding RouteModel.AirportArrive.Name}"/>

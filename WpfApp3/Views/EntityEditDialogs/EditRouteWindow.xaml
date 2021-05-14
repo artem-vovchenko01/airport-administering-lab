@@ -30,24 +30,19 @@
                 </Style>
             </StackPanel.Resources>
             <TextBlock Text="Carrier" />
-            <TextBlock Text="Code" />
             <TextBlock Text="Departure airport" />
             <TextBlock Text="Arrive airport" />
-            <TextBlock Text="Airplane" />
         </StackPanel>
 
         <StackPanel Margin="20 80 20 20" Grid.Column="1" Grid.Row="0">
-            <TextBox Text="{Binding Carrier, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-            <TextBox Text="{Binding Code, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+            <ComboBox ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.Carriers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      SelectedItem="{Binding Carrier, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  ItemTemplate="{StaticResource CarrierComboTemplate}"/>
             <ComboBox ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.Airports, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                       SelectedItem="{Binding AirportDepart, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  ItemTemplate="{StaticResource AirportComboTemplate}"/>
 
             <ComboBox ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.Airports, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                       SelectedItem="{Binding AirportArrive, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" ItemTemplate="{StaticResource AirportComboTemplate}" />
 
-            <ComboBox ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.Airplanes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                      SelectedItem="{Binding Airplane, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" ItemTemplate="{StaticResource AirplaneComboTemplate}">
-            </ComboBox>
         </StackPanel>
 
         <UniformGrid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" DockPanel.Dock="Bottom" Rows="1"

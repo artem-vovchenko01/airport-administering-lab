@@ -6,6 +6,7 @@ namespace Model
 {
     public class FlightModel : AbstractModel
     {
+        private string _code;
         private DateTime _timeDepart;
         private DateTime _timeArrive;
         private DateTime _stopBooking;
@@ -16,12 +17,19 @@ namespace Model
         // private AirportModel _airportModel;
 
         public IEnumerable<TicketModel> Tickets { get; set; }
+        public AirplaneModel Airplane { get; set; }
 
         // public AirportModel AirportModel
         // {
         //     get => _airportModel;
         //     set => Set(ref _airportModel, value);
         // }
+
+        public string Code
+        {
+            get => _code;
+            set => Set(ref _code, value);
+        }
 
         public int SeatsAvailable
         {
@@ -35,6 +43,7 @@ namespace Model
             set
             {
                 value = new DateTime(value.Year, value.Month, value.Day, value.Hour, value.Minute, 0);
+                StopBooking = value;
                 Set(ref _timeDepart, value);
             }
         }
@@ -101,6 +110,10 @@ namespace Model
                                 error = "One flight cannot last >= 24 hours";
                         }
 
+                        break;
+                    case nameof(Code):
+                        if (string.IsNullOrWhiteSpace(Code))
+                            error = "Blank value not allowed for the field" + nameof(Code);
                         break;
                     case nameof(MinDelayed):
                         if (MinDelayed < 0)

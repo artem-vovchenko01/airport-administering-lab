@@ -4,9 +4,9 @@ using Model;
 
 namespace Mappers
 {
-    public static class AirportMapper 
+    public class AirportMapper 
     {
-        public static AirportModel MapToModel(Airport entity)
+        public AirportModel MapToModel(Airport entity)
         {
             var model = new AirportModel
             {
@@ -18,7 +18,7 @@ namespace Mappers
             return model;
         }
 
-        public static Airport MapToEntity(AirportModel model)
+        public Airport MapToEntity(AirportModel model)
         {
             var entity = new Airport
             {

@@ -14,39 +14,40 @@ namespace Data.Repositories
         {
         }
         
-        private MyDbContext _Context => Context as MyDbContext;
+        private MyDbContext _context => Context as MyDbContext;
         public Flight GetWithRouteAndAirplane(Guid id)
         {
-            var flight = _Context.Flights
+            var flight = _context.Flights
                 .Where(f => f.Id == id)
+                .Include(f => f.Airplane)
                 .Include(f => f.Route)
-                .ThenInclude(r => r.Airplane)
+                .ThenInclude(r => r.Carrier)
                 .FirstOrDefault();
             return flight;
         }
 
         public IEnumerable<Flight> GetAllWithRouteAndAirplane()
         {
-            var objs = _Context.Flights
-                                       .Include(f => f.Route)
-                                       .Include(f => f.Route.Airplane)
-                                       .Include(f => f.Route.AirportArrive)
-                                       .Include(f => f.Route.AirportDepart)
-                                       .ToList();
+            var objs = _context.Flights
+                .Include(f => f.Airplane)
+               .Include(f => f.Route)
+               .Include(f => f.Route.Carrier)
+               .Include(f => f.Route.AirportArrive)
+               .Include(f => f.Route.AirportDepart)
+               .ToList();
             return objs;
-
         }
 
         public IEnumerable<Flight> GetAllWithTickets()
         {
-            return _Context.Flights
+            return _context.Flights
                 .Include(f => f.Tickets).ToList();
         }
 
         public int GetSeatCapacity(Guid flightId)
         {
             var flight = GetWithRouteAndAirplane(flightId);
-            return flight.Route.Airplane.Seats;
+            return flight.Airplane.Seats;
         }
 
     }

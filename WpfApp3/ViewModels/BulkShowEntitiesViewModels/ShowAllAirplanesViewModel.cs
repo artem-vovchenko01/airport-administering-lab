@@ -32,11 +32,10 @@ namespace WpfApp3.ViewModels.BulkShowEntitiesViewModels
         private ICommand _editAirplane;
         private ICommand _deleteAirplane;
 
-        public ICommand AddAirplane => _addAirplane ??= new RelayCommand(OnAddAirplaneCommandExecute, CanAlwaysExecute);
+        public ICommand AddAirplane => _addAirplane ??= new RelayCommand(OnAddAirplaneCommandExecute, (obj) => true);
         public ICommand EditAirplane => _editAirplane ??= new RelayCommand(OnEditAirplaneCommandExecute, IsAirplaneSelected);
         public ICommand DeleteAirplane => _deleteAirplane ??= new RelayCommand(OnDeleteAirplaneCommandExecute, IsAirplaneSelected);
 
-        private bool CanAlwaysExecute(object a) => true;
         private bool IsAirplaneSelected(object a) => _selectedAirplane != null;
 
         private void OnAddAirplaneCommandExecute(object a)

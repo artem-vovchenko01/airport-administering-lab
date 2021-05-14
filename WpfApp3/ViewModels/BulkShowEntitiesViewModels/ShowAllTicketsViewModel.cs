@@ -44,11 +44,10 @@ namespace WpfApp3.ViewModels.BulkShowEntitiesViewModels
         private ICommand _editTicket;
         private ICommand _deleteTicket;
 
-        public ICommand AddTicket => _addTicket ??= new RelayCommand(OnAddTicketCommandExecute, CanAlwaysExecute);
+        public ICommand AddTicket => _addTicket ??= new RelayCommand(OnAddTicketCommandExecute, (obj) => true);
         public ICommand EditTicket => _editTicket ??= new RelayCommand(OnEditTicketCommandExecute, IsTicketSelected);
         public ICommand DeleteTicket => _deleteTicket ??= new RelayCommand(OnDeleteTicketCommandExecute, IsTicketSelected);
 
-        private bool CanAlwaysExecute(object t) => true;
         private bool IsTicketSelected(object t) => _selectedTicket != null;
 
         private void OnAddTicketCommandExecute(object t)

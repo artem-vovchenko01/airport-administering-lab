@@ -42,11 +42,10 @@ namespace WpfApp3.ViewModels.BulkShowEntitiesViewModels
         private ICommand _editPassenger;
         private ICommand _deletePassenger;
 
-        public ICommand AddPassenger => _addPassenger ??= new RelayCommand(OnAddPassengerCommandExecute, CanAlwaysExecute);
+        public ICommand AddPassenger => _addPassenger ??= new RelayCommand(OnAddPassengerCommandExecute, (obj) => true);
         public ICommand EditPassenger => _editPassenger ??= new RelayCommand(OnEditPassengerCommandExecute, IsPassengerSelected);
         public ICommand DeletePassenger => _deletePassenger ??= new RelayCommand(OnDeletePassengerCommandExecute, IsPassengerSelected);
 
-        private bool CanAlwaysExecute(object p) => true;
         private bool IsPassengerSelected(object p) => _selectedPassenger != null;
 
         private void OnAddPassengerCommandExecute(object p)

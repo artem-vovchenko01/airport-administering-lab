@@ -9,15 +9,17 @@ namespace Services
 {
     public class RouteService : IRouteService
     {
-        private IUnitOfWork _uof;
+        private readonly IUnitOfWork _uof;
+        private readonly RouteMapper _routeMapper;
         public RouteService(IUnitOfWork unitOfWork)
         {
             _uof = unitOfWork;
+            _routeMapper = new RouteMapper();
         }
 
         public void AddRoute(RouteModel route)
         {
-            var entity = RouteMapper.MapToEntity(route);
+            var entity = _routeMapper.MapToEntity(route);
             _uof.Routes.Add(entity);
             _uof.Complete();
         }
@@ -30,7 +32,7 @@ namespace Services
 
         public void EditRoute(RouteModel route)
         {
-            var entity = RouteMapper.MapToEntity(route);
+            var entity = _routeMapper.MapToEntity(route);
             _uof.Routes.Update(entity);
             _uof.Complete();
         }
@@ -40,7 +42,7 @@ namespace Services
             var routeModels = new List<RouteModel>();
             foreach (var route in _uof.Routes.GetAllWithIncludes())
             {
-                routeModels.Add(RouteMapper.MapToModel(route)); 
+                routeModels.Add(_routeMapper.MapToModel(route)); 
             }
 
             return routeModels;

@@ -16,6 +16,7 @@ namespace Data.Repositories
             Routes = new RouteRepository(context);
             Tickets = new TicketRepository(context);
             Seats = new SeatRepository(context);
+            Carriers = new CarrierRepository(context);
         }
 
         public IAirplaneRepository Airplanes { get; }
@@ -25,6 +26,7 @@ namespace Data.Repositories
         public IRouteRepository Routes { get; }
         public ITicketRepository Tickets { get; }
         public ISeatRepository Seats { get; }
+        public ICarrierRepository Carriers { get; }
 
         public int Complete()
         {

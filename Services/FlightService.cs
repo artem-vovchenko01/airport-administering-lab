@@ -12,15 +12,17 @@ namespace Services
     {
         private readonly IUnitOfWork _uof;
         private readonly TicketService _ticketService;
+        private readonly FlightMapper _flightMapper;
         public FlightService(IUnitOfWork uof)
         {
             _uof = uof;
             _ticketService = new TicketService(uof);
+            _flightMapper = new FlightMapper();
         }
 
         public void AddFlight(FlightModel flight)
         {
-            var entity = FlightMapper.MapToEntity(flight);
+            var entity = _flightMapper.MapToEntity(flight);
             _uof.Flights.Add(entity);
             _uof.Complete();
         }
@@ -33,7 +35,7 @@ namespace Services
 
         public void EditFlight(FlightModel flightModel)
         {
-            var entity = FlightMapper.MapToEntity(flightModel);
+            var entity = _flightMapper.MapToEntity(flightModel);
             _uof.Flights.Update(entity);
             _uof.Complete();
         }
@@ -41,7 +43,7 @@ namespace Services
         public void DelayFlight(FlightModel flight, int min)
         {
             flight.MinDelayed = min;
-            var entity = FlightMapper.MapToEntity(flight);
+            var entity = _flightMapper.MapToEntity(flight);
             _uof.Flights.Update(entity);
             _uof.Complete();
         }
@@ -84,7 +86,7 @@ namespace Services
 
             foreach (var flight in _uof.Flights.GetAllWithRouteAndAirplane())
             {
-                model = FlightMapper.MapToModel(flight);
+                model = _flightMapper.MapToModel(flight);
                 model.SeatsAvailable = SeatsAvailableCount(model);
                 models.Add(model);
             }

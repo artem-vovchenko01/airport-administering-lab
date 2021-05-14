@@ -8,9 +8,6 @@
         mc:Ignorable="d"
         Title="Airport administering" Height="450" Width="800" DataContext="{Binding Source={StaticResource ViewModelLocator} , Path=MainWindowViewModel}">
 
-    <!-- <Window.DataContext> -->
-    <!--     <Binding Path="MainWindowViewModel" Source="{StaticResource ViewModelLocator}"></Binding> -->
-    <!-- </Window.DataContext> -->
     <Grid x:Name="thisGrid">
         <ContentControl Content="{Binding CurrentPageViewModel, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></ContentControl> 
         </Grid>

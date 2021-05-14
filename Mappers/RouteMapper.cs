@@ -4,30 +4,27 @@ using Model;
 
 namespace Mappers
 {
-    public static class RouteMapper 
+    public class RouteMapper 
     {
-        public static RouteModel MapToModel(Route entity)
+        public RouteModel MapToModel(Route entity)
         {
+            var airportMapper = new AirportMapper();
             var model = new RouteModel
             {
                 Id = entity.Id,
-                Carrier = entity.Carrier,
-                Code = entity.Code,
-                Airplane = AirplaneMapper.MapToModel(entity?.Airplane),
-                AirportArrive = AirportMapper.MapToModel(entity?.AirportArrive),
-                AirportDepart = AirportMapper.MapToModel(entity?.AirportDepart)
+                Carrier = new CarrierMapper().MapToModel(entity.Carrier),
+                AirportArrive = airportMapper.MapToModel(entity?.AirportArrive),
+                AirportDepart = airportMapper.MapToModel(entity?.AirportDepart)
             };
             return model;
         }
 
-        public static Route MapToEntity(RouteModel model)
+        public Route MapToEntity(RouteModel model)
         {
             var entity = new Route
             {
                 Id = model.Id,
-                Carrier = model.Carrier,
-                Code = model.Code,
-                AirplaneId = model.Airplane.Id,
+                CarrierId = model.Carrier.Id,
                 AirportDepartId = model.AirportDepart.Id,
                 AirportArriveId = model.AirportArrive.Id
             };

@@ -20,8 +20,9 @@ namespace WpfApp3.ViewModels
         private readonly ShowAllAirportsViewModel _showAllAirportsViewModel;
         private readonly ShowAllPassengersViewModel _showAllPassengersViewModel;
         private readonly ShowAllTicketsViewModel _showAllTicketsViewModel;
+        private readonly ShowAllCarriersViewModel _showAllCarriersViewModel;
         private readonly TicketsByFlightViewModel _ticketsByFlightViewModel;
-        public MainWindowViewModel(ShowAllFlightsViewModel showAllFlightsViewModel, OverviewViewModel overviewViewModel, ShowAllRoutesViewModel showAllRoutesViewModel, ShowAllAirplanesViewModel showAllAirplanesViewModel, ShowAllAirportsViewModel showAllAirportsViewModel, ShowAllPassengersViewModel showAllPassengersViewModel, ShowAllTicketsViewModel showAllTicketsViewModel, TicketsByFlightViewModel ticketsByFlightViewModel)
+        public MainWindowViewModel(ShowAllFlightsViewModel showAllFlightsViewModel, OverviewViewModel overviewViewModel, ShowAllRoutesViewModel showAllRoutesViewModel, ShowAllAirplanesViewModel showAllAirplanesViewModel, ShowAllAirportsViewModel showAllAirportsViewModel, ShowAllPassengersViewModel showAllPassengersViewModel, ShowAllTicketsViewModel showAllTicketsViewModel, TicketsByFlightViewModel ticketsByFlightViewModel, ShowAllCarriersViewModel showAllCarriersViewModel)
         {
             CurrentInstance = this;
             _overviewViewModel = overviewViewModel;
@@ -31,6 +32,7 @@ namespace WpfApp3.ViewModels
             _showAllPassengersViewModel = showAllPassengersViewModel;
             _showAllRoutesViewModel = showAllRoutesViewModel;
             _showAllTicketsViewModel = showAllTicketsViewModel;
+            _showAllCarriersViewModel = showAllCarriersViewModel;
             _ticketsByFlightViewModel = ticketsByFlightViewModel;
 
             _currentPageViewModel = overviewViewModel;
@@ -72,6 +74,11 @@ namespace WpfApp3.ViewModels
         public void ShowAllTickets()
         {
             CurrentPageViewModel = _showAllTicketsViewModel;
+        }
+
+        public void ShowAllCarriers()
+        {
+            CurrentPageViewModel = _showAllCarriersViewModel;
         }
 
         public void ShowTicketsByFlight(FlightModel flightModel)

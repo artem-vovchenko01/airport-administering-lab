@@ -81,21 +81,5 @@ namespace WpfApp3.ViewModels.EntityEditViewModels
             get => _passengers;
             set => Set(ref _passengers, value);
         }
-
-        // public FlightModel SelectedFlight
-        // {
-        //     get => _selectedFlight;
-        //     set
-        //     {
-        //         Set(ref _selectedFlight, value);
-        //         _areSeatsSelected = false;
-        //     }
-        // }
-
-        // public PassengerModel SelectedPassenger
-        // {
-        //     get => _selectedPassenger;
-        //     set => Set(ref _selectedPassenger, value);
-        // }
     }
 }

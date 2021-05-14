@@ -6,35 +6,39 @@ using Model;
 
 namespace Mappers
 {
-    public static class FlightMapper 
+    public class FlightMapper 
     {
-        public static FlightModel MapToModel(Flight entity)
+        public FlightModel MapToModel(Flight entity)
         {
+            var ticketMapper = new TicketMapper();
             var model = new FlightModel
             {
                 Id = entity.Id,
+                Code = entity.Code,
                 MinDelayed = entity.MinDelayed,
                 StopBooking = entity.StopBooking,
                 TimeArrive = entity.TimeArrive,
                 TimeDepart = entity.TimeDepart,
-                Tickets = entity.Tickets?.Select(TicketMapper.MapToModel),
-                RouteModel = RouteMapper.MapToModel(entity?.Route),
+                Tickets = entity.Tickets?.Select(ticketMapper.MapToModel),
+                RouteModel = new RouteMapper().MapToModel(entity?.Route),
+                Airplane = new AirplaneMapper().MapToModel(entity.Airplane),
                 TravelTime = entity.TimeArrive - entity.TimeDepart
             };
             return model;
         }
         
-
-        public static Flight MapToEntity(FlightModel model)
+        public Flight MapToEntity(FlightModel model)
         {
             var flight = new Flight
             {
                 Id = model.Id,
+                Code = model.Code,
                 MinDelayed = model.MinDelayed,
                 StopBooking = model.StopBooking,
                 TimeArrive = model.TimeArrive,
                 TimeDepart = model.TimeDepart,
-                RouteId = model.RouteModel.Id
+                RouteId = model.RouteModel.Id,
+                AirplaneId = model.Airplane.Id
             };
             return flight;
         }

@@ -35,10 +35,9 @@ namespace WpfApp3.ViewModels.BulkShowEntitiesViewModels
         private ICommand _addRoute;
         private ICommand _editRoute;
         private ICommand _deleteRoute;
-        public ICommand AddRoute => _addRoute ??= new RelayCommand(OnAddRouteCommandExecute, CanAlwaysExecute);
+        public ICommand AddRoute => _addRoute ??= new RelayCommand(OnAddRouteCommandExecute, (obj) => true);
         public ICommand EditRoute => _editRoute ??= new RelayCommand(OnEditRouteCommandExecute, IsRouteSelected);
         public ICommand DeleteRoute => _deleteRoute ??= new RelayCommand(OnDeleteRouteCommandExecute, IsRouteSelected);
-        private bool CanAlwaysExecute(object r) => true;
         private bool IsRouteSelected(object r) => SelectedRoute != null;
 
         private void OnAddRouteCommandExecute(object r)

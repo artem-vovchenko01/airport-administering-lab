@@ -11,6 +11,7 @@ namespace Data.Repositories.Abstract
         IRouteRepository Routes { get; }
         ITicketRepository Tickets { get; }
         ISeatRepository Seats { get; }
+        ICarrierRepository Carriers { get; }
 
         int Complete();
     }
