@@ -93,6 +93,21 @@ namespace Services
 
             return models;
         }
+
+        public IEnumerable<FlightModel> GetFlightsByAirport(Guid airportId)
+        {
+            var models = new List<FlightModel>();
+            FlightModel model;
+
+            foreach (var flight in _uof.Flights.GetAllByAirportWithRouteAndAirplane(airportId))
+            {
+                model = _flightMapper.MapToModel(flight);
+                model.SeatsAvailable = SeatsAvailableCount(model);
+                models.Add(model);
+            }
+
+            return models;
+        }
     }
  }
        

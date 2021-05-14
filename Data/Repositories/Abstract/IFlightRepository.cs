@@ -10,5 +10,6 @@ namespace Data.Repositories.Abstract
         IEnumerable<Flight> GetAllWithRouteAndAirplane();
         IEnumerable<Flight> GetAllWithTickets();
         int GetSeatCapacity(Guid flightId);
+        IEnumerable<Flight> GetAllByAirportWithRouteAndAirplane(Guid airportId);
     }
 }

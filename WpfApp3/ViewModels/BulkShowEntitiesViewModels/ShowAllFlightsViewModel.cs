@@ -1,4 +1,7 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
 using Model;
 using Services.Abstract;
@@ -12,27 +15,63 @@ namespace WpfApp3.ViewModels.BulkShowEntitiesViewModels
         private FlightModel _selectedFlight;
         private readonly IFlightService _flightService;
         private readonly IUserDialogService _dialogService;
+        private readonly IAirportService _airportService;
+        private SelectedAirportWrapper _selectedAirportWrapper;
 
+        private IEnumerable<AirportModel> _airports;
         public ObservableCollection<FlightModel> Flights { get; set; }
 
+        private IEnumerable<AirportModel> Airports
+        {
+            get => _airports;
+            set
+            {
+                _airports = value;
+                _airportWrappers = _airports.Select(a => new SelectedAirportWrapper {Airport = a, IsAllAirport = false}).ToList();
+                _airportWrappers.Insert(0, new SelectedAirportWrapper {IsAllAirport = true});
+            }
+        }
+
+        private List<SelectedAirportWrapper> _airportWrappers { get; set; }
+
+        public List<SelectedAirportWrapper> AirportWrappers
+        {
+            get => _airportWrappers;
+        }
         public FlightModel SelectedFlight
         {
             get => _selectedFlight;
             set => Set(ref _selectedFlight, value);
         }
 
-        public ShowAllFlightsViewModel(IFlightService flightService, IUserDialogService dialogService)
+        public SelectedAirportWrapper SelectedAirportWrapper
+        {
+            get => _selectedAirportWrapper;
+            set
+            {
+                Set(ref _selectedAirportWrapper, value);
+                UpdateFlights();
+            }
+        }
+
+        public ShowAllFlightsViewModel(IFlightService flightService, IUserDialogService dialogService, IAirportService airportService)
         {
             _dialogService = dialogService;
             _flightService = flightService;
+            _airportService = airportService;
             Flights = new ObservableCollection<FlightModel>();
+            Airports = _airportService.GetAllAirports();
             UpdateFlights();
         }
 
         private void UpdateFlights()
         {
             Flights.Clear();
-            var updFlights = _flightService.GetAllFlights();
+            IEnumerable<FlightModel> updFlights;
+            if (_selectedAirportWrapper == null || _selectedAirportWrapper.IsAllAirport)
+                updFlights = _flightService.GetAllFlights();
+            else
+                updFlights = _flightService.GetFlightsByAirport(_selectedAirportWrapper.Airport.Id);
             foreach (var flight in updFlights)
             {
                 Flights.Add(flight);

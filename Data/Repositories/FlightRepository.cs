@@ -50,5 +50,18 @@ namespace Data.Repositories
             return flight.Airplane.Seats;
         }
 
+        public IEnumerable<Flight> GetAllByAirportWithRouteAndAirplane(Guid airportId)
+        {
+            var objs = _context.Flights
+                .Where(f => f.Route.AirportArrive.Id == airportId ||
+                            f.Route.AirportDepart.Id == airportId)
+                .Include(f => f.Airplane)
+               .Include(f => f.Route)
+               .Include(f => f.Route.Carrier)
+               .Include(f => f.Route.AirportArrive)
+               .Include(f => f.Route.AirportDepart)
+               .ToList();
+            return objs;
+        }
     }
 }

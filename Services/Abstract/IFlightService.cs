@@ -15,5 +15,6 @@ namespace Services.Abstract
         bool IsSeatAvailable(FlightModel flight, int seat);
         IEnumerable<int> SeatsAvailable(FlightModel flight);
         IEnumerable<FlightModel> GetAllFlights();
+        IEnumerable<FlightModel> GetFlightsByAirport(Guid airportId);
     }
 }
