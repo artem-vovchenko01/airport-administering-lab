@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace ConsoleUI
 {
-    class Program
+    class Program : IDisposable
     {
         public delegate int Calculate(int x, int y);
 
@@ -12,12 +12,14 @@ namespace ConsoleUI
         {
             return x1 + x2;
         }
+
         static void Main(string[] args)
         {
             Calculate handler = Calculation;
             handler += Calculation;
             handler += Calculation;
             handler(4,5);
+            
             // Console.WriteLine(new Guid());
             // QueryStringArray();
             // Console.WriteLine();
@@ -63,6 +65,30 @@ namespace ConsoleUI
                 orderby num
                 select num;
             return numsBiggerThanFive.ToArray();
+        }
+
+        private void ReleaseUnmanagedResources()
+        {
+            // TODO release unmanaged resources here
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            ReleaseUnmanagedResources();
+            if (disposing)
+            {
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        ~Program()
+        {
+            Dispose(false);
         }
     }
 }

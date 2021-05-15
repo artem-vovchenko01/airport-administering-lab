@@ -12,6 +12,5 @@ namespace Data.Repositories
         {
         }
         
-        public MyDbContext MyDbContext => Context as MyDbContext;
     }
 }

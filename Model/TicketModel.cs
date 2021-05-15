@@ -31,10 +31,7 @@ namespace Model
 
         public FlightModel Flight
         {
-            get
-            {
-                return _flight;
-            }
+            get => _flight;
             set
             {
                 if (_flight != null && value.Id != _flight.Id)
@@ -68,6 +65,8 @@ namespace Model
                     case nameof(Price):
                         if (Price <= 0)
                             error = "Price should be > 0";
+                        if (Price < Flight.Airplane.DefaultPrice)
+                            error = "Price of a ticket cannot be less than base airplane cost";
                         break;
                 }
 

@@ -14,7 +14,6 @@ namespace Data.Repositories
         {
         }
         
-        private MyDbContext _context => Context as MyDbContext;
         public IEnumerable<Route> GetAllWithIncludes()
         {
             return _context.Routes

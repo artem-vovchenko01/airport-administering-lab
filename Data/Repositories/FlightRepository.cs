@@ -14,7 +14,6 @@ namespace Data.Repositories
         {
         }
         
-        private MyDbContext _context => Context as MyDbContext;
         public Flight GetWithRouteAndAirplane(Guid id)
         {
             var flight = _context.Flights

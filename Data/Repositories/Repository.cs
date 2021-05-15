@@ -10,62 +10,62 @@ namespace Data.Repositories
 {
     public class Repository<TEntity, TKey> : IRepository<TEntity, TKey> where TKey : IComparable<TKey> where TEntity : class, IEntity<TKey>
     {
-        public readonly DbContext Context;
+        protected readonly MyDbContext _context;
 
-        public Repository(DbContext context)
+        public Repository(MyDbContext context)
         {
-            Context = context;
+            _context = context;
         }
 
         public TEntity Get(TKey id)
         {
-            return Context.Set<TEntity>().Find(id);
+            return _context.Set<TEntity>().Find(id);
         }
 
         public IEnumerable<TEntity> GetAll()
         {
-            return Context.Set<TEntity>().ToList();
+            return _context.Set<TEntity>().ToList();
         }
 
         // DON'T USE
         public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
         {
-            return Context.Set<TEntity>().Where(predicate);
+            return _context.Set<TEntity>().Where(predicate);
         }
 
         public void Add(TEntity entity)
         {
-            Context.Set<TEntity>().Add(entity);
+            _context.Set<TEntity>().Add(entity);
         }
 
         public void AddRange(IEnumerable<TEntity> entities)
         {
-            Context.Set<TEntity>().AddRange(entities);
+            _context.Set<TEntity>().AddRange(entities);
         }
 
         public void Remove(TEntity entity)
         {
-            Context.Set<TEntity>().Remove(entity);
+            _context.Set<TEntity>().Remove(entity);
         }
 
         public void RemoveRange(IEnumerable<TEntity> entities)
         {
-            Context.Set<TEntity>().RemoveRange(entities);
+            _context.Set<TEntity>().RemoveRange(entities);
         }
 
         public void Update(TEntity entity)
         {
-            var ctx = Context.Set<TEntity>();
+            var ctx = _context.Set<TEntity>();
             var oldEnt = Get(entity.Id);
             if (oldEnt == entity)
             {
-                Context.Set<TEntity>().Update(entity);
+                _context.Set<TEntity>().Update(entity);
             }
             else
             {
                 // Context.Entry(oldEnt).State = EntityState.Modified;
                 CopyProperties(entity, oldEnt);
-                Context.Set<TEntity>().Update(oldEnt);
+                _context.Set<TEntity>().Update(oldEnt);
             }
         }
 
@@ -96,7 +96,7 @@ namespace Data.Repositories
 
         public void UpdateRange(IEnumerable<TEntity> entities)
         {
-            Context.Set<TEntity>().UpdateRange(entities);
+            _context.Set<TEntity>().UpdateRange(entities);
         }
     }
 }

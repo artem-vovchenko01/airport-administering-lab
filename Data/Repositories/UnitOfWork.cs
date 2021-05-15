@@ -1,22 +1,23 @@
 ﻿using Data.Repositories.Abstract;
 using Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Data.Repositories
 {
     public class UnitOfWork : IUnitOfWork
     {
         private readonly MyDbContext _context;
-        public UnitOfWork(MyDbContext context)
+        public UnitOfWork(MyDbContext context, IAirplaneRepository airplaneRepository, IAirportRepository airportRepository, IFlightRepository flightRepository, IPassengerRepository passengerRepository, IRouteRepository routeRepository, ITicketRepository ticketRepository, ISeatRepository seatRepository, ICarrierRepository carrierRepository)
         {
             _context = context;
-            Airplanes = new AirplaneRepository(context);
-            Airports = new AirportRepository(context);
-            Flights = new FlightRepository(context);
-            Passengers = new PassengerRepository(context);
-            Routes = new RouteRepository(context);
-            Tickets = new TicketRepository(context);
-            Seats = new SeatRepository(context);
-            Carriers = new CarrierRepository(context);
+            Airplanes = airplaneRepository;
+            Airports = airportRepository;
+            Flights = flightRepository;
+            Passengers = passengerRepository;
+            Routes = routeRepository;
+            Tickets = ticketRepository;
+            Seats = seatRepository;
+            Carriers = carrierRepository;
         }
 
         public IAirplaneRepository Airplanes { get; }

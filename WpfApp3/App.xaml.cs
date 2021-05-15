@@ -2,6 +2,7 @@
 using Data;
 using Data.Repositories;
 using Data.Repositories.Abstract;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Services;
 using Services.Abstract;
@@ -79,6 +80,15 @@ namespace WpfApp3
             serviceCollection.AddSingleton<MainWindow>();
             serviceCollection.AddSingleton(sp => sp);
             serviceCollection.AddSingleton<IUnitOfWork, UnitOfWork>();
+
+            serviceCollection.AddSingleton<IAirplaneRepository, AirplaneRepository>();
+            serviceCollection.AddSingleton<IAirportRepository, AirportRepository>();
+            serviceCollection.AddSingleton<IFlightRepository, FlightRepository>();
+            serviceCollection.AddSingleton<IPassengerRepository, PassengerRepository>();
+            serviceCollection.AddSingleton<IRouteRepository, RouteRepository>();
+            serviceCollection.AddSingleton<ITicketRepository, TicketRepository>();
+            serviceCollection.AddSingleton<ISeatRepository, SeatRepository>();
+            serviceCollection.AddSingleton<ICarrierRepository, CarrierRepository>();
             
             serviceCollection.AddSingleton<IFlightService, FlightService>();
             serviceCollection.AddSingleton<IPassengerService, PassengerService>();

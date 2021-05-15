@@ -27,6 +27,5 @@ namespace Data.Repositories
                 .Include(c => c.Routes);
         }
         
-        private MyDbContext _context => Context as MyDbContext;
     }
 }

@@ -9,13 +9,12 @@ namespace Data.Repositories
 {
     public class SeatRepository : Repository<Seat, Guid>, ISeatRepository
     {
-        public SeatRepository(DbContext context) : base(context)
+        public SeatRepository(MyDbContext context) : base(context)
         {
         }
-        public MyDbContext MyDbContext => Context as MyDbContext;
         public List<Seat> SeatsOccupiedByTicketId(Guid ticketId)
         {
-            var ticket = MyDbContext.Tickets.Where(t => t.Id == ticketId)
+            var ticket = _context.Tickets.Where(t => t.Id == ticketId)
                 .Include(t => t.SeatsOccupied).FirstOrDefault();
             return ticket.SeatsOccupied;
         }
