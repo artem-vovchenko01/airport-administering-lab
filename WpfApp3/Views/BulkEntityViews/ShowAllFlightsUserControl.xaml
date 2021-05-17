@@ -63,8 +63,8 @@
                             </TextBlock>
                         </StackPanel>
                         <StackPanel Grid.Column="2" >
-                        <TextBlock Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Text="{Binding Code}"/>
-                        <TextBlock Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" >
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Text="{Binding Code}"/>
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" >
                             <TextBlock.Text>
                                 <MultiBinding StringFormat="{}{0} h {1} m">
                                     <Binding Path="TravelTime.Hours"/>
@@ -72,6 +72,33 @@
                                 </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>
+                        <StackPanel>
+                            
+                            <StackPanel.Style>
+                                <Style TargetType="StackPanel">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding MinDelayed}" Value="0">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                                </Style>
+                            </StackPanel.Style>
+                        <TextBlock Foreground="Orange" FontWeight="Bold" HorizontalAlignment="Center">
+                             <TextBlock.Text>
+                                 <MultiBinding StringFormat="{}{0} min delay">
+                                     <Binding Path="MinDelayed"/>
+                                 </MultiBinding>
+                             </TextBlock.Text>
+                        </TextBlock>
+                        <TextBlock Foreground="Orange" FontWeight="Bold" HorizontalAlignment="Center">
+                             <TextBlock.Text>
+                                 <MultiBinding StringFormat="{} Reason: {0}">
+                                     <Binding Path="DelayReason"/>
+                                 </MultiBinding>
+                             </TextBlock.Text>
+                        </TextBlock>
+                        </StackPanel>
                         </StackPanel>
                         <StackPanel Grid.Column="3" Orientation="Vertical">
                             <TextBlock HorizontalAlignment="Center" Text="{Binding TimeArrive}"/> 

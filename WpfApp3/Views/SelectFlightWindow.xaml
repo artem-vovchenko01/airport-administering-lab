@@ -9,6 +9,7 @@
         xmlns:commands="clr-namespace:WpfApp3.Commands"
         xmlns:wm="clr-namespace:WpfApp3.ViewModels"
         mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
         Title="SelectFlight" Height="450" Width="800" DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=SelectFlightViewModel}">
     <Grid>
         <Grid.RowDefinitions>

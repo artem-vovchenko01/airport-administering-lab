@@ -22,7 +22,8 @@ namespace Mappers
                 Tickets = entity.Tickets?.Select(ticketMapper.MapToModel),
                 RouteModel = new RouteMapper().MapToModel(entity?.Route),
                 Airplane = new AirplaneMapper().MapToModel(entity.Airplane),
-                TravelTime = entity.TimeArrive - entity.TimeDepart
+                TravelTime = entity.TimeArrive - entity.TimeDepart,
+                DelayReason = entity.DelayReason
             };
             return model;
         }
@@ -38,7 +39,8 @@ namespace Mappers
                 TimeArrive = model.TimeArrive,
                 TimeDepart = model.TimeDepart,
                 RouteId = model.RouteModel.Id,
-                AirplaneId = model.Airplane.Id
+                AirplaneId = model.Airplane.Id,
+                DelayReason = model.DelayReason
             };
             return flight;
         }

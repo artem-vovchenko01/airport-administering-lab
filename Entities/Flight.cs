@@ -16,6 +16,8 @@ namespace Entities
         public DateTime StopBooking { get; set; }
         [Required]
         public int MinDelayed { get; set; }
+
+        public DelayReason DelayReason { get; set; }
         [Required]
         public Guid RouteId { get; set; }
         [Required]

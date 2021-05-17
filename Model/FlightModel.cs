@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Entities;
 
 namespace Model
 {
@@ -12,6 +13,7 @@ namespace Model
         private DateTime _stopBooking;
         private int _minDelayed;
         private RouteModel _routeModel;
+        private DelayReason _delayReason;
 
         private int _seatsAvailable;
         // private AirportModel _airportModel;
@@ -25,6 +27,11 @@ namespace Model
         //     set => Set(ref _airportModel, value);
         // }
 
+        public DelayReason DelayReason
+        {
+            get => _delayReason;
+            set => Set(ref _delayReason, value);
+        }
         public string Code
         {
             get => _code;
@@ -71,7 +78,12 @@ namespace Model
         public int MinDelayed
         {
             get => _minDelayed;
-            set => Set(ref _minDelayed, value);
+            set
+            {
+                Set(ref _minDelayed, value);
+                if (_minDelayed == 0) DelayReason = DelayReason.None;
+                StopBooking = _timeDepart.AddMinutes(_minDelayed);
+            }
         }
 
         public TimeSpan TravelTime { get; set; }

@@ -8,6 +8,7 @@
         xmlns:cmd="clr-namespace:WpfApp3.Commands"
         xmlns:entityEditViewModels="clr-namespace:WpfApp3.ViewModels.EntityEditViewModels"
         mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
         Title="Editing ticket" Height="450" Width="800" DataContext="{Binding Path=EditTicketViewModel , Source={StaticResource ViewModelLocator}}">
 
     <Grid DataContext="{Binding Ticket, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">

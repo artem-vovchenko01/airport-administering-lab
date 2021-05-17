@@ -8,6 +8,7 @@
         xmlns:cmd="clr-namespace:WpfApp3.Commands"
         xmlns:entityEditViewModels="clr-namespace:WpfApp3.ViewModels.EntityEditViewModels"
         mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
         Title="Editing passenger" Height="450" Width="800">
     <Window.DataContext>
         <entityEditViewModels:EditPassengerViewModel />

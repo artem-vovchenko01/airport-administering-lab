@@ -7,13 +7,24 @@
         xmlns:vm="clr-namespace:WpfApp3.ViewModels"
         xmlns:cmd="clr-namespace:WpfApp3.Commands"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:sys="clr-namespace:System;assembly=System"
+        xmlns:entities="clr-namespace:Entities;assembly=Entities"
         xmlns:valid="clr-namespace:WpfApp3.ViewModels.Validations"
         xmlns:entityEditViewModels="clr-namespace:WpfApp3.ViewModels.EntityEditViewModels"
+        WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
         Title="Editing flight" Height="450" Width="800">
     <Window.DataContext>
         <entityEditViewModels:EditFlightViewModel />
     </Window.DataContext>
+    <Window.Resources>
+        <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type entities:DelayReason
+        }" x:Key="ReasonDataProvider">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="entities:DelayReason"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </Window.Resources>
 
     <Grid DataContext="{Binding Flight, Mode=TwoWay}">
         <Grid.ColumnDefinitions>
@@ -24,7 +35,7 @@
             <RowDefinition Height="5*" />
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
-        <StackPanel Margin="0 80 20 20" Grid.Column="0" Grid.Row="0">
+        <StackPanel Margin="0 20 20 20" Grid.Column="0" Grid.Row="0">
             <StackPanel.Resources>
                 <Style TargetType="TextBlock" BasedOn="{StaticResource MaterialDesignTextBlock}">
                     <Setter Property="Margin" Value="25 5 5 5" />
@@ -34,12 +45,13 @@
             <TextBlock Text="Time arrive" />
             <TextBlock Text="Stop booking date" />
             <TextBlock Margin="25 5 5 2" Text="Minutes delayed" />
-            <TextBlock Margin="25 2 5 2" Text="Route"/>
-            <TextBlock Margin="25 2 5 2" Text="Airplane"/>
-            <TextBlock Text="Code" />
+            <TextBlock Margin="25 1 5 2" Text="Delay reason"/>
+            <TextBlock Margin="25 1 5 2" Text="Route"/>
+            <TextBlock Margin="25 1 5 2" Text="Airplane"/>
+            <TextBlock Margin="25 1 5 2" Text="Code"/>
         </StackPanel>
 
-        <StackPanel Margin="20 80 20 20" Grid.Column="1" Grid.Row="0">
+        <StackPanel Margin="20 20 20 20" Grid.Column="1" Grid.Row="0">
             <StackPanel.Resources>
                 <Style TargetType="xctk:DateTimePicker">
                    <Setter Property="Margin" Value="7"></Setter> 
@@ -77,8 +89,21 @@
                     </Binding>
                 </TextBox.Text>
             </TextBox>
-            <ComboBox
-                ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.Routes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            
+            <ComboBox ItemsSource="{Binding Source={StaticResource ReasonDataProvider}}" SelectedItem="{Binding DelayReason, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <ComboBox.Style>
+                <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource MaterialDesignComboBox}">
+                    <Setter Property="IsEnabled" Value="True" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding MinDelayed}" Value="0">
+                            <Setter Property="IsEnabled" Value="False" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ComboBox.Style>
+            </ComboBox>
+            
+            <ComboBox ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.Routes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 ItemTemplate="{StaticResource RouteComboTemplate}"
                 SelectedItem="{Binding RouteModel, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
             <ComboBox ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.Airplanes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
